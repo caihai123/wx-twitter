@@ -57,8 +57,11 @@
 }
 
 .dynamic-body {
-  padding: 10px 0;
+  margin: 10px 0;
   font-size: 14px;
+}
+.dynamic-body .text{
+  margin-bottom: 10px;
 }
 
 .dynamic-body .image-grid {

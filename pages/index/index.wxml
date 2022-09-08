@@ -17,6 +17,8 @@
           </view>
         </view>
         <view class="dynamic-body">
+          <!-- 普通文本 -->
+          <view class="text">{{item.content.text}}</view>
           <!-- 图片动态 -->
           <view wx:if="{{item.content.type === 'img'}}" class="image-grid">
             <image wx:for="{{item.content.url}}" wx:key="*this" class="img-item" src="{{item}}" />
@@ -25,12 +27,11 @@
           <view wx:if="{{item.content.type === 'video'}}">
             <video src="{{item.content.url}}"></video>
           </view>
-          <!-- 普通文本 -->
-          <view>{{item.content.text}}</view>
           <!-- 投票 -->
           <view wx:if="{{item.content.type === 'vote'}}">
             <van-radio-group>
-              <van-radio wx:for="{{item.content.options}}" wx:key="key" name="{{item.key}}" custom-class="vote-radio-item">{{item.label}}</van-radio>
+              <van-radio wx:for="{{item.content.options}}" wx:key="key" name="{{item.key}}"
+                custom-class="vote-radio-item">{{item.label}}</van-radio>
             </van-radio-group>
           </view>
           <!-- 接龙游戏 -->
@@ -49,8 +50,11 @@
       </view>
     </view>
   </van-tab>
-  <view slot="nav-left" class="nav-left">美树阳光
-    <van-icon name="arrow-down" />
+  <view slot="nav-left" class="nav-left">
+    <view>美树阳光</view>
+    <view style="margin-left:2px">
+      <van-icon name="arrow-down" />
+    </view>
   </view>
   <view slot="nav-right" class="nav-right">
     <van-button type="default" round type="info" icon="plus" size="mini" bind:click="openDrawer"></van-button>
