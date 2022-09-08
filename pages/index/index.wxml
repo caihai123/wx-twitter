@@ -25,7 +25,7 @@
           </view>
           <!-- 视频动态 -->
           <view wx:if="{{item.content.type === 'video'}}">
-            <video src="{{item.content.url}}"></video>
+            <video class="video" src="{{item.content.url}}"></video>
           </view>
           <!-- 投票 -->
           <view wx:if="{{item.content.type === 'vote'}}">

@@ -25,13 +25,13 @@ Page({
     }, {
       id: "2",
       user: {
-        name: "张三",
+        name: "王麻子",
         portrait: "https://caihai123.com/Dribbble/lists/screen-shot.jpg",
         describe: "30万人关注他",
       },
       content: {
         type: "img",
-        url: ["https://caihai123.com/Dribbble/lists/preview_teaser.png", "https://caihai123.com/Dribbble/lists/car_teaser.gif"],
+        url: ["https://caihai123.com/Dribbble/lists/preview_teaser.png", "https://caihai123.com/Dribbble/lists/car_teaser.gif", "https://caihai123.com/Dribbble/lists/preview_teaser.png", "https://caihai123.com/Dribbble/lists/car_teaser.gif"],
         text: "这是带图片的动态，最多可放9张图片。",
       },
       statistics: {
@@ -43,7 +43,7 @@ Page({
       id: "3",
       user: {
         name: "张三",
-        portrait: "https://caihai123.com/Dribbble/lists/screen-shot.jpg",
+        portrait: "https://img.alicdn.com/imgextra/i4/O1CN01aG16y424E11XsURUd_!!6000000007358-2-tps-206-240.png",
         describe: "30万人关注他",
       },
       content: {
@@ -59,8 +59,8 @@ Page({
     }, {
       id: "4",
       user: {
-        name: "张三",
-        portrait: "https://caihai123.com/Dribbble/lists/screen-shot.jpg",
+        name: "李四",
+        portrait: "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png",
         describe: "30万人关注他",
       },
       content: {
@@ -86,8 +86,8 @@ Page({
     }, {
       id: "5",
       user: {
-        name: "张三",
-        portrait: "https://caihai123.com/Dribbble/lists/screen-shot.jpg",
+        name: "小张",
+        portrait: "https://avatars.githubusercontent.com/u/47770861?s=40&v=4",
         describe: "30万人关注他",
       },
       content: {
