@@ -1,0 +1,70 @@
+<!--pages/index/index.wxml-->
+
+<van-tabs active="{{ 1 }}" animated sticky swipeable>
+  <van-tab title="收藏">
+    <view class="main">
+      <van-empty description="收藏列表空空如也" />
+    </view>
+  </van-tab>
+  <van-tab title="动态">
+    <view class="main">
+      <view class="dynamic-item" wx:for="{{dynamicList}}" wx:key="id">
+        <view class="dynamic-head">
+          <image class="portrait" src="{{item.user.portrait}}" />
+          <view class="dynamic-head-content">
+            <view class="name">{{item.user.name}}</view>
+            <view class="describe">{{item.user.describe}}</view>
+          </view>
+        </view>
+        <view class="dynamic-body">
+          <!-- 图片动态 -->
+          <view wx:if="{{item.content.type === 'img'}}" class="image-grid">
+            <image wx:for="{{item.content.url}}" wx:key="*this" class="img-item" src="{{item}}" />
+          </view>
+          <!-- 视频动态 -->
+          <view wx:if="{{item.content.type === 'video'}}">
+            <video src="{{item.content.url}}"></video>
+          </view>
+          <!-- 普通文本 -->
+          <view>{{item.content.text}}</view>
+          <!-- 投票 -->
+          <view wx:if="{{item.content.type === 'vote'}}">
+            <van-radio-group>
+              <van-radio wx:for="{{item.content.options}}" wx:key="key" name="{{item.key}}" custom-class="vote-radio-item">{{item.label}}</van-radio>
+            </van-radio-group>
+          </view>
+          <!-- 接龙游戏 -->
+          <view wx:if="{{item.content.type === 'fan-tan'}}">
+            这里的交互还没想好反正就是普通的接龙游戏
+          </view>
+        </view>
+        <view class="dynamic-foot">
+          <view>
+            <van-icon name="like-o" />{{item.statistics.watching}}</view>
+          <view>
+            <van-icon name="chat-o" />{{item.statistics.comments}}</view>
+          <view>
+            <van-icon name="good-job-o" />{{item.statistics.star}}</view>
+        </view>
+      </view>
+    </view>
+  </van-tab>
+  <view slot="nav-left" class="nav-left">美树阳光
+    <van-icon name="arrow-down" />
+  </view>
+  <view slot="nav-right" class="nav-right">
+    <van-button type="default" round type="info" icon="plus" size="mini" bind:click="openDrawer"></van-button>
+  </view>
+</van-tabs>
+
+<view hidden="{{!showDrawer}}" class="drawer">
+  <view class="drawer-mask" bindtap="closeDrawer"></view>
+
+  <van-cell-group class="drawer-content">
+    <van-cell title="写动态" clickable />
+    <van-cell title="图片" clickable />
+    <van-cell title="视频" clickable />
+    <van-cell title="发起接龙" clickable />
+    <van-cell title="发起投票" clickable />
+  </van-cell-group>
+</view>

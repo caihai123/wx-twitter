@@ -1,0 +1,115 @@
+/* pages/index/index.wxss */
+
+.van-tabs__wrap {
+  background-color: #fff;
+}
+
+.nav-left,
+.nav-right {
+  width: 400rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.nav-left {
+  color: #1989fa;
+}
+
+.nav-right {
+  justify-content: flex-end;
+}
+
+.main {
+  min-height: calc(100vh - 44px);
+  overflow: hidden;
+  background-color: #f7f8fa;
+}
+
+.dynamic-item {
+  margin: 10px 0;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.dynamic-head {
+  display: flex;
+  align-items: center;
+}
+
+.dynamic-head .portrait {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.dynamic-head .dynamic-head-content {
+  margin-left: 16px;
+}
+
+.dynamic-head .dynamic-head-content .name {
+  font-size: 16px;
+}
+
+.dynamic-head .dynamic-head-content .describe {
+  font-size: 14px;
+}
+
+.dynamic-body {
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.dynamic-body .image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33%);
+  grid-template-rows: repeat(3, 33.33%);
+  grid-gap: 10px 10px;
+}
+
+.dynamic-body .image-grid .img-item {
+  width: 100%;
+  height: 200rpx;
+}
+
+.dynamic-body .vote-radio-item {
+  margin-top: 8px;
+}
+
+.dynamic-foot {
+  margin: 0 -16px;
+  margin-bottom: -16px;
+  line-height: 42px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ebedf0;
+  font-size: 12px
+}
+
+.dynamic-foot .van-icon {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.drawer .drawer-mask {
+  height: 100%;
+}
+
+.drawer .drawer-content {
+  position: absolute;
+  top: 44px;
+  right: 16px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+}
