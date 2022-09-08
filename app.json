@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/notice/index",
     "pages/home/index",
-    "pages/supermar/index",
     "pages/suggestions/index"
   ],
   "window": {
@@ -13,22 +12,31 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "list": [
-      {
+    "color": "#333",
+    "selectedColor": "#1296db",
+    "list": [{
+        "text": "首页",
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "iconPath": "/assets/index-icon.png",
+        "selectedIconPath": "/assets/index-icon-active.png"
       },
       {
-        "pagePath": "pages/supermar/index",
-        "text": "生活便利"
+        "text": "意见箱",
+        "pagePath": "pages/suggestions/index",
+        "iconPath": "/assets/suggestions-icon.png",
+        "selectedIconPath": "/assets/suggestions-icon-active.png"
       },
       {
+        "text": "消息",
         "pagePath": "pages/notice/index",
-        "text": "消息"
+        "iconPath": "/assets/message-icon.png",
+        "selectedIconPath": "/assets/message-icon-active.png"
       },
       {
+        "text": "我的",
         "pagePath": "pages/home/index",
-        "text": "我的"
+        "iconPath": "/assets/user-icon.png",
+        "selectedIconPath": "/assets/user-icon-active.png"
       }
     ]
   },
