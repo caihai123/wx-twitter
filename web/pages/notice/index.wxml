@@ -1,6 +1,5 @@
 <!--pages/notice/index.wxml-->
 <van-cell-group>
-  <van-cell title="小区公告" icon="location-o" is-link />
   <van-cell title="评论" icon="location-o" is-link />
   <van-cell title="赞" icon="location-o" is-link />
 </van-cell-group>

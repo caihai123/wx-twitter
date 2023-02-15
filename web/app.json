@@ -20,12 +20,7 @@
         "iconPath": "/assets/index-icon.png",
         "selectedIconPath": "/assets/index-icon-active.png"
       },
-      {
-        "text": "意见箱",
-        "pagePath": "pages/suggestions/index",
-        "iconPath": "/assets/suggestions-icon.png",
-        "selectedIconPath": "/assets/suggestions-icon-active.png"
-      },
+      
       {
         "text": "消息",
         "pagePath": "pages/notice/index",

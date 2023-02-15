@@ -1,7 +1,10 @@
 {
+  "cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "web/",
   "description": "项目配置文件",
   "packOptions": {
-    "ignore": []
+    "ignore": [],
+    "include": []
   },
   "setting": {
     "urlCheck": true,
@@ -41,35 +44,13 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.26.0",
-  "appid": "wxf5a5c0359ccb78fd",
+  "appid": "wx3b432dc6cfc40d27",
   "projectname": "tentative",
-  "debugOptions": {
-    "hidedInDevtools": []
-  },
-  "scripts": {},
-  "staticServerOptions": {
-    "baseURL": "",
-    "servePath": ""
-  },
-  "isGameTourist": false,
-  "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": []
-    }
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "condition": {},
+  "srcMiniprogramRoot": "web/",
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }
