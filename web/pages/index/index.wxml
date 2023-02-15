@@ -87,6 +87,6 @@
   <van-empty description="您还没有加入任何圈子" />
   <view style="padding:16px">
     <van-button block type="info">查找圈子</van-button>
-    <van-button block type="info" custom-style="margin-top:16px">创建圈子</van-button>
+    <van-button block type="info" custom-style="margin-top:16px" bind:click="goCreateTribe">创建圈子</van-button>
   </view>
 </view>

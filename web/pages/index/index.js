@@ -64,6 +64,13 @@ Page({
     });
   },
 
+  // 去创建圈子
+  goCreateTribe(){
+    wx.navigateTo({
+      url: "/pages/create-tribe/index",
+    });
+  },
+
   // 刷新动态列表
   refreshMoments() {},
 
