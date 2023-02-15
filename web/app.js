@@ -12,6 +12,7 @@ App({
           const db = wx.cloud.database();
           db.collection("user")
             .where({ _openid: openid })
+            .limit(1)
             .get({
               success: (res) => {
                 const userInfo = res.data[0];
@@ -42,7 +43,7 @@ App({
       nickName: "",// 昵称
       gender: "",// 性别
       avatarUrl: "",// 头像地
-      description: "",// 自我描述or个性签名
+      describe: "",// 自我描述or个性签名
       tribes: [],// 所属部落
       currentGroup: "",// 当前所在组
     },

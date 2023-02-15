@@ -1,0 +1,15 @@
+<!--pages/create-moment/index.wxml-->
+
+<view class="container">
+
+  <van-field value="{{ value }}" type="textarea" input-align="left" border="{{false}}" maxlength="500" show-word-limit="{{true}}" autosize="{{autosize}}" placeholder="这一刻的想法..." bind:change="handelValueChange" />
+
+  <van-cell-group>
+    <van-cell title="所在位置" is-link icon="location-o" />
+    <van-cell title="选择社区" is-link icon="hotel-o" />
+  </van-cell-group>
+</view>
+
+<view class="footer">
+  <van-button type="info" block disabled="{{!value}}" bind:click="submitForm">发 表</van-button>
+</view>

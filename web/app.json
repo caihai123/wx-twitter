@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/notice/index",
     "pages/home/index",
-    "pages/suggestions/index"
+    "pages/suggestions/index",
+    "pages/create-moment/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,13 +15,13 @@
   "tabBar": {
     "color": "#333",
     "selectedColor": "#1296db",
-    "list": [{
+    "list": [
+      {
         "text": "首页",
         "pagePath": "pages/index/index",
         "iconPath": "/assets/index-icon.png",
         "selectedIconPath": "/assets/index-icon-active.png"
       },
-      
       {
         "text": "消息",
         "pagePath": "pages/notice/index",

@@ -3,5 +3,18 @@
   "projectname": "miniprogram-1",
   "setting": {
     "compileHotReLoad": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "发表动态",
+          "pathName": "pages/create-moment/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
   }
 }
