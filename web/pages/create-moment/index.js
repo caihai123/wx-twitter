@@ -23,7 +23,7 @@ Page({
       data: {
         content: this.data.value,
         tribleId: "",// 圈子id
-        createTime:dayjs().format("YYYY-MM-DD HH::mm:ss")
+        createTime:dayjs().format("YYYY-MM-DD HH:mm:ss")
       },
       success: function () {
         wx.showToast({
