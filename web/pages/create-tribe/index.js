@@ -90,12 +90,12 @@ Page({
       .doc(userInfo._id)
       .update({
         data: { currentTribe: currentTribeId },
-        success: () => {
-          this.store.dispatch({
-            type: "setUserInfo",
-            payload: { ...userInfo, currentTribe: currentTribeId },
-          });
-        },
+      })
+      .then(() => {
+        this.store.dispatch({
+          type: "setUserInfo",
+          payload: { ...userInfo, currentTribe: currentTribeId },
+        });
       });
   },
 });
