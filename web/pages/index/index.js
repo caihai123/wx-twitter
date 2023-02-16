@@ -1,56 +1,31 @@
 // pages/index/index.js
 const app = getApp();
+let unsubscribe = null;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    groupList: [], // 圈子列表
+    currentTribe: "", // 当前圈子
+    tribeList: [], // 圈子列表
     showDrawer: false,
-    // 动态列表
-    moments: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.globalData.loginPromise.then(() => {
-      this.getTribeList();
-      this.getMoments();
+    this.initPage();
+    // 监测store变化
+    unsubscribe = app.store.subscribe(() => {
+      this.initPage();
     });
   },
 
-  // 获取用户所在的圈子
-  getTribeList() {
-    const db = wx.cloud.database();
-    const _ = db.command;
-    db.collection("tribes")
-      .where({
-        _id: _.in(app.globalData.userInfo?.tribes || []),
-      })
-      .field({
-        _id: true,
-        name: true,
-        description: true,
-      })
-      .get({
-        success: (res) => {
-          this.setData({
-            groupList: res.data,
-          });
-        },
-      });
-  },
-
-  // 获取动态列表
-  getMoments() {
-    wx.cloud.callFunction({
-      name: "getMoments",
-      success: (res) => {
-        this.setData({ moments: res.result || [] });
-      },
-    });
+  // 初始化页面
+  initPage() {
+    const { userInfo, tribeList } = app.store.getState();
+    this.setData({ tribeList, currentTribe: userInfo.currentTribe });
   },
 
   // 去发动态
@@ -65,14 +40,11 @@ Page({
   },
 
   // 去创建圈子
-  goCreateTribe(){
+  goCreateTribe() {
     wx.navigateTo({
       url: "/pages/create-tribe/index",
     });
   },
-
-  // 刷新动态列表
-  refreshMoments() {},
 
   // 打开drawer
   openDrawer() {
@@ -80,10 +52,17 @@ Page({
       showDrawer: true,
     });
   },
+
   // 取消drawer
   closeDrawer() {
     this.setData({
       showDrawer: false,
     });
+  },
+  
+  // 页面卸载时
+  onUnload() {
+    // 停止监听store
+    unsubscribe();
   },
 });

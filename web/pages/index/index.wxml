@@ -1,52 +1,9 @@
 <!--pages/index/index.wxml-->
 
-<view wx:if="{{false}}">
-  <van-tabs active="{{ 1 }}" animated sticky swipeable ellipsis="{{false}}">
+<view wx:if="{{tribeList.length}}">
+  <van-tabs active="{{ 0 }}" animated sticky swipeable ellipsis="{{false}}">
     <van-tab title="动态">
-      <view class="main">
-        <view class="dynamic-item" wx:for="{{moments}}" wx:key="_id">
-          <view class="dynamic-head">
-            <image class="portrait" src="{{item.user.avatarUrl}}" />
-            <view class="dynamic-head-content">
-              <view class="name">{{item.user.nickName}}</view>
-              <view class="describe">{{item.user.describe}}</view>
-            </view>
-          </view>
-          <view class="dynamic-body">
-            <!-- 普通文本 -->
-            <view class="text">{{item.content}}</view>
-            <!-- 图片动态 -->
-            <view wx:if="{{item.content.type === 'img'}}" class="image-grid">
-              <image wx:for="{{item.content.url}}" wx:key="*this" class="img-item" src="{{item}}" />
-            </view>
-            <!-- 视频动态 -->
-            <view wx:if="{{item.content.type === 'video'}}">
-              <video class="video" src="{{item.content.url}}"></video>
-            </view>
-            <!-- 投票 -->
-            <view wx:if="{{item.content.type === 'vote'}}">
-              <van-radio-group>
-                <van-radio wx:for="{{item.content.options}}" wx:key="key" name="{{item.key}}" custom-class="vote-radio-item">{{item.label}}</van-radio>
-              </van-radio-group>
-            </view>
-            <!-- 接龙游戏 -->
-            <view wx:if="{{item.content.type === 'fan-tan'}}">
-              这里的交互还没想好反正就是普通的接龙游戏
-            </view>
-          </view>
-          <view class="dynamic-foot">
-            <view>
-              <van-icon name="like-o" />{{item.statistics.watching}}
-            </view>
-            <view>
-              <van-icon name="chat-o" />{{item.statistics.comments}}
-            </view>
-            <view>
-              <van-icon name="good-job-o" />{{item.statistics.star}}
-            </view>
-          </view>
-        </view>
-      </view>
+      <moment-box tribeId="{{currentTribe}}" />
     </van-tab>
     <van-tab title="留言板">
       <van-search value="{{ value }}" placeholder="留个言吧..." left-icon="edit" />
@@ -54,7 +11,6 @@
     </van-tab>
     <van-tab title="成员"></van-tab>
     <van-tab title="设置">
-
       <view style="padding:16px">
         <van-button block>退 出</van-button>
       </view>
