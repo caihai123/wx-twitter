@@ -34,14 +34,22 @@ exports.main = async (event, context) => {
     };
   } else {
     // 如果不存在则帮他创建之后再返回
-    await db.collection("user").add({
+    const defaultUserInfo = {
+      _openid: OPENID,
+      nickName: "微信用户",
+      avatarUrl: "",
+      describe: "这个人很懒，什么也没留下~",
+    };
+    const result = await db.collection("user").add({
       data: {
-        _openid: OPENID,
+        ...defaultUserInfo,
         createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       },
     });
     return {
-      _openid: OPENID,
+      _id: result._id,
+      ...defaultUserInfo,
+      tribeList: [],
     };
   }
 };
