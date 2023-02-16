@@ -1,52 +1,51 @@
 // app.js
+const Redux = require("./assets/redux.min");
+const initialState = {
+  userInfo: {
+    _id: "",
+    _openid: "",
+    nickName: "", // 昵称
+    gender: "", // 性别
+    avatarUrl: "", // 头像地
+    describe: "", // 自我描述or个性签名
+    currentTribe: "", // 当前所在圈子
+  },
+  tribeList: [],
+};
+const store = Redux.createStore((state = initialState, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case "setUserInfo":
+      return {
+        ...state,
+        userInfo: payload,
+      };
+    case "setTribeList":
+      return {
+        ...state,
+        tribeList: payload,
+      };
+    default:
+      return state;
+  }
+});
+
 App({
+  store: store,
   onLaunch() {
     wx.cloud.init({ traceUser: true });
-    // 登录
-    this.globalData.loginPromise = new Promise((resolve, reject) => {
-      wx.cloud.callFunction({
-        name: "login",
-        success: (res) => {
-          const { openid } = res.result;
-          // 获取用户信息 开始
-          const db = wx.cloud.database();
-          db.collection("user")
-            .where({ _openid: openid })
-            .limit(1)
-            .get({
-              success: (res) => {
-                const userInfo = res.data[0];
-                if (userInfo) {
-                  this.globalData.userInfo = userInfo;
-                } else {
-                  this.globalData.userInfo = null;
-                }
-                resolve(res);
-              },
-              fail: (err) => {
-                reject(err);
-              },
-            });
-          // 获取用户信息 结束
-        },
-        fail: (err) => {
-          reject(err);
-        },
-      });
-    });
+    this.login();
   },
 
-  globalData: {
-    userInfo: {
-      _id: "",
-      _openid: "",
-      nickName: "",// 昵称
-      gender: "",// 性别
-      avatarUrl: "",// 头像地
-      describe: "",// 自我描述or个性签名
-      tribes: [],// 所属部落
-      currentGroup: "",// 当前所在组
-    },
-    loginPromise: null,
+  // 登录，实际是获取用户信息
+  login() {
+    wx.cloud.callFunction({
+      name: "login",
+      success: (res) => {
+        const { tribeList = [], ...userInfo } = res.result;
+        this.store.dispatch({ type: "setUserInfo", payload: userInfo });
+        this.store.dispatch({ type: "setTribeList", payload: tribeList });
+      },
+    });
   },
 });
