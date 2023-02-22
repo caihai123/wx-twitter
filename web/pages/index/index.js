@@ -1,31 +1,35 @@
 // pages/index/index.js
+import { selectAllPosts, postInit } from "../../store/module/posts";
 const app = getApp();
+const { dispatch, subscribe, getState } = app.store;
+
 let unsubscribe = null;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    currentTribe: "", // 当前圈子
-    tribeList: [], // 圈子列表
     showDrawer: false,
+    posts: [], // 动态列表
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.initPage();
+  onLoad: function () {
     // 监测store变化
-    unsubscribe = app.store.subscribe(() => {
-      this.initPage();
+    unsubscribe = subscribe(() => {
+      this.setData({ posts: selectAllPosts(getState()) });
     });
+    this.initPosts();
   },
 
-  // 初始化页面
-  initPage() {
-    const { userInfo, tribeList } = app.store.getState();
-    this.setData({ tribeList, currentTribe: userInfo.currentTribe });
+  // 初始化动态列表
+  initPosts() {
+    wx.cloud.callFunction({ name: "getMoments" }).then((res) => {
+      const data = res.result.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
+      dispatch(postInit(data));
+    });
   },
 
   // 去发动态
@@ -59,7 +63,7 @@ Page({
       showDrawer: false,
     });
   },
-  
+
   // 页面卸载时
   onUnload() {
     // 停止监听store

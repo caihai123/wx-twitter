@@ -18,11 +18,11 @@ Page({
   // 发表
   submitForm() {
     const db = wx.cloud.database();
-    db.collection("moment").add({
+    db.collection("posts").add({
       // data 字段表示需新增的 JSON 数据
       data: {
         content: this.data.value,
-        tribleId: "",// 圈子id
+        tribeId: "",// 圈子id
         createTime:dayjs().format("YYYY-MM-DD HH:mm:ss")
       },
       success: function () {

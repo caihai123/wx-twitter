@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "创建圈子",
-  "usingComponents": {
-    "van-cell-group": "@vant/weapp/cell-group/index",
-    "van-field": "@vant/weapp/field/index",
-    "van-button": "@vant/weapp/button/index"
-  }
-}

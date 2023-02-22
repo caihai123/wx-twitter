@@ -1,56 +1,77 @@
-/* pages/index/index.wxss */
-
-.van-tabs__wrap {
+page {
+  background-color: #f7f8fa;
+}
+.post-box {
+  overflow: hidden;
+}
+.post-item {
+  margin: 10px 0;
+  padding: 16px;
   background-color: #fff;
 }
 
-.nav-left,
-.nav-right {
+.post-head {
   display: flex;
   align-items: center;
-  padding: 0 16px;
+}
+
+.post-head .portrait {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.post-head .post-head-content {
+  margin-left: 16px;
+}
+
+.post-head .post-head-content .name {
+  font-size: 16px;
+}
+
+.post-head .post-head-content .describe {
   font-size: 14px;
 }
-.nav-left {
-  padding-right: 0;
+
+.post-body {
+  margin: 10px 0;
+  font-size: 14px;
 }
-.nav-left .text {
-  max-width: 80px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.nav-right {
-  width: 100px;
-  padding-left: 0;
+.post-body .text {
+  margin-bottom: 10px;
 }
 
-.nav-left {
-  color: #1989fa;
+.post-body .image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, calc(33.33333% - 6px));
+  grid-gap: 9px 9px;
+  box-sizing: border-box;
 }
 
-.nav-right {
-  justify-content: flex-end;
-}
-
-.drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
+.post-body .image-grid .img-item {
   width: 100%;
-  height: 100%;
-  z-index: 999;
+  height: 200rpx;
+}
+.post-body .video {
+  width: 500px;
+  max-width: 100%;
 }
 
-.drawer .drawer-mask {
-  height: 100%;
+.post-body .vote-radio-item {
+  margin-top: 8px;
 }
 
-.drawer .drawer-content {
-  position: absolute;
-  top: 44px;
-  right: 16px;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: #fff;
+.post-foot {
+  margin: 0 -16px;
+  margin-bottom: -16px;
+  line-height: 42px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ebedf0;
+  font-size: 12px;
+}
+
+.post-foot .van-icon {
+  margin-right: 5px;
+  font-size: 14px;
 }

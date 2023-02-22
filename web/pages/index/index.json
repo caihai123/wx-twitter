@@ -1,14 +1,7 @@
 {
   "navigationBarTitleText": "首页",
   "usingComponents": {
-    "van-tab": "@vant/weapp/tab/index",
-    "van-tabs": "@vant/weapp/tabs/index",
-    "van-button": "@vant/weapp/button/index",
-    "van-image": "@vant/weapp/image/index",
-    "van-cell": "@vant/weapp/cell/index",
-    "van-cell-group": "@vant/weapp/cell-group/index",
-    "van-empty": "@vant/weapp/empty/index",
-    "van-search": "@vant/weapp/search/index",
-    "moment-box": "./components/moment-box/index"
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-icon": "@vant/weapp/icon/index"
   }
 }

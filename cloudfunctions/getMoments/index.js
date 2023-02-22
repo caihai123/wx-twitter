@@ -19,11 +19,9 @@ exports.main = async (event, context) => {
   const userInfo = userList[0];
 
   if (userInfo) {
-    const { tribes = [] } = userInfo; // 自己所在的群
     const { list } = await db
-      .collection("moment")
+      .collection("posts")
       .aggregate()
-      .match({ tribleId: _.in([...tribes, "", null, undefined]) })
       .lookup({
         from: "user",
         as: "user",
@@ -42,7 +40,6 @@ exports.main = async (event, context) => {
       .addFields({ user: $.arrayElemAt(["$user", 0]) })
       .project({ _openid: false })
       .end();
-    // return list.map(({ user, ...rest }) => ({ ...rest, user: user[0] }));
     return list;
   } else {
     return {

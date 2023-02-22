@@ -1,48 +1,46 @@
 <!--pages/index/index.wxml-->
 
-<view wx:if="{{tribeList.length}}">
-  <van-tabs active="{{ 0 }}" animated sticky swipeable ellipsis="{{false}}">
-    <van-tab title="动态">
-      <moment-box tribeId="{{currentTribe}}" />
-    </van-tab>
-    <van-tab title="留言板">
-      <van-search value="{{ value }}" placeholder="留个言吧..." left-icon="edit" />
-      <van-empty description="暂时还没有人留言" />
-    </van-tab>
-    <van-tab title="成员"></van-tab>
-    <van-tab title="设置">
-      <view style="padding:16px">
-        <van-button block>退 出</van-button>
-      </view>
-    </van-tab>
-    <view slot="nav-left" class="nav-left">
-      <view class="text">美树阳光</view>
-      <view style="margin-left:2px">
-        <van-icon name="arrow-down" />
+<view class="post-box">
+  <view class="post-item" wx:for="{{posts}}" wx:key="id">
+    <view class="post-head">
+      <image class="portrait" src="{{item.user.avatarUrl}}" />
+      <view class="post-head-content">
+        <view class="name">{{item.user.nickName}}</view>
+        <view class="describe">{{item.user.describe}}</view>
       </view>
     </view>
-    <view slot="nav-right" class="nav-right">
-      <van-button type="default" round type="info" icon="plus" size="mini" bind:click="openDrawer"></van-button>
+    <view class="post-body">
+      <!-- 普通文本 -->
+      <view class="text">{{item.content}}</view>
+      <!-- 图片动态 -->
+      <view wx:if="{{item.content.type === 'img'}}" class="image-grid">
+        <image wx:for="{{item.content.url}}" wx:key="*this" class="img-item" src="{{item}}" />
+      </view>
+      <!-- 视频动态 -->
+      <view wx:if="{{item.content.type === 'video'}}">
+        <video class="video" src="{{item.content.url}}"></video>
+      </view>
+      <!-- 投票 -->
+      <view wx:if="{{item.content.type === 'vote'}}">
+        <van-radio-group>
+          <van-radio wx:for="{{item.content.options}}" wx:key="key" name="{{item.key}}" custom-class="vote-radio-item">{{item.label}}</van-radio>
+        </van-radio-group>
+      </view>
+      <!-- 接龙游戏 -->
+      <view wx:if="{{item.content.type === 'fan-tan'}}">
+        这里的交互还没想好反正就是普通的接龙游戏
+      </view>
     </view>
-  </van-tabs>
-
-  <view hidden="{{!showDrawer}}" class="drawer">
-    <view class="drawer-mask" bindtap="closeDrawer"></view>
-    <van-cell-group class="drawer-content">
-      <van-cell title="写动态" clickable bind:click="goCreatdMoment" />
-      <van-cell title="图片" clickable />
-      <van-cell title="视频" clickable />
-      <van-cell title="发起接龙" clickable />
-      <van-cell title="发起投票" clickable />
-    </van-cell-group>
-  </view>
-
-</view>
-
-<view wx:else>
-  <van-empty description="您还没有加入任何圈子" />
-  <view style="padding:16px">
-    <van-button block type="info">查找圈子</van-button>
-    <van-button block type="info" custom-style="margin-top:16px" bind:click="goCreateTribe">创建圈子</van-button>
+    <view class="post-foot">
+      <view>
+        <van-icon name="like-o" />{{item.statistics.watching}}
+      </view>
+      <view>
+        <van-icon name="chat-o" />{{item.statistics.comments}}
+      </view>
+      <view>
+        <van-icon name="good-job-o" />{{item.statistics.star}}
+      </view>
+    </view>
   </view>
 </view>

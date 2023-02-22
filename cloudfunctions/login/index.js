@@ -23,15 +23,7 @@ exports.main = async (event, context) => {
   const [userInfo] = userList;
 
   if (userInfo) {
-    const { data: tribeList } = await db
-      .collection("tribes")
-      .where({ members: _.all([userInfo._id]) })
-      .field({ members: false })
-      .get();
-    return {
-      ...userInfo,
-      tribeList,
-    };
+    return userInfo;
   } else {
     // 如果不存在则帮他创建之后再返回
     const defaultUserInfo = {
@@ -49,7 +41,6 @@ exports.main = async (event, context) => {
     return {
       _id: result._id,
       ...defaultUserInfo,
-      tribeList: [],
     };
   }
 };

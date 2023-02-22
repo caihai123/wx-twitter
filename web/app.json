@@ -4,8 +4,7 @@
     "pages/notice/index",
     "pages/home/index",
     "pages/suggestions/index",
-    "pages/create-moment/index",
-    "pages/create-tribe/index"
+    "pages/create-moment/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
