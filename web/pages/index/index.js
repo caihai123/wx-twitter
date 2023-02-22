@@ -9,7 +9,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showDrawer: false,
     posts: [], // 动态列表
   },
 
@@ -33,34 +32,9 @@ Page({
   },
 
   // 去发动态
-  goCreatdMoment() {
-    const that = this;
+  goCreatdPost() {
     wx.navigateTo({
-      url: "/pages/create-moment/index?type=1",
-      success() {
-        that.closeDrawer();
-      },
-    });
-  },
-
-  // 去创建圈子
-  goCreateTribe() {
-    wx.navigateTo({
-      url: "/pages/create-tribe/index",
-    });
-  },
-
-  // 打开drawer
-  openDrawer() {
-    this.setData({
-      showDrawer: true,
-    });
-  },
-
-  // 取消drawer
-  closeDrawer() {
-    this.setData({
-      showDrawer: false,
+      url: "/pages/create-post/index",
     });
   },
 

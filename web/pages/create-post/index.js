@@ -19,13 +19,11 @@ Page({
   submitForm() {
     const db = wx.cloud.database();
     db.collection("posts").add({
-      // data 字段表示需新增的 JSON 数据
       data: {
         content: this.data.value,
-        tribeId: "",// 圈子id
         createTime:dayjs().format("YYYY-MM-DD HH:mm:ss")
       },
-      success: function () {
+      success: function (res) {
         wx.showToast({
           title: "发表成功",
           icon: "success",

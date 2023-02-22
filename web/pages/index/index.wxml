@@ -1,6 +1,10 @@
 <!--pages/index/index.wxml-->
 
 <view class="post-box">
+  <view class="float-button">
+    <van-button type="default" type="info" round icon="plus" bind:click="goCreatdPost"></van-button>
+  </view>
+
   <view class="post-item" wx:for="{{posts}}" wx:key="id">
     <view class="post-head">
       <image class="portrait" src="{{item.user.avatarUrl}}" />

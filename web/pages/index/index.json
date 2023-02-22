@@ -2,6 +2,9 @@
   "navigationBarTitleText": "首页",
   "usingComponents": {
     "van-radio-group": "@vant/weapp/radio-group/index",
-    "van-icon": "@vant/weapp/icon/index"
+    "van-icon": "@vant/weapp/icon/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-cell": "@vant/weapp/cell/index"
   }
 }
