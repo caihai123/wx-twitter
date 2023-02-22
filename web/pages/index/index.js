@@ -26,7 +26,7 @@ Page({
 
   // 初始化动态列表
   initPosts() {
-    wx.cloud.callFunction({ name: "getMoments" }).then((res) => {
+    wx.cloud.callFunction({ name: "getPosts" }).then((res) => {
       const data = res.result.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
       dispatch(postInit(data));
     });
