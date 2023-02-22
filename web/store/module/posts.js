@@ -18,10 +18,18 @@ const postsSlice = createSlice({
     postInit(state, action) {
       postsAdapter.upsertMany(state, action.payload);
     },
+    // 点赞
+    thumbsUp(state, action) {
+      const { id } = action.payload;
+      const existingPost = state.entities[id];
+      if (existingPost) {
+        existingPost.thumbsUp = (existingPost.thumbsUp || 0) + 1;
+      }
+    },
   },
 });
 
-export const { postInit } = postsSlice.actions;
+export const { postInit, thumbsUp } = postsSlice.actions;
 
 export const {
   selectAll: selectAllPosts,

@@ -1,5 +1,5 @@
 // pages/index/index.js
-import { selectAllPosts, postInit } from "../../store/module/posts";
+import { selectAllPosts, postInit, thumbsUp } from "../../store/module/posts";
 const app = getApp();
 const { dispatch, subscribe, getState } = app.store;
 
@@ -36,6 +36,12 @@ Page({
     wx.navigateTo({
       url: "/pages/create-post/index",
     });
+  },
+
+  // 点赞
+  thumbsUp(event) {
+    const { id } = event.currentTarget.dataset;
+    dispatch(thumbsUp({ id }));
   },
 
   // 页面卸载时
