@@ -58,13 +58,12 @@ export const thumbsUpSync = createAsyncThunk(
     // 设置本地的结果
     dispatch(updateThumbsUp({ id, thumbsUp: resultLocalThumbsUp }));
 
+    // 开始向后端传递点赞信息
     const db = wx.cloud.database();
     const { data: postThumbsUpInfo } = await db
       .collection("posts")
       .doc(id)
-      .field({
-        thumbsUp: true,
-      })
+      .field({ thumbsUp: true })
       .get();
 
     const resultThumbsUp = (() => {
