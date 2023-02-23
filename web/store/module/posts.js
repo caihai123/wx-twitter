@@ -4,6 +4,8 @@ const {
   createAsyncThunk,
 } = require("../../utils/redux-toolkit");
 
+import { selectUserId } from "./userInfo";
+
 const postsAdapter = createEntityAdapter({
   sortComparer: (a, b) => b.createTime.localeCompare(a.createTime),
 });
@@ -33,39 +35,42 @@ const postsSlice = createSlice({
 });
 
 // 点赞
-export const thumbsUpSync = createAsyncThunk("posts/thumbsUp", async (id) => {
-  const db = wx.cloud.database();
-  const { data: postThumbsUpInfo } = await db
-    .collection("posts")
-    .doc(id)
-    .field({
-      thumbsUp: true,
-    })
-    .get();
+export const thumbsUpSync = createAsyncThunk(
+  "posts/thumbsUp",
+  async (id, { getState }) => {
+    const db = wx.cloud.database();
+    const { data: postThumbsUpInfo } = await db
+      .collection("posts")
+      .doc(id)
+      .field({
+        thumbsUp: true,
+      })
+      .get();
 
-  const resultThumbsUp = (() => {
-    const userId = "0122a58763ee3e5500a035a9460fec63";
-    const { thumbsUp = [] } = postThumbsUpInfo;
-    if (thumbsUp.includes(userId)) {
-      return thumbsUp.filter((item) => item !== userId);
-    } else {
-      return [...thumbsUp, userId];
-    }
-  })();
+    const resultThumbsUp = (() => {
+      const userId = selectUserId(getState());// 获取当前用户的id
+      const { thumbsUp = [] } = postThumbsUpInfo;
+      if (thumbsUp.includes(userId)) {
+        return thumbsUp.filter((item) => item !== userId);
+      } else {
+        return [...thumbsUp, userId];
+      }
+    })();
 
-  // TOOD: 这里多个人同时点赞时可能会丢失数据
-  await db
-    .collection("posts")
-    .doc(id)
-    .update({
-      data: { thumbsUp: resultThumbsUp },
-    });
+    // TOOD: 这里多个人同时点赞时可能会丢失数据
+    await db
+      .collection("posts")
+      .doc(id)
+      .update({
+        data: { thumbsUp: resultThumbsUp },
+      });
 
-  return {
-    id: id,
-    thumbsUp: resultThumbsUp,
-  };
-});
+    return {
+      id: id,
+      thumbsUp: resultThumbsUp,
+    };
+  }
+);
 
 export const { postInit } = postsSlice.actions;
 

@@ -1,7 +1,7 @@
 import { createSlice } from "../../utils/redux-toolkit";
 
 export const slice = createSlice({
-  name: "userinfo",
+  name: "userInfo",
   initialState: {
     _id: "",
     _openid: "",
@@ -11,7 +11,7 @@ export const slice = createSlice({
   },
   reducers: {
     // 更新所有用户信息，一般用于初始化
-    updateUserinfo(state, action) {
+    updateUserInfo(state, action) {
       const { _id, _openid, nickName, avatarUrl, describe } = action.payload;
       state._id = _id;
       state._openid = _openid;
@@ -22,6 +22,9 @@ export const slice = createSlice({
   },
 });
 
-export const { updateUserinfo } = slice.actions;
+export const { updateUserInfo } = slice.actions;
 
 export default slice.reducer;
+
+// 获取userId
+export const selectUserId = (state) => state.userInfo._id;
