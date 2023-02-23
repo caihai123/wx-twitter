@@ -1,5 +1,6 @@
 // app.js
-import store from "./store/index"
+import store from "./store/index";
+import { updateUserinfo } from "./store/module/userInfo";
 
 App({
   store: store,
@@ -13,8 +14,8 @@ App({
     wx.cloud.callFunction({
       name: "login",
       success: (res) => {
+        store.dispatch(updateUserinfo(res.result));
       },
     });
   },
-
 });
