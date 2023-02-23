@@ -4,6 +4,7 @@ import {
   postInit,
   thumbsUpSync,
 } from "../../store/module/posts";
+import { selectUserId } from "../../store/module/userInfo";
 const app = getApp();
 const { dispatch, subscribe, getState } = app.store;
 
@@ -13,6 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    ownId: "", // 自己的id
     posts: [], // 动态列表
   },
 
@@ -22,7 +24,11 @@ Page({
   onLoad: function () {
     // 监测store变化
     unsubscribe = subscribe(() => {
-      this.setData({ posts: selectAllPosts(getState()) });
+      const state = getState();
+      this.setData({
+        ownId: selectUserId(state),
+        posts: selectAllPosts(state),
+      });
     });
     this.initPosts();
   },
