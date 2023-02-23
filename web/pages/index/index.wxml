@@ -43,7 +43,7 @@
         <van-icon name="chat-o" />{{item.comments}}
       </view>
       <view data-id="{{item.id}}" bindtap="thumbsUp">
-        <van-icon name="good-job-o" />{{item.thumbsUp}}
+        <van-icon name="good-job-o" />{{item.thumbsUp.length}}
       </view>
     </view>
   </view>

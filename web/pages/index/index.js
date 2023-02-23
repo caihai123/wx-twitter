@@ -1,5 +1,9 @@
 // pages/index/index.js
-import { selectAllPosts, postInit, thumbsUp } from "../../store/module/posts";
+import {
+  selectAllPosts,
+  postInit,
+  thumbsUpSync,
+} from "../../store/module/posts";
 const app = getApp();
 const { dispatch, subscribe, getState } = app.store;
 
@@ -41,7 +45,7 @@ Page({
   // 点赞
   thumbsUp(event) {
     const { id } = event.currentTarget.dataset;
-    dispatch(thumbsUp({ id }));
+    dispatch(thumbsUpSync(id)).unwrap();
   },
 
   // 页面卸载时

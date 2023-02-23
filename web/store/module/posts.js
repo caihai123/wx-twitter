@@ -1,6 +1,7 @@
 const {
   createSlice,
   createEntityAdapter,
+  createAsyncThunk,
 } = require("../../utils/redux-toolkit");
 
 const postsAdapter = createEntityAdapter({
@@ -18,18 +19,55 @@ const postsSlice = createSlice({
     postInit(state, action) {
       postsAdapter.upsertMany(state, action.payload);
     },
-    // 点赞
-    thumbsUp(state, action) {
-      const { id } = action.payload;
-      const existingPost = state.entities[id];
-      if (existingPost) {
-        existingPost.thumbsUp = (existingPost.thumbsUp || 0) + 1;
+  },
+  extraReducers(builder) {
+    // 点赞完成后更新本地点赞列表
+    builder.addCase(thumbsUpSync.fulfilled, (state, action) => {
+      const { id, thumbsUp } = action.payload;
+      const found = state.entities[id];
+      if (found) {
+        found.thumbsUp = thumbsUp;
       }
-    },
+    });
   },
 });
 
-export const { postInit, thumbsUp } = postsSlice.actions;
+// 点赞
+export const thumbsUpSync = createAsyncThunk("posts/thumbsUp", async (id) => {
+  const db = wx.cloud.database();
+  const { data: postThumbsUpInfo } = await db
+    .collection("posts")
+    .doc(id)
+    .field({
+      thumbsUp: true,
+    })
+    .get();
+
+  const resultThumbsUp = (() => {
+    const userId = "0122a58763ee3e5500a035a9460fec63";
+    const { thumbsUp = [] } = postThumbsUpInfo;
+    if (thumbsUp.includes(userId)) {
+      return thumbsUp.filter((item) => item !== userId);
+    } else {
+      return [...thumbsUp, userId];
+    }
+  })();
+
+  // TOOD: 这里多个人同时点赞时可能会丢失数据
+  await db
+    .collection("posts")
+    .doc(id)
+    .update({
+      data: { thumbsUp: resultThumbsUp },
+    });
+
+  return {
+    id: id,
+    thumbsUp: resultThumbsUp,
+  };
+});
+
+export const { postInit } = postsSlice.actions;
 
 export const {
   selectAll: selectAllPosts,
