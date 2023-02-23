@@ -21,15 +21,20 @@ const postsSlice = createSlice({
     postInit(state, action) {
       postsAdapter.upsertMany(state, action.payload);
     },
-  },
-  extraReducers(builder) {
-    // 点赞完成后更新本地点赞列表
-    builder.addCase(thumbsUpSync.fulfilled, (state, action) => {
+
+    // 更新点赞列表
+    updateThumbsUp(state, action) {
       const { id, thumbsUp } = action.payload;
       const found = state.entities[id];
       if (found) {
         found.thumbsUp = thumbsUp;
       }
+    },
+  },
+  extraReducers(builder) {
+    // 点赞完成后更新本地点赞列表
+    builder.addCase(thumbsUpSync.fulfilled, (...rest) => {
+      updateThumbsUp(...rest);
     });
   },
 });
@@ -37,7 +42,22 @@ const postsSlice = createSlice({
 // 点赞
 export const thumbsUpSync = createAsyncThunk(
   "posts/thumbsUp",
-  async (id, { getState }) => {
+  async (id, { dispatch, getState }) => {
+    const state = getState();
+    const userId = selectUserId(state); // 获取当前用户的id
+
+    // 先在本地计算结果，使页面更快响应
+    const resultLocalThumbsUp = (() => {
+      const localThumbsUp = selectThumbsUpById(state, id);
+      if (localThumbsUp.includes(userId)) {
+        return localThumbsUp.filter((item) => item !== userId);
+      } else {
+        return [...localThumbsUp, userId];
+      }
+    })();
+    // 设置本地的结果
+    dispatch(updateThumbsUp({ id, thumbsUp: resultLocalThumbsUp }));
+
     const db = wx.cloud.database();
     const { data: postThumbsUpInfo } = await db
       .collection("posts")
@@ -48,7 +68,6 @@ export const thumbsUpSync = createAsyncThunk(
       .get();
 
     const resultThumbsUp = (() => {
-      const userId = selectUserId(getState());// 获取当前用户的id
       const { thumbsUp = [] } = postThumbsUpInfo;
       if (thumbsUp.includes(userId)) {
         return thumbsUp.filter((item) => item !== userId);
@@ -72,12 +91,17 @@ export const thumbsUpSync = createAsyncThunk(
   }
 );
 
-export const { postInit } = postsSlice.actions;
+export const { postInit, updateThumbsUp } = postsSlice.actions;
 
 export const {
   selectAll: selectAllPosts,
   selectById: selectPostById,
   selectIds: selectPostIds,
 } = postsAdapter.getSelectors((state) => state.posts);
+
+// 通过id找到点赞thumbsUp
+export const selectThumbsUpById = (state, postId) => {
+  return selectPostById(state, postId).thumbsUp;
+};
 
 export default postsSlice.reducer;
