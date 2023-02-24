@@ -1,2 +1,26 @@
 <!--pages/home/index.wxml-->
-<text>pages/home/index.wxml</text>
+
+<view class="userinfo-box">
+  <view class="wall">
+  </view>
+  <view class="body">
+    <view class="haeder">
+      <van-image width="82" height="82" round src="{{userInfo.avatarUrl}}" />
+      <van-button type="default" size="small" round >编辑个人资料</van-button>
+    </view>
+    <view class="nickName">{{userInfo.nickName}}</view>
+    <view class="account">ID：{{userInfo._openid}}</view>
+    <view class="describe">{{userInfo.describe}}</view>
+
+    <view class="friend">
+      <view class="item-bar">
+        <text class="num">6</text>
+        正在关注
+      </view>
+      <view class="item-bar">
+        <text class="num">2</text>
+        关注者
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,66 +1,48 @@
 // pages/home/index.js
-Page({
 
+import { selectUserInfo } from "../../store/module/userInfo";
+const app = getApp();
+const { subscribe, getState } = app.store;
+
+let unsubscribe = null;
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-
+    userInfo: {
+      avatarUrl: "",
+      nickName: "",
+      describe: "",
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: function () {
+    // 监测store变化
+    unsubscribe = subscribe(() => {
+      this.initPage();
+    });
+    this.initPage();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // 初始化页面
+  initPage() {
+    const state = getState();
+    const userInfo = selectUserInfo(state);
+    this.setData({
+      userInfo: userInfo,
+    });
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
+  onUnload() {
+    // 停止监听store
+    unsubscribe();
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
-})
+});
