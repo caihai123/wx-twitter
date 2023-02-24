@@ -3,15 +3,19 @@
 <view class="container">
     <view class="wall">
         <image src="{{wallImg.url}}" />
-        <van-icon class="upload" name="photograph" size="24px" bindtap="handleWallUpdate"/>
+        <view class="upload" bindtap="handleWallUpdate">
+            <van-icon name="photograph" size="24px" />
+        </view>
     </view>
 
-    <view class="avatar-bar">
-        <van-image width="82" height="82" round src="{{avatar.url}}" custom-class="avatar" />
-        <van-uploader class="upload" accept="image" max-count="1" bind:after-read="onAvatarUrlChange">
-            <van-icon name="photograph" size="24px" />
-        </van-uploader>
-    </view>
+    <van-uploader accept="image" max-count="1" bind:after-read="onAvatarUrlChange">
+        <view class="avatar-bar">
+            <van-image width="82" height="82" round src="{{avatar.url}}" />
+            <view class="upload">
+                <van-icon name="photograph" size="24px" />
+            </view>
+        </view>
+    </van-uploader>
 
     <view class="form-item">
         <div class="label">昵称</div>
