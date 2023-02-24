@@ -11,11 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {
-      avatarUrl: "",
-      nickName: "",
-      describe: "",
-    },
+    userInfo: {},
   },
 
   /**
@@ -36,6 +32,13 @@ Page({
     this.setData({
       userInfo: userInfo,
     });
+  },
+
+  // 去编辑个人资料
+  goEditUserInfo(){
+    wx.navigateTo({
+      url:"/pages/edit-user-info/index"
+    })
   },
 
   /**

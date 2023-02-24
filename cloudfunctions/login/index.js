@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
       _openid: OPENID,
       nickName: "微信用户",
       avatarUrl: "",
-      describe: "这个人很懒，什么也没留下~",
+      describe: "",
     };
     const result = await db.collection("user").add({
       data: {

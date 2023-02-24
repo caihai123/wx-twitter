@@ -8,16 +8,25 @@ export const slice = createSlice({
     nickName: "",
     avatarUrl: "",
     describe: "",
+    wallUrl: "",
   },
   reducers: {
     // 更新所有用户信息，一般用于初始化
     updateUserInfo(state, action) {
-      const { _id, _openid, nickName, avatarUrl, describe } = action.payload;
+      const {
+        _id,
+        _openid,
+        nickName,
+        avatarUrl,
+        describe,
+        wallUrl,
+      } = action.payload;
       state._id = _id;
       state._openid = _openid;
       state.nickName = nickName;
       state.avatarUrl = avatarUrl;
       state.describe = describe;
+      state.wallUrl = wallUrl;
     },
   },
 });
