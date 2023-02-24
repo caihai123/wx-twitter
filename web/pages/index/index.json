@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "首页",
+    "navigationBarTitleText": "动态",
     "usingComponents": {
         "van-radio-group": "@vant/weapp/radio-group/index",
         "van-icon": "@vant/weapp/icon/index",
