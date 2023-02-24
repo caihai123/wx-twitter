@@ -28,3 +28,6 @@ export default slice.reducer;
 
 // 获取userId
 export const selectUserId = (state) => state.userInfo._id;
+
+// 获取所有用户信息
+export const selectUserInfo = (state) => state.userInfo;
