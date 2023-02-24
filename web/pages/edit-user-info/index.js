@@ -43,24 +43,99 @@ Page({
     this.setData({ describe: event.detail });
   },
 
+  // 头像上传成功
   onAvatarUrlChange(event) {
     const { file } = event.detail;
-    this.setData({
-      avatar: {
-        url: file.url,
-        new: true,
+    this.cropImage(file.url, "1:1")
+      .then(({ tempFilePath }) => {
+        this.setData({
+          avatar: {
+            url: tempFilePath,
+            new: true,
+          },
+        });
+      })
+      .catch(() => {
+        this.setData({
+          avatar: {
+            url: file.url,
+            new: true,
+          },
+        });
+      });
+  },
+
+  // 处理背景墙上图标的点击事件
+  handleWallUpdate() {
+    const itemList = ["拍摄", "从相册选择"];
+    if (this.data.wallImg.url) {
+      itemList.push("移除");
+    }
+    wx.showActionSheet({
+      itemList: itemList,
+      success: ({ tapIndex }) => {
+        switch (tapIndex) {
+          case 0:
+            wx.chooseMedia({
+              count: 1,
+              mediaType: ["image"],
+              sourceType: ["camera"],
+              sizeType: "compressed",
+              success: ({ tempFiles }) => {
+                this.onWallUrlChange(tempFiles[0]);
+              },
+            });
+            break;
+          case 1:
+            wx.chooseMedia({
+              count: 1,
+              mediaType: ["image"],
+              sourceType: ["album"],
+              sizeType: "compressed",
+              success: ({ tempFiles }) => {
+                this.onWallUrlChange(tempFiles[0]);
+              },
+            });
+            break;
+          case 2:
+            this.setData({
+              wallImg: {
+                url: "",
+                new: false,
+              },
+            });
+            break;
+          default:
+            wx.showToast({
+              title: "无效的选择",
+              icon: "none",
+            });
+            break;
+        }
       },
     });
   },
 
-  onWallUrlChange(event) {
-    const { file } = event.detail;
-    this.setData({
-      wallImg: {
-        url: file.url,
-        new: true,
-      },
-    });
+  // 处理背景墙照片上传成功
+  onWallUrlChange({ tempFilePath }) {
+    // 开始裁剪图片
+    this.cropImage(tempFilePath, "16:9")
+      .then(({ tempFilePath }) => {
+        this.setData({
+          wallImg: {
+            url: tempFilePath,
+            new: true,
+          },
+        });
+      })
+      .catch(() => {
+        this.setData({
+          wallImg: {
+            url: tempFilePath,
+            new: true,
+          },
+        });
+      });
   },
 
   submitForm() {
@@ -110,6 +185,20 @@ Page({
     );
   },
 
+  // 获取微信用户信息
+  getWxUserInfo() {
+    wx.getUserProfile({
+      desc: "快速获取",
+      success: ({ userInfo }) => {
+        this.setData({
+          nickName: userInfo.nickName,
+          "avatar.url": userInfo.avatarUrl,
+          "avatar.new": false,
+        });
+      },
+    });
+  },
+
   // 字段验证
   formValidate() {
     const { avatar, nickName } = this.data;
@@ -128,5 +217,17 @@ Page({
       return false;
     }
     return true;
+  },
+
+  // 裁剪图片
+  cropImage(imgSrc, cropScale) {
+    return new Promise((resolve, reject) => {
+      wx.cropImage({
+        src: imgSrc,
+        cropScale,
+        success: (res) => resolve(res),
+        fail: (err) => reject(err),
+      });
+    });
   },
 });

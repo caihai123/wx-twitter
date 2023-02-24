@@ -2,6 +2,7 @@
 
 <view class="userinfo-box">
     <view class="wall">
+        <image wx:if="{{userInfo.wallUrl}}" src="{{userInfo.wallUrl}}" />
     </view>
     <view class="body">
         <view class="haeder">
