@@ -52,4 +52,23 @@ Page({
     // 停止监听store
     unsubscribe();
   },
+
+  // 处理用户下拉操作
+  onPullDownRefresh() {
+    dispatch(refreshPostList())
+      .unwrap()
+      .then(() => {
+        wx.stopPullDownRefresh({
+          complete: () => {
+            wx.showToast({
+              title: "刷新成功",
+              icon: "none",
+            });
+          },
+        });
+      })
+      .catch(() => {
+        wx.stopPullDownRefresh();
+      });
+  },
 });
