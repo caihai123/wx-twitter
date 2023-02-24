@@ -45,24 +45,14 @@ Page({
 
   // 头像上传成功
   onAvatarUrlChange(event) {
-    const { file } = event.detail;
-    this.cropImage(file.url, "1:1")
-      .then(({ tempFilePath }) => {
-        this.setData({
-          avatar: {
-            url: tempFilePath,
-            new: true,
-          },
-        });
-      })
-      .catch(() => {
-        this.setData({
-          avatar: {
-            url: file.url,
-            new: true,
-          },
-        });
-      });
+    const { avatarUrl } = event.detail;
+    console.log(event)
+    this.setData({
+      avatar: {
+        url: avatarUrl,
+        new: true,
+      },
+    });
   },
 
   // 处理背景墙上图标的点击事件
@@ -183,20 +173,6 @@ Page({
           });
       }
     );
-  },
-
-  // 获取微信用户信息
-  getWxUserInfo() {
-    wx.getUserProfile({
-      desc: "快速获取",
-      success: ({ userInfo }) => {
-        this.setData({
-          nickName: userInfo.nickName,
-          "avatar.url": userInfo.avatarUrl,
-          "avatar.new": false,
-        });
-      },
-    });
   },
 
   // 字段验证

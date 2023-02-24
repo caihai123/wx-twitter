@@ -8,18 +8,16 @@
         </view>
     </view>
 
-    <van-uploader accept="image" max-count="1" bind:after-read="onAvatarUrlChange">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onAvatarUrlChange">
         <view class="avatar-bar">
             <van-image width="82" height="82" round src="{{avatar.url}}" />
-            <view class="upload">
-                <van-icon name="photograph" size="24px" />
-            </view>
+            <van-icon name="photograph" size="24px" class="icon" />
         </view>
-    </van-uploader>
+    </button>
 
     <view class="form-item">
         <div class="label">昵称</div>
-        <van-field value="{{ nickName }}" maxlength="20" bind:change="onNickNameChange" />
+        <van-field value="{{ nickName }}" maxlength="20" type="nickname" bind:change="onNickNameChange" />
     </view>
 
     <view class="form-item">
@@ -27,9 +25,6 @@
         <van-field value="{{ describe }}" type="textarea" maxlength="100" show-word-limit bind:change="onDescribeChange" />
     </view>
 
-    <view class="form-item" style="padding:0 16px;text-align: right;">
-        <van-button icon="wechat" bind:click="getWxUserInfo"></van-button>
-    </view>
 </view>
 
 

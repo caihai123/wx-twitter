@@ -27,25 +27,29 @@
   transform: translate(-50%, -50%);
 }
 
-.avatar-bar {
-  position: relative;
-  margin: 0 16px;
-  margin-top: -41px;
-  font-size: 0;
+.avatar-wrapper {
+  display: inline-block;
+  margin-top: -44px;
+  background-color: transparent;
+}
+.avatar-wrapper::after {
+  border: none;
 }
 
-.avatar-bar .upload {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
+.avatar-bar {
+  position: relative;
+  width: 86px;
+  height: 86px;
   border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+.avatar-bar .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form-item {
