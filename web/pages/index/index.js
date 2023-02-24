@@ -1,7 +1,7 @@
 // pages/index/index.js
 import {
   selectAllPosts,
-  postInit,
+  refreshPostList,
   thumbsUpSync,
 } from "../../store/module/posts";
 import { selectUserId } from "../../store/module/userInfo";
@@ -30,15 +30,8 @@ Page({
         posts: selectAllPosts(state),
       });
     });
-    this.initPosts();
-  },
-
-  // 初始化动态列表
-  initPosts() {
-    wx.cloud.callFunction({ name: "getPosts" }).then((res) => {
-      const data = res.result.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
-      dispatch(postInit(data));
-    });
+    // 初始化动态列表
+    dispatch(refreshPostList()).unwrap();
   },
 
   // 去发动态

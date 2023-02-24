@@ -1,5 +1,8 @@
 // pages/create-moment/index.js
+import { refreshPostList } from "../../store/module/posts";
 import dayjs from "dayjs";
+const app = getApp();
+const { dispatch } = app.store;
 
 Page({
   /**
@@ -21,9 +24,11 @@ Page({
     db.collection("posts").add({
       data: {
         content: this.data.value,
-        createTime:dayjs().format("YYYY-MM-DD HH:mm:ss")
+        createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        thumbsUp: [],
       },
-      success: function (res) {
+      success: function () {
+        dispatch(refreshPostList()).unwrap();
         wx.showToast({
           title: "发表成功",
           icon: "success",

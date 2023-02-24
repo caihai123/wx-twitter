@@ -17,11 +17,6 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    // 初始化动态列表
-    postInit(state, action) {
-      postsAdapter.upsertMany(state, action.payload);
-    },
-
     // 更新点赞列表
     updateThumbsUp(state, action) {
       const { id, thumbsUp } = action.payload;
@@ -33,9 +28,14 @@ const postsSlice = createSlice({
   },
   extraReducers(builder) {
     // 点赞完成后更新本地点赞列表
-    builder.addCase(thumbsUpSync.fulfilled, (...rest) => {
-      updateThumbsUp(...rest);
-    });
+    builder
+      .addCase(thumbsUpSync.fulfilled, (...rest) => {
+        updateThumbsUp(...rest);
+      })
+      // 刷新动态列表成功后
+      .addCase(refreshPostList.fulfilled, (state, action) => {
+        postsAdapter.upsertMany(state, action.payload);
+      });
   },
 });
 
@@ -90,7 +90,17 @@ export const thumbsUpSync = createAsyncThunk(
   }
 );
 
-export const { postInit, updateThumbsUp } = postsSlice.actions;
+// 刷新动态列表，也用于初始化
+export const refreshPostList = createAsyncThunk(
+  "post/refreshList",
+  async () => {
+    const { result } = await wx.cloud.callFunction({ name: "getPosts" });
+    const data = result.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
+    return data;
+  }
+);
+
+export const { updateThumbsUp } = postsSlice.actions;
 
 export const {
   selectAll: selectAllPosts,
