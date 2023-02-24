@@ -5,7 +5,9 @@
     "pages/home/index",
     "pages/suggestions/index",
     "pages/create-post/index",
-    "pages/search/index"
+    "pages/search/index",
+    "pages/post-detail/index",
+    "pages/user-detail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
