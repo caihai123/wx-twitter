@@ -1,10 +1,13 @@
 {
-    "navigationBarTitleText": "我的",
-    "usingComponents": {
-        "van-image": "@vant/weapp/image/index",
-        "van-button": "@vant/weapp/button/index",
-        "van-tab": "@vant/weapp/tab/index",
-        "van-tabs": "@vant/weapp/tabs/index"
-    },
-    "navigationStyle": "custom"
+  "navigationBarTitleText": "我的",
+  "usingComponents": {
+    "van-image": "@vant/weapp/image/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-divider": "@vant/weapp/divider/index"
+  },
+  "navigationStyle": "custom"
 }
