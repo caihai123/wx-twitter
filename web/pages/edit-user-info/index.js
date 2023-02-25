@@ -48,7 +48,6 @@ Page({
   // 头像上传成功
   onAvatarUrlChange(event) {
     const { avatarUrl } = event.detail;
-    console.log(event);
     this.setData({
       avatar: {
         url: avatarUrl,

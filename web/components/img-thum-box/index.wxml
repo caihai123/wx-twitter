@@ -1,0 +1,24 @@
+<!--components/img-thum-box/index.wxml-->
+<wxs module="tools">
+  module.exports = {
+    calcClass: function (length) {
+      // 不同的照片数量会使用不同的类
+      switch (length) {
+        case 1:
+          return "columns-1"
+        case 2:
+          return "columns-2"
+        case 3:
+          return "columns-3"
+        case 4:
+          return "columns-4"
+        default:
+          return "columns-else"
+      }
+    }
+  }
+</wxs>
+
+<view wx:if="{{imgList.length}}" class="img-thum-box {{tools.calcClass(imgList.length)}}">
+  <image wx:for="{{imgList}}" src="{{item}}" mode="{{imgList.length === 1?'widthFix':'scaleToFill'}}" show-menu-by-longpress lazy-load wx:key="*this" data-url="{{item}}" bindtap="previewImage" />
+</view>

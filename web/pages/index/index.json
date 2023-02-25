@@ -1,11 +1,10 @@
 {
     "navigationBarTitleText": "动态",
     "usingComponents": {
-        "van-radio-group": "@vant/weapp/radio-group/index",
         "van-icon": "@vant/weapp/icon/index",
         "van-button": "@vant/weapp/button/index",
-        "van-cell-group": "@vant/weapp/cell-group/index",
-        "van-cell": "@vant/weapp/cell/index"
+        "van-image": "@vant/weapp/image/index",
+        "img-thum-box":"/components/img-thum-box/index"
     },
     "enablePullDownRefresh": true,
     "backgroundTextStyle": "dark"

@@ -1,66 +1,60 @@
 <!--pages/index/index.wxml-->
 
 <wxs module="tools">
-    module.exports = {
-        includes: function (arr, item) {
-            var len = arr.length;
-            for (var i = 0; i < len; i++) {
-                if (arr[i] === item) {
-                    return true
-                }
-            }
-            return false
-        },
-    }
+  module.exports = {
+    includes: function (arr, item) {
+      var len = arr.length;
+      for (var i = 0; i < len; i++) {
+        if (arr[i] === item) {
+          return true
+        }
+      }
+      return false
+    },
+  }
 </wxs>
 
-<view class="post-box">
-    <view class="float-button">
-        <van-button type="default" type="info" round icon="plus" bind:click="goCreatdPost"></van-button>
-    </view>
-
-    <view class="post-item" wx:for="{{posts}}" wx:key="id">
-        <view class="post-head">
-            <image class="portrait" src="{{item.user.avatarUrl}}" />
-            <view class="post-head-content">
-                <view class="name">{{item.user.nickName}}</view>
-                <view class="describe">{{item.user.describe}}</view>
-            </view>
+<view>
+  <view class="post-item" wx:for="{{posts}}" wx:key="id">
+    <view class="post-main">
+      <view class="post-aside">
+        <van-image width="48" height="48" round lazy-load src="{{item.user.avatarUrl}}" />
+      </view>
+      <view class="post-body">
+        <view class="post-head ellipsis">
+          <view class="user-bar">
+            <view class="nick-name ellipsis">{{item.user.nickName}}</view>
+            <view class="date">2月16日</view>
+          </view>
+          <view>
+            <van-icon name="ellipsis" custom-class="icon-ellipsis" />
+          </view>
         </view>
-        <view class="post-body">
-            <!-- 普通文本 -->
-            <view class="text">{{item.content}}</view>
-            <!-- 图片动态 -->
-            <view wx:if="{{item.content.type === 'img'}}" class="image-grid">
-                <image wx:for="{{item.content.url}}" wx:key="*this" class="img-item" src="{{item}}" />
-            </view>
-            <!-- 视频动态 -->
-            <view wx:if="{{item.content.type === 'video'}}">
-                <video class="video" src="{{item.content.url}}"></video>
-            </view>
-            <!-- 投票 -->
-            <view wx:if="{{item.content.type === 'vote'}}">
-                <van-radio-group>
-                    <van-radio wx:for="{{item.content.options}}" wx:key="key" name="{{item.key}}" custom-class="vote-radio-item">{{item.label}}</van-radio>
-                </van-radio-group>
-            </view>
-            <!-- 接龙游戏 -->
-            <view wx:if="{{item.content.type === 'fan-tan'}}">
-                这里的交互还没想好反正就是普通的接龙游戏
-            </view>
+        <view class="post-content">
+          <!-- 文本 -->
+          <view class="post-text">{{item.content}}</view>
+          <view wx:if="{{item.imgList}}" class="img-thum-box">
+            <img-thum-box img-list="{{item.imgList}}" />
+          </view>
         </view>
         <view class="post-foot">
-            <view>
-                <van-icon name="like-o" />{{item.watching}}
-            </view>
-            <view>
-                <van-icon name="chat-o" />{{item.comments}}
-            </view>
-            <view data-id="{{item.id}}" bindtap="thumbsUp">
-                <van-icon wx:if="{{tools.includes(item.thumbsUp,ownId)}}" style="color:#f56c6c" name="good-job-o" />
-                <van-icon wx:else name="good-job-o" />
-                {{item.thumbsUp.length}}
-            </view>
+          <view class="tool-item">
+            <van-icon name="like-o" />{{item.watching}}
+          </view>
+          <view class="tool-item">
+            <van-icon name="chat-o" />{{item.comments}}
+          </view>
+          <view class="tool-item" data-id="{{item.id}}" bindtap="thumbsUp">
+            <van-icon wx:if="{{tools.includes(item.thumbsUp,ownId)}}" style="color:#f56c6c" name="good-job" />
+            <van-icon wx:else name="good-job-o" />
+            <text class="num" wx:if="{{item.thumbsUp.length}}">{{item.thumbsUp.length}}</text>
+          </view>
         </view>
+      </view>
     </view>
+  </view>
+</view>
+
+<view class="float-button">
+  <van-button type="default" type="info" round icon="plus" bind:click="goCreatdPost"></van-button>
 </view>

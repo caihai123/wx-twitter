@@ -1,9 +1,6 @@
 page {
   background-color: #f7f8fa;
 }
-.post-box {
-  overflow: hidden;
-}
 .float-button {
   height: 48px;
   position: fixed;
@@ -16,75 +13,90 @@ page {
   background-color: #1989fa;
   border-radius: 50%;
 }
-
 .post-item {
-  margin: 10px 0;
-  padding: 16px;
   background-color: #fff;
 }
-
-.post-head {
-  display: flex;
-  align-items: center;
+.post-item + .post-item {
+  margin-top: -1px;
 }
-
-.post-head .portrait {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
-
-.post-head .post-head-content {
-  margin-left: 16px;
-}
-
-.post-head .post-head-content .name {
-  font-size: 16px;
-}
-
-.post-head .post-head-content .describe {
-  font-size: 14px;
-}
-
-.post-body {
-  margin: 10px 0;
-  font-size: 14px;
-}
-.post-body .text {
-  margin-bottom: 10px;
-}
-
-.post-body .image-grid {
-  display: grid;
-  grid-template-columns: repeat(3, calc(33.33333% - 6px));
-  grid-gap: 9px 9px;
-  box-sizing: border-box;
-}
-
-.post-body .image-grid .img-item {
+.post-item::after,
+.post-item::before {
+  content: "";
+  display: block;
   width: 100%;
-  height: 200rpx;
+  height: 1px;
+  background-color: #d1d1d1;
+  transform: scaleY(0.5);
 }
-.post-body .video {
-  width: 500px;
-  max-width: 100%;
+.post-item .post-main {
+  padding: 10px;
+}
+.post-item .post-aside {
+  float: left;
+  font-size: 0;
+}
+.post-item .post-body {
+  margin-left: 48px;
+  padding-left: 10px;
+}
+.post-item .post-head {
+  display: flex;
+  justify-content: space-between;
+  line-height: 22px;
+  font-size: 14px;
+  color: #536471;
+}
+.post-item .post-head .user-bar {
+  display: flex;
+  max-width: calc(100% - 24px);
+}
+.post-item .post-head .nick-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #111;
+}
+.post-item .post-head .date {
+  position: relative;
+  padding-left: 10px;
+}
+.post-item .post-head .date::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background-color: #536471;
+}
+.post-item .post-head .icon-ellipsis {
+  transform: rotate(90deg);
 }
 
-.post-body .vote-radio-item {
+.post-item .post-content .post-text {
+  line-height: 20px;
+  font-size: 15px;
+  color: #111;
+}
+.post-item .post-content .img-thum-box {
   margin-top: 8px;
 }
 
 .post-foot {
-  margin: 0 -16px;
-  margin-bottom: -16px;
-  line-height: 42px;
   display: flex;
   justify-content: space-around;
-  border-top: 1px solid #ebedf0;
-  font-size: 12px;
 }
 
-.post-foot .van-icon {
-  margin-right: 5px;
+.post-foot .tool-item {
+  width: 100%;
+  padding-top: 10px;
+  text-align: left;
+  font-size: 18px;
+  color: #61707d;
+}
+.post-foot .tool-item .num {
+  padding: 0 6px;
   font-size: 14px;
 }
