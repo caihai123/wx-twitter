@@ -1,11 +1,12 @@
 /* pages/home/index.wxss */
 page {
   background-color: #f7f8fa;
+  color: #5c7081;
 }
 
 .userinfo-box .wall {
   height: 421rpx;
-  background-color: #1296db;
+  background-color: #1ca1f0;
 }
 
 .wall image {
@@ -24,6 +25,11 @@ page {
   align-items: flex-end;
   font-size: 0;
 }
+.userinfo-box .body .custom-but {
+  font-weight: 500;
+  color: #5d6f81;
+  border: 1px solid #606c78;
+}
 
 .userinfo-box .body .van-image {
   margin-top: -40px;
@@ -32,26 +38,26 @@ page {
 }
 
 .userinfo-box .nickName {
-  line-height: 1.5;
+  margin: 5px 0;
+  line-height: 1.2;
   font-size: 20px;
-  color: #303133;
+  font-weight: 500;
+  color: #111;
 }
 
 .userinfo-box .account {
   font-size: 14px;
-  color: #909399;
 }
 
 .userinfo-box .describe {
   padding: 4px 0;
   font-size: 14px;
-  color: #303133;
+  color: #111111;
 }
 
 .userinfo-box .friend {
   display: flex;
   padding: 6px 0;
-  color: #606266;
 }
 
 .item-bar {
@@ -59,7 +65,7 @@ page {
 }
 
 .item-bar .num {
-  color: #303133;
+  color: #111;
 }
 
 .main {

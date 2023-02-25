@@ -20,6 +20,8 @@ Page({
     },
     nickName: "",
     describe: "",
+
+    autosize: { maxHeight: 100, minHeight: 50 },
   },
 
   /**
@@ -46,7 +48,7 @@ Page({
   // 头像上传成功
   onAvatarUrlChange(event) {
     const { avatarUrl } = event.detail;
-    console.log(event)
+    console.log(event);
     this.setData({
       avatar: {
         url: avatarUrl,

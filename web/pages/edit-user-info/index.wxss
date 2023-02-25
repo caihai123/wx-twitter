@@ -6,7 +6,7 @@
 .wall {
   position: relative;
   height: 421rpx;
-  background-color: #1296db;
+  background-color: #1ca1f0;
   color: #fff;
 }
 
