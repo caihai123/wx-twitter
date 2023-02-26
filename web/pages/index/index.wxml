@@ -24,7 +24,7 @@
         <view class="post-head ellipsis">
           <view class="user-bar">
             <view class="nick-name ellipsis">{{item.user.nickName}}</view>
-            <view class="date">2月16日</view>
+            <view class="date">{{item.date}}</view>
           </view>
           <view>
             <van-icon name="ellipsis" custom-class="icon-ellipsis" />

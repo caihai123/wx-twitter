@@ -3,7 +3,11 @@ const {
   createEntityAdapter,
   createAsyncThunk,
 } = require("../../utils/redux-toolkit");
-
+import dayjs from "dayjs";
+import "../../utils/zh-cn";
+dayjs.locale("zh-cn");
+const relativeTime = require("../../utils/relativeTime");
+dayjs.extend(relativeTime);
 import { selectUserId } from "./userInfo";
 
 const postsAdapter = createEntityAdapter({
@@ -90,12 +94,31 @@ export const thumbsUpSync = createAsyncThunk(
   }
 );
 
+// 处理时间为相对时间
+const handleRelativeTime = (time) => {
+  const datDate = dayjs(time);
+  const today = dayjs(); // 现在
+  if (today.unix() - datDate.unix() < 604800) {
+    // 小于7天
+    return datDate.fromNow();
+  } else if (today.format("YYYY") === datDate.format("YYYY")) {
+    // 如果是今年
+    return datDate.format("M月D日");
+  } else {
+    // 不是今年
+    return datDate.format("YYYY年M月D日");
+  }
+};
+
 // 刷新动态列表，也用于初始化
 export const refreshPostList = createAsyncThunk(
   "post/refreshList",
   async () => {
     const { result } = await wx.cloud.callFunction({ name: "getPosts" });
-    const data = result.map(({ _id, ...rest }) => ({ id: _id, ...rest }));
+    const data = result.map(({ _id, createTime, ...rest }) => {
+      const relativeTimeString = handleRelativeTime(createTime);
+      return { id: _id, date: relativeTimeString, createTime, ...rest };
+    });
     return data;
   }
 );
