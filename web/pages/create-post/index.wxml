@@ -1,15 +1,23 @@
 <!--pages/create-moment/index.wxml-->
 
 <view class="container">
+  <van-field value="{{ form.value }}" type="textarea" input-align="left" maxlength="500" show-word-limit="{{true}}" autosize="{{autosize}}" placeholder="这一刻的想法..." bind:change="handelValueChange" />
 
-  <van-field value="{{ value }}" type="textarea" input-align="left" border="{{false}}" maxlength="500" show-word-limit="{{true}}" autosize="{{autosize}}" placeholder="这一刻的想法..." bind:change="handelValueChange" />
+  <view wx:if="{{!form.video}}" class="uploader">
+    <view wx:for="{{form.imgList}}" wx:key="index" class="uploader-preview" data-url="{{item.tempFilePath}}" bindtap="previewImage">
+      <van-image width="100%" height="80" src="{{item.tempFilePath}}" />
+    </view>
+    <view wx:if="{{form.imgList.length < 9}}" class="uploader-upload" bindtap="uploadBefore">
+      <van-icon name="photograph" custom-class="van-uploader__upload-icon" />
+    </view>
+  </view>
 
-  <van-cell-group>
-    <van-cell title="所在位置" is-link icon="location-o" />
-    <van-cell title="选择社区" is-link icon="hotel-o" />
-  </van-cell-group>
+  <view wx:else class="video-box">
+    <my-video url="{{form.video.tempFilePath}}" poster="{{form.video.tempThumbPath}}" width="220px" height="320px">
+    </my-video>
+  </view>
 </view>
 
 <view class="footer">
-  <van-button type="info" block disabled="{{!value}}" bind:click="submitForm">发 表</van-button>
+  <van-button type="info" block disabled="{{!form.value && !form.imgList.length && !form.video}}" bind:click="submitForm">发 表</van-button>
 </view>

@@ -1,0 +1,10 @@
+<!--components/my-video/index.wxml-->
+
+<view class="video-box" style="width: {{width}};height: {{height}};">
+  <video id="{{url}}" src="{{url}}" class="video position" show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" show-center-play-btn="{{false}}" enable-progress-gesture="false" poster="{{poster}}" vslide-gesture-in-fullscreen="{{false}}" bindfullscreenchange="bindfullscreenchange">
+  </video>
+
+  <view class="drawer position" bindtap="playVideo">
+    <van-icon name="play-circle-o" />
+  </view>
+</view>
