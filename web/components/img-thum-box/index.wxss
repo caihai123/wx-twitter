@@ -2,7 +2,7 @@
 
 .img-thum-box {
   display: grid;
-  grid-gap: 4rpx 4rpx;
+  grid-gap: 6rpx;
   border-radius: 10px;
   overflow: hidden;
 }
