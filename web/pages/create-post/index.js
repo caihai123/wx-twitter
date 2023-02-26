@@ -148,28 +148,41 @@ Page({
     };
 
     // 上传图片到云服务器
+    wx.showLoading({ title: "正在上传图片", mask: true });
     const uploadToCloudImgList = imgList.map((item) =>
       uploadToCloud(item.tempFilePath)
     );
-    await Promise.all(uploadToCloudImgList).then((imgUrls) => {
-      params.imgList = imgUrls.map((item) => item.fileID);
-    });
+    try {
+      await Promise.all(uploadToCloudImgList).then((imgUrls) => {
+        params.imgList = imgUrls.map((item) => item.fileID);
+      });
+    } catch (error) {
+      wx.hideLoading();
+      return;
+    }
 
     // 上传视频到云服务器
     if (video) {
-      const uploadToCloudVideo = uploadToCloud(video.tempFilePath);
-      await uploadToCloudVideo.then(({ fileID }) => {
-        const { tempFilePath, thumbTempFilePath, ...rest } = video;
-        params.video = {
-          ...rest,
-          url: fileID,
-        };
-      });
+      wx.showLoading({ title: "正在上传视频", mask: true });
+      try {
+        const uploadToCloudVideo = uploadToCloud(video.tempFilePath);
+        await uploadToCloudVideo.then(({ fileID }) => {
+          const { tempFilePath, thumbTempFilePath, ...rest } = video;
+          params.video = {
+            ...rest,
+            url: fileID,
+          };
+        });
+      } catch (error) {
+        wx.hideLoading();
+        return;
+      }
     }
 
     db.collection("posts").add({
       data: params,
       success: function () {
+        wx.hideLoading();
         dispatch(refreshPostList()).unwrap();
         wx.showToast({
           title: "发表成功",
@@ -179,6 +192,14 @@ Page({
         setTimeout(() => {
           wx.navigateBack();
         }, 2000);
+      },
+      fail() {
+        wx.hideLoading();
+        wx.showToast({
+          title: "发表失败",
+          icon: "success",
+          duration: 2000,
+        });
       },
     });
   },
