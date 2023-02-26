@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 const app = getApp();
 const { dispatch } = app.store;
 const maxCount = 9; // 仅上传图片时的最大数量
-const maxDuration = 10; // 上传视频的最大时长
+const maxDuration = 60; // 上传视频的最大时长
 
 Page({
   /**
