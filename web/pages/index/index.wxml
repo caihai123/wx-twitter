@@ -45,9 +45,14 @@
             <van-icon name="chat-o" />{{item.comments}}
           </view>
           <view class="tool-item" data-id="{{item.id}}" bindtap="thumbsUp">
-            <van-icon wx:if="{{tools.includes(item.thumbsUp,ownId)}}" style="color:#f56c6c" name="good-job" />
-            <van-icon wx:else name="good-job-o" />
-            <text class="num" wx:if="{{item.thumbsUp.length}}">{{item.thumbsUp.length}}</text>
+            <view wx:if="{{tools.includes(item.thumbsUp,ownId)}}" style="color:#de265c">
+              <van-icon name="good-job" />
+              <text class="num" wx:if="{{item.thumbsUp.length}}">{{item.thumbsUp.length}}</text>
+            </view>
+            <view wx:else>
+              <van-icon name="good-job-o" />
+              <text class="num" wx:if="{{item.thumbsUp.length}}">{{item.thumbsUp.length}}</text>
+            </view>
           </view>
         </view>
       </view>
