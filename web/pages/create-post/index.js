@@ -136,7 +136,7 @@ Page({
     });
   },
 
-  // 发表
+  // 发布
   async submitForm() {
     const db = wx.cloud.database();
     const { value, imgList, video } = this.data.form;
@@ -185,7 +185,7 @@ Page({
         wx.hideLoading();
         dispatch(refreshPostList()).unwrap();
         wx.showToast({
-          title: "发表成功",
+          title: "发布成功",
           icon: "success",
           duration: 2000,
         });
@@ -196,7 +196,7 @@ Page({
       fail() {
         wx.hideLoading();
         wx.showToast({
-          title: "发表失败",
+          title: "发布失败",
           icon: "success",
           duration: 2000,
         });
