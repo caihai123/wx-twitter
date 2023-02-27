@@ -1,0 +1,37 @@
+/* components/user-card/index.wxss */
+
+.user-card {
+  color: #111;
+}
+
+.card-body {
+  padding: 10px 16px;
+  overflow: hidden;
+}
+.card-header .head-left {
+  margin-right: 70px;
+}
+.card-header .head-right {
+  float: right;
+}
+
+.user-avatar {
+  float: left;
+}
+
+.user-content {
+  margin-left: 48px;
+  padding-left: 10px;
+}
+.nick-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+.account {
+  font-size: 14px;
+  color: #5c7081;
+}
+.describe {
+  padding: 4px 0;
+  font-size: 14px;
+}
