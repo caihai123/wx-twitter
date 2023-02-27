@@ -114,7 +114,7 @@ const handleRelativeTime = (time) => {
 export const refreshPostList = createAsyncThunk(
   "post/refreshList",
   async () => {
-    const { result } = await wx.cloud.callFunction({ name: "getPosts" });
+    const { result } = await wx.cloud.callFunction({ name: "getPostList" });
     const data = result.map(({ _id, createTime, ...rest }) => {
       const relativeTimeString = handleRelativeTime(createTime);
       return { id: _id, date: relativeTimeString, createTime, ...rest };
