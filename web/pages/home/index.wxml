@@ -18,14 +18,13 @@
                 <text class="num">6</text>
                 正在关注
             </view>
-            <view class="item-bar">
+            <view class="item-bar" bindtap="goFollower">
                 <text class="num">2</text>
                 关注者
             </view>
         </view>
     </view>
 </view>
-
 
 <view class="main">
     <van-cell-group>

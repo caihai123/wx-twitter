@@ -35,10 +35,17 @@ Page({
   },
 
   // 去编辑个人资料
-  goEditUserInfo(){
+  goEditUserInfo() {
     wx.navigateTo({
-      url:"/pages/edit-user-info/index"
-    })
+      url: "/pages/edit-user-info/index",
+    });
+  },
+
+  // 去粉丝列表（关注者）
+  goFollower() {
+    wx.navigateTo({
+      url: "/pages/follower/index",
+    });
   },
 
   /**

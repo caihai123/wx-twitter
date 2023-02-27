@@ -1,0 +1,5 @@
+<!--pages/follower/index.wxml-->
+
+<view class="border-top">
+  <user-card wx:for="{{5}}" />
+</view>
