@@ -39,19 +39,13 @@
         </view>
         <view class="post-foot">
           <view class="tool-item">
-            <van-icon name="like-o" />{{item.watching}}
+            <van-icon name="chat-o" />
           </view>
-          <view class="tool-item">
-            <van-icon name="chat-o" />{{item.comments}}
-          </view>
-          <view class="tool-item" data-id="{{item.id}}" bindtap="thumbsUp">
-            <view wx:if="{{tools.includes(item.thumbsUp,ownId)}}" style="color:#de265c">
-              <van-icon name="good-job" />
-              <text class="num" wx:if="{{item.thumbsUp.length}}">{{item.thumbsUp.length}}</text>
-            </view>
-            <view wx:else>
-              <van-icon name="good-job-o" />
-              <text class="num" wx:if="{{item.thumbsUp.length}}">{{item.thumbsUp.length}}</text>
+          <view class="tool-item" data-id="{{item.id}}" bindtap="handleHeart">
+            <view style="color:{{item.isHeart?'#de265c':''}}">
+              <van-icon wx:if="{{item.isHeart}}" name="like" />
+              <van-icon wx:else name="like-o" />
+              <text class="num">{{item.heartNum}}</text>
             </view>
           </view>
         </view>

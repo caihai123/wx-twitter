@@ -21,20 +21,30 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    // 更新点赞列表
-    updateThumbsUp(state, action) {
-      const { id, thumbsUp } = action.payload;
+    // 用于本地处理喜欢状态
+    updateHeart(state, action) {
+      const { id } = action.payload;
       const found = state.entities[id];
       if (found) {
-        found.thumbsUp = thumbsUp;
+        if (found.isHeart) {
+          found.heartNum--;
+        } else {
+          found.heartNum++;
+        }
+        found.isHeart = !found.isHeart;
       }
     },
   },
   extraReducers(builder) {
     // 点赞完成后更新本地点赞列表
     builder
-      .addCase(thumbsUpSync.fulfilled, (...rest) => {
-        updateThumbsUp(...rest);
+      .addCase(heartSwitch.fulfilled, (state, action) => {
+        const { id, heartNum, isHeart } = action.payload;
+        const found = state.entities[id];
+        if (found) {
+          found.heartNum = heartNum;
+          found.isHeart = isHeart;
+        }
       })
       // 刷新动态列表成功后
       .addCase(refreshPostList.fulfilled, (state, action) => {
@@ -43,53 +53,29 @@ const postsSlice = createSlice({
   },
 });
 
-// 点赞
-export const thumbsUpSync = createAsyncThunk(
-  "posts/thumbsUp",
+// 处理喜欢操作
+export const heartSwitch = createAsyncThunk(
+  "posts/heartSwitch",
   async (id, { dispatch, getState }) => {
     const state = getState();
     const userId = selectUserId(state); // 获取当前用户的id
 
-    // 先在本地计算结果，使页面更快响应
-    const resultLocalThumbsUp = (() => {
-      const localThumbsUp = selectThumbsUpById(state, id);
-      if (localThumbsUp.includes(userId)) {
-        return localThumbsUp.filter((item) => item !== userId);
-      } else {
-        return [...localThumbsUp, userId];
-      }
-    })();
-    // 设置本地的结果
-    dispatch(updateThumbsUp({ id, thumbsUp: resultLocalThumbsUp }));
+    // 先在本地设置结果，使页面更快响应
+    dispatch(updateHeart({ id }));
 
     // 开始向后端传递点赞信息
-    const db = wx.cloud.database();
-    const { data: postThumbsUpInfo } = await db
-      .collection("posts")
-      .doc(id)
-      .field({ thumbsUp: true })
-      .get();
-
-    const resultThumbsUp = (() => {
-      const { thumbsUp = [] } = postThumbsUpInfo;
-      if (thumbsUp.includes(userId)) {
-        return thumbsUp.filter((item) => item !== userId);
-      } else {
-        return [...thumbsUp, userId];
-      }
-    })();
-
-    // TOOD: 这里多个人同时点赞时可能会丢失数据
-    await db
-      .collection("posts")
-      .doc(id)
-      .update({
-        data: { thumbsUp: resultThumbsUp },
-      });
+    const { result } = await wx.cloud.callFunction({
+      name: "heartSwitch",
+      data: {
+        userId,
+        postId: id,
+      },
+    });
 
     return {
       id: id,
-      thumbsUp: resultThumbsUp,
+      heartNum: result.heartNum,
+      isHeart: result.isHeart,
     };
   }
 );
@@ -123,17 +109,12 @@ export const refreshPostList = createAsyncThunk(
   }
 );
 
-export const { updateThumbsUp } = postsSlice.actions;
+export const { updateHeart } = postsSlice.actions;
 
 export const {
   selectAll: selectAllPosts,
   selectById: selectPostById,
   selectIds: selectPostIds,
 } = postsAdapter.getSelectors((state) => state.posts);
-
-// 通过id找到点赞thumbsUp
-export const selectThumbsUpById = (state, postId) => {
-  return selectPostById(state, postId).thumbsUp;
-};
 
 export default postsSlice.reducer;

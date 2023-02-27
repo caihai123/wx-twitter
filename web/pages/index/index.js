@@ -2,7 +2,7 @@
 import {
   selectAllPosts,
   refreshPostList,
-  thumbsUpSync,
+  heartSwitch,
 } from "../../store/module/posts";
 import { selectUserId } from "../../store/module/userInfo";
 const app = getApp();
@@ -42,9 +42,9 @@ Page({
   },
 
   // 点赞
-  thumbsUp(event) {
+  handleHeart(event) {
     const { id } = event.currentTarget.dataset;
-    dispatch(thumbsUpSync(id)).unwrap();
+    dispatch(heartSwitch(id)).unwrap();
   },
 
   // 页面卸载时
