@@ -1,5 +1,5 @@
 {
-  "name": "getPosts",
+  "name": "getPostList",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
