@@ -38,6 +38,7 @@ exports.main = async (event, context) => {
           userInfo._id,
         ]),
       })
+      // 获取此动态的用户信息
       .lookup({
         from: "user",
         // localField: "userId",
@@ -55,8 +56,22 @@ exports.main = async (event, context) => {
           .limit(1)
           .done(),
       })
-      .addFields({ user: $.arrayElemAt(["$user", 0]) })
-      .project({ _openid: false })
+      // 获取喜欢的人的数量
+      .lookup({
+        from: "heart",
+        let: { postId: "$_id" },
+        as: "heart",
+        pipeline: $.pipeline()
+          .match(_.expr($.eq(["$postId", "$$postId"])))
+          .project({ _id: true, userId: true })
+          .done(),
+      })
+      .addFields({
+        user: $.arrayElemAt(["$user", 0]),
+        heartNum: $.size("$heart"), // 喜欢的人的数量
+        isHeart: $.in([userInfo._id, "$heart"]), // 自己是否喜欢
+      })
+      .project({ _openid: false, heart: false })
       .end();
     return list;
   } else {
