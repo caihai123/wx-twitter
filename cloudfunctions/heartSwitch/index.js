@@ -20,11 +20,11 @@ const _ = db.command;
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { postId,userId } = event;
+  const { postId, userId } = event;
 
   const { data: heart } = await db
     .collection("heart")
-    .where({ postId: postId, userId: userId })
+    .where({ postId, userId })
     .get();
 
   let isHeart;
