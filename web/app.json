@@ -8,7 +8,8 @@
     "pages/search/index",
     "pages/post-detail/index",
     "pages/user-detail/index",
-    "pages/edit-user-info/index"
+    "pages/edit-user-info/index",
+    "pages/follower/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
