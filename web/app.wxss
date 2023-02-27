@@ -1,12 +1,12 @@
 /**app.wxss**/
 
-.ellipsis{
+.ellipsis {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 /* 最多显示两行的文字 */
-.multi-ellipsis-2{
+.multi-ellipsis-2 {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -14,10 +14,28 @@
   -webkit-box-orient: vertical;
 }
 /* 最多显示三行的文字 */
-.multi-ellipsis-3{
+.multi-ellipsis-3 {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+/* 上边框 */
+.border-top::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #d1d1d1;
+  transform: scaleY(0.5);
+}
+/* 下边框 */
+.border-bottom::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #d1d1d1;
+  transform: scaleY(0.5);
 }
