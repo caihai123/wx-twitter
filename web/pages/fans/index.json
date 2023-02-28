@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "正在关注",
+  "navigationBarTitleText": "关注者",
   "usingComponents": {
     "user-card": "/components/user-card/index"
   }

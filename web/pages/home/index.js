@@ -41,10 +41,18 @@ Page({
     });
   },
 
-  // 去粉丝列表（关注者）
+  // 去正在关注页面
   goFollower() {
+    const { _id } = this.data.userInfo;
     wx.navigateTo({
-      url: "/pages/follower/index",
+      url: `/pages/follower/index?userId=${_id}`,
+    });
+  },
+  // 去粉丝列表（关注者）
+  goFans() {
+    const { _id } = this.data.userInfo;
+    wx.navigateTo({
+      url: `/pages/fans/index?userId=${_id}`,
     });
   },
 

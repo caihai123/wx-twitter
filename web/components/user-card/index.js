@@ -7,8 +7,9 @@ Component({
     styleIsolation: "true",
   },
   properties: {
-    id: String,
+    userId: String,
     nickName: String,
+    avatarUrl:String,
     describe: String,
   },
 

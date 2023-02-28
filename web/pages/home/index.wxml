@@ -14,11 +14,11 @@
         <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
 
         <view class="friend">
-            <view class="item-bar">
+            <view class="item-bar" bindtap="goFollower">
                 <text class="num">{{userInfo.follow}}</text>
                 正在关注
             </view>
-            <view class="item-bar" bindtap="goFollower">
+            <view class="item-bar" bindtap="goFans">
                 <text class="num">{{userInfo.fans}}</text>
                 关注者
             </view>

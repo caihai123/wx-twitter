@@ -3,7 +3,7 @@
 <view class="user-card border-bottom">
   <view class="card-body">
     <view class="user-avatar">
-      <van-image width="48" height="48" round src="{{}}" />
+      <van-image width="48" height="48" round src="{{avatarUrl}}" />
     </view>
     <view class="user-content">
       <view class="card-header">
@@ -11,11 +11,11 @@
           <van-button size="small" round color="#1ca1f0">正在关注</van-button>
         </view>
         <view class="head-left">
-          <view class="nick-name ellipsis">好名字可以让你的朋友更容易记住你你</view>
-          <view class="account ellipsis">ID：552164656121</view>
+          <view class="nick-name ellipsis">{{nickName}}</view>
+          <view class="account ellipsis">ID：{{userId}}</view>
         </view>
       </view>
-      <view class="describe multi-ellipsis-2">Professor @YaleLawSch and @yalehistory, comparative historian,legal ...</view>
+      <view class="describe multi-ellipsis-2">{{describe || "这个人很懒，什么也没留下~"}}</view>
     </view>
   </view>
 </view>
