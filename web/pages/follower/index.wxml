@@ -1,5 +1,5 @@
 <!--pages/follower/index.wxml-->
 
 <view class="border-top">
-  <user-card wx:for="{{list}}" wx:key="_id" userId="{{item._id}}" nickName="{{item.nickName}}" avatarUrl="{{item.avatarUrl}}" describe="{{item.describe}}" />
+  <user-card wx:for="{{list}}" wx:key="_id" userId="{{item._id}}" nickName="{{item.nickName}}" avatarUrl="{{item.avatarUrl}}" describe="{{item.describe}}" followState="{{item.followState}}" bind:followChange="handleFollowChange"/>
 </view>
