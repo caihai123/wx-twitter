@@ -26,11 +26,7 @@ const postsSlice = createSlice({
       const { id } = action.payload;
       const found = state.entities[id];
       if (found) {
-        if (found.isHeart) {
-          found.heartNum--;
-        } else {
-          found.heartNum++;
-        }
+        
         found.isHeart = !found.isHeart;
       }
     },
