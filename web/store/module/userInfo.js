@@ -9,6 +9,8 @@ export const slice = createSlice({
     avatarUrl: "",
     describe: "",
     wallUrl: "",
+    follow:"",
+    fans:""
   },
   reducers: {
     // 更新所有用户信息，一般用于初始化
@@ -20,6 +22,8 @@ export const slice = createSlice({
         avatarUrl,
         describe,
         wallUrl,
+        follow,
+        fans
       } = action.payload;
       state._id = _id;
       state._openid = _openid;
@@ -27,6 +31,8 @@ export const slice = createSlice({
       state.avatarUrl = avatarUrl;
       state.describe = describe;
       state.wallUrl = wallUrl;
+      state.follow = follow;
+      state.fans = fans;
     },
   },
 });

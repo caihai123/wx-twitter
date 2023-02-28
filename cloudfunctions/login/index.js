@@ -23,7 +23,13 @@ exports.main = async (event, context) => {
   const [userInfo] = userList;
 
   if (userInfo) {
-    return userInfo;
+    // 获取我的关注和我的粉丝
+    const [{ total: follow }, { total: fans }] = await Promise.all([
+      db.collection("follow").where({ userId: userInfo._id }).count(),
+      db.collection("follow").where({ followId: userInfo._id }).count(),
+    ]);
+
+    return { ...userInfo, follow, fans };
   } else {
     // 如果不存在则帮他创建之后再返回
     const defaultUserInfo = {
@@ -41,6 +47,8 @@ exports.main = async (event, context) => {
     return {
       _id: result._id,
       ...defaultUserInfo,
+      follow: 0, // 我的关注
+      fans: 0, // 我的粉丝
     };
   }
 };
