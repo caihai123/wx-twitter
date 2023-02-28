@@ -34,7 +34,7 @@ const getUserId = async () => {
 
 /**
  * 获取传入id用户和自己的关注状态
- * 0 是自己 1 我关注他 2 他关注我 3 互关 4 互不关
+ * 0 是自己 1 仅我关注他 2 仅他关注我 3 互关 4 互不关
  */
 const getFollowState = async (userId, myUserId) => {
   if (userId === myUserId) {
@@ -135,6 +135,48 @@ const getFansList = async (event, context) => {
   return userList;
 };
 
+// 切换对每个人的关注状态
+const followSwitch = async (event, context) => {
+  const { userId } = event;
+
+  const myUserId = await getUserId(); // 自己的userId
+
+  // 先判断是否关注
+  const { data } = await db
+    .collection("follow")
+    .where({
+      userId: myUserId,
+      followId: userId,
+    })
+    .field({ _id: true })
+    .get();
+
+  if (data && data.length) {
+    // 如果已经关注则取消关注
+    await db
+      .collection("follow")
+      .where({
+        _id: _.in(data.map((item) => item._id)),
+      })
+      .remove();
+  } else {
+    // 如果没有关注则关注
+    await db.collection("follow").add({
+      data: {
+        userId: myUserId,
+        followId: userId,
+      },
+    });
+  }
+
+  // 重新获取关注状态
+  const followState = await getFollowState(userId, myUserId);
+
+  return {
+    followState,
+  };
+};
+
 exports.main = async (event, context) => {
   const { type } = event;
   switch (type) {
@@ -142,6 +184,8 @@ exports.main = async (event, context) => {
       return await getFollowList(event, context);
     case "getFansList":
       return await getFansList(event, context);
+    case "followSwitch":
+      return await followSwitch(event, context);
     default:
       break;
   }
