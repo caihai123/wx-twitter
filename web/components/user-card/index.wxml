@@ -8,7 +8,8 @@
     <view class="user-content">
       <view class="card-header">
         <view class="head-right">
-          <van-button size="small" round color="#1ca1f0">正在关注</van-button>
+          <van-button wx:if="{{_followState === '1' || _followState==='3'}}" size="small" round color="#1ca1f0" bind:click="followSwitch">正在关注</van-button>
+          <van-button wx:if="{{_followState === '2' || _followState ==='4'}}" size="small" round color="#1ca1f0" plain  bind:click="followSwitch">关 注</van-button>
         </view>
         <view class="head-left">
           <view class="nick-name ellipsis">{{nickName}}</view>
