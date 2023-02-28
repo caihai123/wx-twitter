@@ -41,7 +41,7 @@ const getFollowState = async (userId, myUserId) => {
     return "0"; // 是自己
   } else {
     const [follow, fans] = await Promise.all([
-      async () => {
+      (async () => {
         // 是否是 myUserId 关注 userId
         const { total } = await db
           .collection("follow")
@@ -51,8 +51,8 @@ const getFollowState = async (userId, myUserId) => {
           })
           .count();
         return total > 0;
-      },
-      async () => {
+      })(),
+      (async () => {
         // 是否是 userId 关注 myUserId
         const { total } = await db
           .collection("follow")
@@ -62,7 +62,7 @@ const getFollowState = async (userId, myUserId) => {
           })
           .count();
         return total > 0;
-      },
+      })(),
     ]);
 
     if (follow && fans) {
