@@ -1,6 +1,22 @@
 page {
   background-color: #f7f8fa;
 }
+.post-box {
+  position: relative;
+}
+.post-box::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 10px 0;
+  position: absolute;
+  left: 50%;
+  border-radius: 50%;
+  background-color: #536471;
+  transform: translateY(-50%);
+}
+
 .float-button {
   height: 48px;
   position: fixed;
@@ -13,4 +29,3 @@ page {
   background-color: #1989fa;
   border-radius: 50%;
 }
-

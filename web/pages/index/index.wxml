@@ -1,6 +1,6 @@
 <!--pages/index/index.wxml-->
 
-<view class="border-top">
+<view class="post-box border-top">
   <post-card wx:for="{{postIds}}" wx:key="id" post-id="{{item._id}}" />
 </view>
 
