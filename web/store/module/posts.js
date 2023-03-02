@@ -26,7 +26,6 @@ const postsSlice = createSlice({
       const { id } = action.payload;
       const found = state.entities[id];
       if (found) {
-        
         found.isHeart = !found.isHeart;
       }
     },
