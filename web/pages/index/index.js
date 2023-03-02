@@ -15,12 +15,13 @@ Page({
   },
 
   getPostIds() {
-    wx.cloud.callFunction({
-      name: "getPostLast",
-      success: (res) => {
+    return wx.cloud
+      .callFunction({
+        name: "getPostLast",
+      })
+      .then((res) => {
         this.setData({ postIds: res.result });
-      },
-    });
+      });
   },
 
   // 去发动态
@@ -31,21 +32,20 @@ Page({
   },
 
   // 处理用户下拉操作
-  // onPullDownRefresh() {
-  //   dispatch(refreshPostList())
-  //     .unwrap()
-  //     .then(() => {
-  //       wx.stopPullDownRefresh({
-  //         complete: () => {
-  //           wx.showToast({
-  //             title: "刷新成功",
-  //             icon: "none",
-  //           });
-  //         },
-  //       });
-  //     })
-  //     .catch(() => {
-  //       wx.stopPullDownRefresh();
-  //     });
-  // },
+  onPullDownRefresh() {
+    this.getPostIds()
+      .then(() => {
+        wx.stopPullDownRefresh({
+          complete: () => {
+            wx.showToast({
+              title: "刷新成功",
+              icon: "none",
+            });
+          },
+        });
+      })
+      .catch(() => {
+        wx.stopPullDownRefresh();
+      });
+  },
 });
