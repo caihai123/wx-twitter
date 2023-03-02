@@ -2,7 +2,8 @@
   "navigationBarTitleText": "动态",
   "usingComponents": {
     "van-button": "@vant/weapp/button/index",
-    "post-card": "/components/post-crad/index"
+    "post-card": "/components/post-crad/index",
+    "footer-box":"/components/footer-box/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"

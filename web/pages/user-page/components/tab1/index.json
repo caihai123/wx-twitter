@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "post-card":"/components/post-crad/index"
+    "post-card":"/components/post-crad/index",
+    "footer-box":"/components/footer-box/index"
   }
 }

@@ -1,0 +1,4 @@
+<!--components/footer-box/index.wxml-->
+<view class="footer-box">
+  <view class="dot"></view>
+</view>
