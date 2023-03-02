@@ -1,0 +1,39 @@
+<!--components/post-crad/index.wxml-->
+
+<view class="post-item">
+  <view class="post-main">
+    <view class="post-aside" data-id="{{postData.user._id}}" bindtap="goUserPage">
+      <van-image width="48" height="48" round lazy-load src="{{postData.user.avatarUrl}}" />
+    </view>
+    <view class="post-body">
+      <view class="post-head ellipsis">
+        <view class="user-bar">
+          <view class="nick-name ellipsis" data-id="{{postData.user._id}}" bindtap="goUserPage">{{postData.user.nickName}}</view>
+          <view class="date">{{postData.date}}</view>
+        </view>
+        <view>
+          <van-icon name="ellipsis" custom-class="icon-ellipsis" />
+        </view>
+      </view>
+      <view class="post-content">
+        <!-- 文本 -->
+        <view class="post-text">{{postData.content}}</view>
+        <view wx:if="{{postData.imgList}}" class="img-thum-box">
+          <img-thum-box img-list="{{postData.imgList}}" />
+        </view>
+      </view>
+      <view class="post-foot">
+        <view class="tool-item">
+          <van-icon name="chat-o" />
+        </view>
+        <view class="tool-item">
+          <view style="color:{{postData.isHeart?'#de265c':''}}" data-id="{{postData.id}}" bindtap="handleHeart">
+            <van-icon wx:if="{{postData.isHeart}}" name="like" />
+            <van-icon wx:else name="like-o" />
+            <text class="num">{{postData.heartNum}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

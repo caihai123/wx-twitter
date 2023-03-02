@@ -1,57 +1,7 @@
 <!--pages/index/index.wxml-->
 
-<wxs module="tools">
-  module.exports = {
-    includes: function (arr, item) {
-      var len = arr.length;
-      for (var i = 0; i < len; i++) {
-        if (arr[i] === item) {
-          return true
-        }
-      }
-      return false
-    },
-  }
-</wxs>
-
-<view>
-  <view class="post-item" wx:for="{{posts}}" wx:key="id">
-    <view class="post-main">
-      <view class="post-aside">
-        <van-image width="48" height="48" round lazy-load src="{{item.user.avatarUrl}}" />
-      </view>
-      <view class="post-body">
-        <view class="post-head ellipsis">
-          <view class="user-bar">
-            <view class="nick-name ellipsis">{{item.user.nickName}}</view>
-            <view class="date">{{item.date}}</view>
-          </view>
-          <view>
-            <van-icon name="ellipsis" custom-class="icon-ellipsis" />
-          </view>
-        </view>
-        <view class="post-content">
-          <!-- 文本 -->
-          <view class="post-text">{{item.content}}</view>
-          <view wx:if="{{item.imgList}}" class="img-thum-box">
-            <img-thum-box img-list="{{item.imgList}}" />
-          </view>
-        </view>
-        <view class="post-foot">
-          <view class="tool-item">
-            <van-icon name="chat-o" />
-          </view>
-          <view class="tool-item" data-id="{{item.id}}" bindtap="handleHeart">
-            <view style="color:{{item.isHeart?'#de265c':''}}">
-              <van-icon wx:if="{{item.isHeart}}" name="like" />
-              <van-icon wx:else name="like-o" />
-              <text class="num">{{item.heartNum}}</text>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
+<view class="border-top">
+  <post-card wx:for="{{posts}}" wx:key="id" post-data="{{item}}" />
 </view>
 
 <view class="float-button">

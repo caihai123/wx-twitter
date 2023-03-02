@@ -1,10 +1,5 @@
 // pages/index/index.js
-import {
-  selectAllPosts,
-  refreshPostList,
-  heartSwitch,
-} from "../../store/module/posts";
-import { selectUserId } from "../../store/module/userInfo";
+import { selectAllPosts, refreshPostList } from "../../store/module/posts";
 const app = getApp();
 const { dispatch, subscribe, getState } = app.store;
 
@@ -14,7 +9,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    ownId: "", // 自己的id
     posts: [], // 动态列表
   },
 
@@ -26,7 +20,6 @@ Page({
     unsubscribe = subscribe(() => {
       const state = getState();
       this.setData({
-        ownId: selectUserId(state),
         posts: selectAllPosts(state),
       });
     });
@@ -39,12 +32,6 @@ Page({
     wx.navigateTo({
       url: "/pages/create-post/index",
     });
-  },
-
-  // 点赞
-  handleHeart(event) {
-    const { id } = event.currentTarget.dataset;
-    dispatch(heartSwitch(id)).unwrap();
   },
 
   // 页面卸载时
