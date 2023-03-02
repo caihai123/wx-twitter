@@ -20,13 +20,15 @@ Component({
 
   lifetimes: {
     attached: async function () {
+      this.setData({ loading: true });
       await this.getPostDetail();
 
-      this.getUserInfo();
+      await this.getUserInfo();
 
-      this.getHeartNum();
+      await this.getHeartNum();
 
-      this.watchUserId();
+      await this.watchUserId();
+      this.setData({ loading: false });
     },
     detached: function () {
       const { isHeartWatch } = this.data;
@@ -45,6 +47,8 @@ Component({
     isHeart: false,
 
     isHeartWatch: null,
+
+    loading: true,
   },
 
   /**

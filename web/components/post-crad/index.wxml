@@ -1,7 +1,7 @@
 <!--components/post-crad/index.wxml-->
 
 <view class="post-item">
-  <view class="post-main">
+  <view wx:if="{{!loading}}" class="post-main">
     <view class="post-aside" bindtap="goUserPage">
       <van-image width="48" height="48" round lazy-load src="{{userInfo.avatarUrl}}" />
     </view>
@@ -16,7 +16,6 @@
         </view>
       </view>
       <view class="post-content">
-        <!-- 文本 -->
         <view class="post-text">{{postData.content}}</view>
         <view wx:if="{{postData.imgList}}" class="img-thum-box">
           <img-thum-box img-list="{{postData.imgList}}" />
@@ -33,6 +32,21 @@
             <text class="num">{{heartNum}}</text>
           </view>
         </view>
+      </view>
+    </view>
+  </view>
+
+
+  <view wx:else class="skeleton">
+    <view class="skeleton-header">
+      <view class="skeleton-avatar skeleton-active"></view>
+    </view>
+    <view class="skeleton-content">
+      <view class="skeleton-title skeleton-active"></view>
+      <view class="skeleton-paragraph">
+        <view class="item skeleton-active"></view>
+        <view class="item skeleton-active"></view>
+        <view class="item skeleton-active"></view>
       </view>
     </view>
   </view>
