@@ -1,43 +1,43 @@
 <!--pages/home/index.wxml-->
 
 <view class="userinfo-box">
-    <view class="wall">
-        <image wx:if="{{userInfo.wallUrl}}" src="{{userInfo.wallUrl}}" />
+  <view class="wall">
+    <image wx:if="{{userInfo.wallUrl}}" src="{{userInfo.wallUrl}}" />
+  </view>
+  <view class="body">
+    <view class="haeder">
+      <van-image width="82" height="82" round src="{{userInfo.avatarUrl}}" />
+      <van-button type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
     </view>
-    <view class="body">
-        <view class="haeder">
-            <van-image width="82" height="82" round src="{{userInfo.avatarUrl}}" />
-            <van-button type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
-        </view>
-        <view class="nickName">{{userInfo.nickName}}</view>
-        <view class="account">ID：{{userInfo._openid}}</view>
-        <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
+    <view class="nickName">{{userInfo.nickName}}</view>
+    <view class="account">ID：{{userInfo._openid}}</view>
+    <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
 
-        <view class="friend">
-            <view class="item-bar" bindtap="goFollower">
-                <text class="num">{{userInfo.follow}}</text>
-                正在关注
-            </view>
-            <view class="item-bar" bindtap="goFans">
-                <text class="num">{{userInfo.fans}}</text>
-                关注者
-            </view>
-        </view>
+    <view class="friend">
+      <view class="follow" bindtap="goFollower">
+        <text class="num">{{userInfo.follow}}</text>
+        正在关注
+      </view>
+      <view class="fans" bindtap="goFans">
+        <text class="num">{{userInfo.fans}}</text>
+        关注者
+      </view>
     </view>
+  </view>
 </view>
 
 <view class="main">
-    <van-cell-group>
-        <van-cell title="列表" icon="orders-o" is-link />
-        <van-cell title="话题" icon="comment-o" is-link />
-        <van-cell title="书签" icon="label-o" is-link />
-        <van-cell title="瞬间" icon="fire-o" is-link />
-    </van-cell-group>
+  <van-cell-group>
+    <van-cell title="列表" icon="orders-o" is-link />
+    <van-cell title="话题" icon="comment-o" is-link />
+    <van-cell title="书签" icon="label-o" is-link />
+    <van-cell title="瞬间" icon="fire-o" is-link />
+  </van-cell-group>
 
-    <van-divider />
+  <van-divider />
 
-    <van-cell-group>
-        <van-cell title="设置和隐私" is-link />
-        <van-cell title="帮助中心" is-link />
-    </van-cell-group>
+  <van-cell-group>
+    <van-cell title="设置和隐私" is-link />
+    <van-cell title="帮助中心" is-link />
+  </van-cell-group>
 </view>
