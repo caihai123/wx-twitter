@@ -18,7 +18,11 @@ Page({
       name: "getUserInfo",
       data: { id },
       success: (res) => {
-        this.setData({ userInfo: res.result });
+        const data = res.result;
+        this.setData({ userInfo: data });
+        wx.setNavigationBarTitle({
+          title: data.nickName+'的个人主页',
+        });
       },
     });
   },

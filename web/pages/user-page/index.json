@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "个人主页",
   "usingComponents": {
     "van-image": "@vant/weapp/image/index",
     "van-button": "@vant/weapp/button/index",
