@@ -2,13 +2,13 @@
 
 <view class="post-item">
   <view class="post-main">
-    <view class="post-aside" data-id="{{postData.user._id}}" bindtap="goUserPage">
-      <van-image width="48" height="48" round lazy-load src="{{postData.user.avatarUrl}}" />
+    <view class="post-aside" bindtap="goUserPage">
+      <van-image width="48" height="48" round lazy-load src="{{userInfo.avatarUrl}}" />
     </view>
     <view class="post-body">
       <view class="post-head ellipsis">
         <view class="user-bar">
-          <view class="nick-name ellipsis" data-id="{{postData.user._id}}" bindtap="goUserPage">{{postData.user.nickName}}</view>
+          <view class="nick-name ellipsis" bindtap="goUserPage">{{userInfo.nickName}}</view>
           <view class="date">{{postData.date}}</view>
         </view>
         <view>
@@ -27,10 +27,10 @@
           <van-icon name="chat-o" />
         </view>
         <view class="tool-item">
-          <view style="color:{{postData.isHeart?'#de265c':''}}" data-id="{{postData.id}}" bindtap="handleHeart">
-            <van-icon wx:if="{{postData.isHeart}}" name="like" />
+          <view style="color:{{isHeart?'#de265c':''}}" bindtap="handleHeart">
+            <van-icon wx:if="{{isHeart}}" name="like" />
             <van-icon wx:else name="like-o" />
-            <text class="num">{{postData.heartNum}}</text>
+            <text class="num">{{heartNum}}</text>
           </view>
         </view>
       </view>
