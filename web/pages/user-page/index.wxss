@@ -1,0 +1,71 @@
+/* pages/user-page/index.wxss */
+page {
+  background-color: #f7f8fa;
+  color: #5c7081;
+}
+
+.userinfo-box .wall {
+  height: 421rpx;
+  background-color: #1ca1f0;
+}
+
+.wall image {
+  width: 100%;
+  height: 100%;
+}
+
+.userinfo-box .body {
+  padding: 0 16px;
+  background-color: #fff;
+}
+
+.userinfo-box .body .haeder {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 0;
+}
+.userinfo-box .body .custom-but {
+  font-weight: 500;
+  color: #5d6f81;
+  border: 1px solid #606c78;
+}
+
+.userinfo-box .body .van-image {
+  margin-top: -40px;
+  border: 3px solid #fff;
+  box-sizing: border-box;
+}
+
+.userinfo-box .nickName {
+  margin: 5px 0;
+  line-height: 1.2;
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+}
+
+.userinfo-box .account {
+  font-size: 14px;
+}
+
+.userinfo-box .describe {
+  padding: 4px 0;
+  font-size: 14px;
+  color: #111111;
+}
+
+.userinfo-box .friend {
+  display: flex;
+  padding: 6px 0;
+}
+
+.friend .follow,
+.friend .fans {
+  margin-right: 10px;
+}
+
+.friend .follow .num,
+.friend .fans .num {
+  color: #111;
+}
