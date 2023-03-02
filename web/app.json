@@ -10,7 +10,8 @@
     "pages/user-detail/index",
     "pages/edit-user-info/index",
     "pages/follower/index",
-    "pages/fans/index"
+    "pages/fans/index",
+    "pages/user-page/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
