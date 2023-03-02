@@ -1,7 +1,7 @@
 <!--pages/index/index.wxml-->
 
 <view class="border-top">
-  <post-card wx:for="{{posts}}" wx:key="id" post-data="{{item}}" />
+  <post-card wx:for="{{postIds}}" wx:key="id" post-id="{{item._id}}" />
 </view>
 
 <view class="float-button">

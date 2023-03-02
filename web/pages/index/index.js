@@ -1,30 +1,26 @@
 // pages/index/index.js
-import { selectAllPosts, refreshPostList } from "../../store/module/posts";
-const app = getApp();
-const { dispatch, subscribe, getState } = app.store;
-
-let unsubscribe = null;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    posts: [], // 动态列表
+    postIds: [], // 动态的id列表
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    // 监测store变化
-    unsubscribe = subscribe(() => {
-      const state = getState();
-      this.setData({
-        posts: selectAllPosts(state),
-      });
+    this.getPostIds();
+  },
+
+  getPostIds() {
+    wx.cloud.callFunction({
+      name: "getPostLast",
+      success: (res) => {
+        this.setData({ postIds: res.result });
+      },
     });
-    // 初始化动态列表
-    dispatch(refreshPostList()).unwrap();
   },
 
   // 去发动态
@@ -34,28 +30,22 @@ Page({
     });
   },
 
-  // 页面卸载时
-  onUnload() {
-    // 停止监听store
-    unsubscribe();
-  },
-
   // 处理用户下拉操作
-  onPullDownRefresh() {
-    dispatch(refreshPostList())
-      .unwrap()
-      .then(() => {
-        wx.stopPullDownRefresh({
-          complete: () => {
-            wx.showToast({
-              title: "刷新成功",
-              icon: "none",
-            });
-          },
-        });
-      })
-      .catch(() => {
-        wx.stopPullDownRefresh();
-      });
-  },
+  // onPullDownRefresh() {
+  //   dispatch(refreshPostList())
+  //     .unwrap()
+  //     .then(() => {
+  //       wx.stopPullDownRefresh({
+  //         complete: () => {
+  //           wx.showToast({
+  //             title: "刷新成功",
+  //             icon: "none",
+  //           });
+  //         },
+  //       });
+  //     })
+  //     .catch(() => {
+  //       wx.stopPullDownRefresh();
+  //     });
+  // },
 });
