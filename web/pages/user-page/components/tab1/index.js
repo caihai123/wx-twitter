@@ -32,6 +32,7 @@ Component({
       const { userId } = this.properties;
       const { data } = await db
         .collection("posts")
+        .orderBy('createTime', 'desc')
         .where({ userId })
         .field({ _id: true })
         .get();
