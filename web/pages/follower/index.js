@@ -21,13 +21,4 @@ Page({
     });
   },
 
-  // 处理关注人员改变
-  handleFollowChange(event) {
-    const { userId, followState } = event.detail;
-    if (followState !== "1" && followState !== "3") {
-      this.setData({
-        list: this.data.list.filter((item) => item._id !== userId),
-      });
-    }
-  },
 });
