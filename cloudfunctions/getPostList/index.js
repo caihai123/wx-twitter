@@ -7,8 +7,6 @@ const db = cloud.database();
 const _ = db.command;
 const $ = db.command.aggregate;
 
-console.log($);
-
 // 获取用户Id
 const getUserId = async (openid) => {
   const { data: userList } = await db
