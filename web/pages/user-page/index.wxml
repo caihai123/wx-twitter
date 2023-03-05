@@ -25,11 +25,13 @@
     </view>
 </view>
 
-<van-tabs active="{{ active }}" color="#1ca1f0" sticky="{{true}}">
+<van-tabs active="{{ active }}" color="#1ca1f0" animated sticky >
   <van-tab title="推文">
     <tab-1 user-id="{{id}}"/>
   </van-tab>
   <van-tab title="推文与回复"></van-tab>
-  <van-tab title="媒体"></van-tab>
+  <van-tab title="媒体">
+    <tab-3 user-id="{{id}}"/>
+  </van-tab>
   <van-tab title="喜欢"></van-tab>
 </van-tabs>

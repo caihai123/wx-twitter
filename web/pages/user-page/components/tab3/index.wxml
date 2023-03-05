@@ -1,0 +1,7 @@
+<!--pages/user-page/components/tab1/index.wxml-->
+
+<view class="border-top">
+  <post-card wx:for="{{postList}}" wx:key="id" post-id="{{item._id}}" />
+</view>
+
+<footer-box />
