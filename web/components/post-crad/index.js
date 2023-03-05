@@ -49,6 +49,8 @@ Component({
     isHeartWatch: null,
 
     loading: true,
+
+    selfUserId: "",
   },
 
   /**
@@ -58,9 +60,11 @@ Component({
     // 此组件在首页就会加载 我不确定此时用户信息是否已经加载完成
     watchUserId() {
       const selfUserId = selectUserId(getState());
+      this.data.selfUserId = selfUserId;
       selfUserId && this.canHeart(selfUserId);
       unsubscribe = subscribe(() => {
         const selfUserId = selectUserId(getState());
+        this.data.selfUserId = selfUserId;
         selfUserId && this.canHeart(selfUserId);
       });
     },
@@ -83,6 +87,11 @@ Component({
       const { data: userInfo } = await db
         .collection("user")
         .doc(postData.userId)
+        .field({
+          _id: true,
+          nickName: true,
+          avatarUrl: true,
+        })
         .get();
       this.setData({ userInfo });
     },
@@ -110,6 +119,7 @@ Component({
         this.data.isHeartWatch = model.watch({
           onChange: (snapshot) => {
             this.setData({ isHeart: snapshot.docs.length > 0 });
+            this.getHeartNum();
           },
           onError: () => {},
         });
@@ -126,10 +136,16 @@ Component({
 
     // 点赞
     handleHeart() {
-      this.setData({
-        isHeart: !this.data.isHeart,
-      });
+      const isHeart = !this.data.isHeart;
+      this.setData({ isHeart });
       // 这里需要做防抖，只需要将最后一次的结果存储到数据库
+      const { postId } = this.properties;
+      const { selfUserId } = this.data;
+      if (isHeart) {
+        db.collection("heart").add({ data: { postId, userId: selfUserId } });
+      } else {
+        db.collection("heart").where({ postId, userId: selfUserId }).remove();
+      }
     },
 
     // 处理时间为相对时间
