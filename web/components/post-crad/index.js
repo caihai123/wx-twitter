@@ -129,9 +129,14 @@ Component({
     // 跳转到个人主页
     goUserPage() {
       const { _id } = this.data.userInfo;
-      wx.navigateTo({
-        url: `/pages/user-page/index?id=${_id}`,
-      });
+      const pages = getCurrentPages();
+      const currentPage = pages[pages.length - 1];
+      const currentPageUrl = currentPage.route;
+      if(currentPageUrl !== "pages/user-page/index" || currentPage.data.id !== _id){
+        wx.navigateTo({
+          url: `/pages/user-page/index?id=${_id}`,
+        });
+      }
     },
 
     // 点赞
