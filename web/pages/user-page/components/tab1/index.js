@@ -34,6 +34,7 @@ Component({
         .collection("posts")
         .orderBy('createTime', 'desc')
         .where({ userId })
+        .limit(10)
         .field({ _id: true })
         .get();
       this.setData({ postList: data });
