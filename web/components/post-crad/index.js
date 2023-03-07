@@ -22,9 +22,7 @@ Component({
 
   lifetimes: {
     attached: async function () {
-      // this.setData({ loading: true });
-
-      // this.setData({ loading: false });
+      this.setData({ loading: true });
 
       const { postId } = this.properties;
       const { getPostItemById, getUserInfoById } = mapDispatch;
@@ -36,16 +34,16 @@ Component({
         this.setData({ selfUserId: selectUserId(state) });
         if (data) {
           this.setData({ postData: data });
-          const { data: userInfo } = getUserInfoById.select(data.userId)(
-            getState()
-          );
+          const { data: userInfo } = getUserInfoById.select(data.userId)(state);
           this.setData({ userInfo });
 
-          this.userUnsubscribe?.();
+          this._userUnsubscribe?.();
           const { unsubscribe } = dispatch(
             getUserInfoById.initiate(data.userId)
           );
-          this.userUnsubscribe = unsubscribe;
+          this._userUnsubscribe = unsubscribe;
+
+          this.setData({ loading: false });
         }
       });
 
