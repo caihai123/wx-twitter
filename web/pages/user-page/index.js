@@ -1,4 +1,7 @@
 // pages/user-page/index.js
+import { updateUserInfo, selectUserInfo } from "../../store/module/userInfo";
+const { subscribe, getState, dispatch } = getApp().store;
+
 Page({
   /**
    * 页面的初始数据
@@ -19,11 +22,27 @@ Page({
       data: { id },
       success: (res) => {
         const data = res.result;
-        this.setData({ userInfo: data });
-        wx.setNavigationBarTitle({
-          title: data.nickName+'的个人主页',
-        });
+        this.setUserInfo(data);
+
+        if (data.isSelf) {
+          // 如果是自己
+          dispatch(updateUserInfo(data));
+          this._unsubscribe = subscribe(() => {
+            const userInfo = selectUserInfo(getState());
+            this.setUserInfo({
+              ...userInfo,
+              isSelf: true,
+            });
+          });
+        }
       },
+    });
+  },
+
+  setUserInfo(data) {
+    this.setData({ userInfo: data });
+    wx.setNavigationBarTitle({
+      title: data.nickName + "的个人主页",
     });
   },
 
@@ -47,5 +66,13 @@ Page({
     wx.navigateTo({
       url: `/pages/fans/index?userId=${id}`,
     });
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+    // 停止监听store
+    this._unsubscribe();
   },
 });
