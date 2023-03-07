@@ -22,7 +22,7 @@ Component({
   lifetimes: {
     attached: async function () {
       // this.setData({ loading: true });
-     
+
       // this.setData({ loading: false });
 
       const { postId } = this.properties;
@@ -34,7 +34,9 @@ Component({
 
         if (data) {
           this.setData({ postData: data });
-          const { data: userInfo } = getUserInfoById.select(data.userId)(getState());
+          const { data: userInfo } = getUserInfoById.select(data.userId)(
+            getState()
+          );
           this.setData({ userInfo });
 
           this.userUnsubscribe?.();
@@ -46,9 +48,8 @@ Component({
       });
 
       // 订阅缓存数据
-      const caihai = dispatch(getPostItemById.initiate(postId));
-      console.log(caihai)
-      this.unsubscribe = caihai.unsubscribe;
+      const { unsubscribe } = dispatch(getPostItemById.initiate(postId));
+      this.unsubscribe = unsubscribe;
     },
     detached: function () {
       this.unsubscribe?.();
@@ -136,7 +137,5 @@ Component({
         db.collection("heart").where({ postId, userId: selfUserId }).remove();
       }
     },
-
-   
   },
 });
