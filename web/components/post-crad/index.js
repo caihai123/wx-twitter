@@ -34,7 +34,7 @@ Component({
         if (data) {
           this.setData({ postData: data });
           const { data: userInfo } = getUserInfoById.select(data.userId)(state);
-          this.setData({ userInfo });
+          userInfo && this.setData({ userInfo });
 
           this._userUnsubscribe?.();
           const { unsubscribe } = dispatch(

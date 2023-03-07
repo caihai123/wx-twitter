@@ -47,8 +47,8 @@ Component({
           // 不是今年
           return datDate.format("YYYY年M月D日");
         }
-      }else{
-        return ""
+      } else {
+        return "";
       }
     },
   },

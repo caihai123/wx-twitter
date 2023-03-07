@@ -3,14 +3,14 @@
 <view class="post-item">
   <view wx:if="{{!loading}}" class="post-main">
     <view class="post-aside" bindtap="goUserPage">
-      <van-image width="48" height="48" round lazy-load src="{{userInfo.avatarUrl}}" />
+      <van-image width="48" height="48" round lazy-load src="{{userInfo.avatarUrl || ''}}" />
     </view>
     <view class="post-body">
       <view class="post-head ellipsis">
         <view class="user-bar">
           <view class="nick-name ellipsis" bindtap="goUserPage">{{userInfo.nickName}}</view>
           <view class="date">
-            <time-ago date="{{postData.createTime}}" />
+            <time-ago date="{{postData.createTime || ''}}" />
           </view>
         </view>
         <view>
