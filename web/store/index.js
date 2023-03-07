@@ -1,11 +1,11 @@
 const { configureStore } = require("../utils/redux-toolkit");
-import posts from "./module/posts.js";
+import postList from "./module/posts.js";
 import userInfo from "./module/userInfo";
 import { apiSlice } from "./module/apiSlice";
 
 export default configureStore({
   reducer: {
-    posts,
+    postList,
     userInfo,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },

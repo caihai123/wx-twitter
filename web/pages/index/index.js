@@ -1,4 +1,9 @@
 // pages/index/index.js
+import { updatePostList, selectPostList } from "../../store/module/posts";
+
+const app = getApp();
+const { subscribe, getState, dispatch } = app.store;
+
 Page({
   /**
    * 页面的初始数据
@@ -11,13 +16,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    this.getPostIds();
-  },
-
-  getPostIds() {
-    return wx.cloud.callFunction({ name: "getPostLast" }).then((res) => {
-      this.setData({ postIds: res.result });
+    this._unsubscribe = subscribe(() => {
+      this.setData({
+        postIds: selectPostList(getState()),
+      });
     });
+    dispatch(updatePostList());
   },
 
   // 去发动态
@@ -29,7 +33,8 @@ Page({
 
   // 处理用户下拉操作
   onPullDownRefresh() {
-    this.getPostIds()
+    dispatch(updatePostList())
+      .unwrap()
       .then(() => {
         wx.stopPullDownRefresh({
           complete: () => {
@@ -43,5 +48,13 @@ Page({
       .catch(() => {
         wx.stopPullDownRefresh();
       });
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+    // 停止监听store
+    this._unsubscribe();
   },
 });

@@ -2,7 +2,7 @@
 // TOOD：此页面还差一个删除文件的功能
 
 import { selectUserId } from "../../store/module/userInfo";
-import { refreshPostList } from "../../store/module/posts";
+import { updatePostList } from "../../store/module/posts";
 import { uploadToCloud } from "../../utils/util";
 import dayjs from "dayjs";
 const app = getApp();
@@ -194,7 +194,7 @@ Page({
       data: params,
       success: function () {
         wx.hideLoading();
-        dispatch(refreshPostList()).unwrap();
+        dispatch(updatePostList()).unwrap();
         wx.showToast({
           title: "发布成功",
           icon: "success",
