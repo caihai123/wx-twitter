@@ -66,6 +66,7 @@ export const apiSlice = createApi({
         const patchResult = dispatch(
           apiSlice.util.updateQueryData("getPostItemById", postId, (draft) => {
             draft.isHeart = isHeart;
+            draft.heartNum = isHeart ? ++draft.heartNum : --draft.heartNum;
           })
         );
         try {
