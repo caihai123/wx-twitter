@@ -3,6 +3,7 @@
 const app = getApp();
 const { subscribe, getState, dispatch } = app.store;
 import { apiSlice } from "../../store/module/apiSlice";
+import { selectUserId } from "../../store/module/userInfo";
 
 const db = wx.cloud.database();
 
@@ -30,8 +31,9 @@ Component({
 
       // 开始监测store数据
       this.watchStore = subscribe(() => {
-        const { data } = getPostItemById.select(postId)(getState());
-
+        const state = getState();
+        const { data } = getPostItemById.select(postId)(state);
+        this.setData({ selfUserId: selectUserId(state) });
         if (data) {
           this.setData({ postData: data });
           const { data: userInfo } = getUserInfoById.select(data.userId)(
@@ -48,11 +50,14 @@ Component({
       });
 
       // 订阅缓存数据
-      const { unsubscribe } = dispatch(getPostItemById.initiate(postId));
-      this.unsubscribe = unsubscribe;
+      const { unsubscribe, refetch } = dispatch(
+        getPostItemById.initiate(postId)
+      );
+      this._unsubscribe = unsubscribe;
+      this._refetch = refetch;
     },
     detached: function () {
-      this.unsubscribe?.();
+      this._unsubscribe?.();
       this.watchStore?.();
       this.userUnsubscribe?.();
     },
@@ -64,50 +69,18 @@ Component({
   data: {
     postData: {},
     userInfo: {},
-    heartNum: 0,
-    isHeart: false,
 
     isHeartWatch: null,
 
     loading: false,
 
-    selfUserId: "",
+    selfUserId: "", // 自己的userId
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    // 获取喜欢的人的数量
-    async getHeartNum() {
-      const { postId } = this.properties;
-      const { total: heartNum } = await db
-        .collection("heart")
-        .where({ postId })
-        .count();
-      this.setData({ heartNum: heartNum });
-    },
-
-    // 是否是自己喜欢
-    async canHeart(userId) {
-      const { postId } = this.properties;
-      if (userId) {
-        // 仅仅是代码层处理一下，谁的id也不会一直变吧
-        const { isHeartWatch } = this.data;
-        isHeartWatch && isHeartWatch.close();
-
-        const model = db.collection("heart").where({ postId, userId });
-        // 侦听器
-        this.data.isHeartWatch = model.watch({
-          onChange: (snapshot) => {
-            this.setData({ isHeart: snapshot.docs.length > 0 });
-            this.getHeartNum();
-          },
-          onError: () => {},
-        });
-      }
-    },
-
     // 跳转到个人主页
     goUserPage() {
       const { _id } = this.data.userInfo;
@@ -124,18 +97,24 @@ Component({
       }
     },
 
-    // 点赞
-    handleHeart() {
-      const isHeart = !this.data.isHeart;
-      this.setData({ isHeart });
+    // 点击爱心
+    async handleHeart() {
+      const isHeart = !this.data.postData.isHeart;
+      this.setData({ "postData.isHeart": isHeart });
       // 这里需要做防抖，只需要将最后一次的结果存储到数据库
       const { postId } = this.properties;
       const { selfUserId } = this.data;
       if (isHeart) {
-        db.collection("heart").add({ data: { postId, userId: selfUserId } });
+        await db
+          .collection("heart")
+          .add({ data: { postId, userId: selfUserId } });
       } else {
-        db.collection("heart").where({ postId, userId: selfUserId }).remove();
+        await db
+          .collection("heart")
+          .where({ postId, userId: selfUserId })
+          .remove();
       }
+      this._refetch(); // 点赞之后刷新动态
     },
   },
 });

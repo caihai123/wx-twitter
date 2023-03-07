@@ -28,10 +28,10 @@
           <van-icon name="chat-o" />
         </view>
         <view class="tool-item">
-          <view style="color:{{isHeart?'#de265c':''}}" bindtap="handleHeart">
-            <van-icon wx:if="{{isHeart}}" name="like" />
+          <view style="color:{{postData.isHeart?'#de265c':''}}" bindtap="handleHeart">
+            <van-icon wx:if="{{postData.isHeart}}" name="like" />
             <van-icon wx:else name="like-o" />
-            <text class="num">{{heartNum}}</text>
+            <text class="num">{{postData.heartNum}}</text>
           </view>
         </view>
       </view>

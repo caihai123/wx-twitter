@@ -10,17 +10,18 @@ const customWxQuery = async (args, api, extraOptions) => {
       const postId = new RegExp(
         /^\/get-post-item\/((?:[^\/]+?))(?:\/(?=$))?$/i
       ).exec(args)[1];
-      const { data } = await db.collection("posts").doc(postId).get();
-      return { data };
+      const { result } = await wx.cloud.callFunction({
+        name: "getPostInfo",
+        data: { id: postId },
+      });
+      db.collection("posts").doc(postId).get();
+      return { data: result };
     } else if (new RegExp(/^\/get-user-info\/\w*/g).test(args)) {
       // 获取用户信息
       const userId = new RegExp(
         /^\/get-user-info\/((?:[^\/]+?))(?:\/(?=$))?$/i
       ).exec(args)[1];
-      const { data } = await db
-        .collection("user")
-        .doc(userId)
-        .get();
+      const { data } = await db.collection("user").doc(userId).get();
       return { data };
     } else {
       return { data: undefined };
@@ -46,6 +47,5 @@ export const apiSlice = createApi({
       query: (userId) => `/get-user-info/${userId}`,
       providesTags: (result, error, arg) => [{ type: "User", id: arg }],
     }),
-
   }),
 });
