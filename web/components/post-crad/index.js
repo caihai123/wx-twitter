@@ -1,7 +1,5 @@
 // components/post-crad/index.js
-import dayjs from "dayjs";
-import "../../utils/zh-cn";
-dayjs.locale("zh-cn");
+
 const app = getApp();
 const { subscribe, getState, dispatch } = app.store;
 import { apiSlice } from "../../store/module/apiSlice";
@@ -139,20 +137,6 @@ Component({
       }
     },
 
-    // 处理时间为相对时间
-    handleRelativeTime(time) {
-      const datDate = dayjs(time);
-      const today = dayjs(); // 现在
-      if (today.unix() - datDate.unix() < 604800) {
-        // 小于7天
-        return datDate.fromNow();
-      } else if (today.format("YYYY") === datDate.format("YYYY")) {
-        // 如果是今年
-        return datDate.format("M月D日");
-      } else {
-        // 不是今年
-        return datDate.format("YYYY年M月D日");
-      }
-    },
+   
   },
 });

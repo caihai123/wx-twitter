@@ -1,0 +1,2 @@
+<!--components/time-ago/index.wxml-->
+<text>{{dateString}}</text>

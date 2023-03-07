@@ -3,6 +3,7 @@
   "usingComponents": {
     "van-icon": "@vant/weapp/icon/index",
     "van-image": "@vant/weapp/image/index",
-    "img-thum-box": "/components/img-thum-box/index"
+    "img-thum-box": "/components/img-thum-box/index",
+    "time-ago":"/components/time-ago/index"
   }
 }

@@ -9,7 +9,9 @@
       <view class="post-head ellipsis">
         <view class="user-bar">
           <view class="nick-name ellipsis" bindtap="goUserPage">{{userInfo.nickName}}</view>
-          <view class="date">{{postData.date}}</view>
+          <view class="date">
+            <time-ago date="{{postData.createTime}}" />
+          </view>
         </view>
         <view>
           <van-icon name="ellipsis" custom-class="icon-ellipsis" />
