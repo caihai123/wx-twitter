@@ -15,7 +15,6 @@ const customWxQuery = async (args, api, extraOptions) => {
         name: "getPostInfo",
         data: { id: postId },
       });
-      db.collection("posts").doc(postId).get();
       return { data: result };
     } else if (new RegExp(/^\/get-user-info\/\w*/g).test(args)) {
       // 获取用户信息
