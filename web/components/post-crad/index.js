@@ -1,15 +1,14 @@
 // components/post-crad/index.js
 
-const app = getApp();
-const { subscribe, getState, dispatch } = app.store;
+const { subscribe, getState, dispatch } = getApp().store;
 import { apiSlice } from "../../store/module/apiSlice";
 import { selectUserId } from "../../store/module/userInfo";
-
-const db = wx.cloud.database();
+// import { createSelector } from "../../utils/redux-toolkit";
 
 const mapDispatch = {
   getPostItemById: apiSlice.endpoints.getPostItemById,
   getUserInfoById: apiSlice.endpoints.getUserInfoById,
+  handleHeartChange: apiSlice.endpoints.handleHeartChange,
 };
 
 Component({
@@ -97,22 +96,16 @@ Component({
 
     // 点击爱心
     async handleHeart() {
+      const { handleHeartChange } = mapDispatch;
+      const { _id } = this.data.postData;
       const isHeart = !this.data.postData.isHeart;
-      this.setData({ "postData.isHeart": isHeart });
-      // 这里需要做防抖，只需要将最后一次的结果存储到数据库
-      const { postId } = this.properties;
-      const { selfUserId } = this.data;
-      if (isHeart) {
-        await db
-          .collection("heart")
-          .add({ data: { postId, userId: selfUserId } });
-      } else {
-        await db
-          .collection("heart")
-          .where({ postId, userId: selfUserId })
-          .remove();
-      }
-      this._refetch(); // 点赞之后刷新动态
+      dispatch(
+        handleHeartChange.initiate({
+          postId: _id,
+          userId: this.data.selfUserId,
+          isHeart
+        })
+      );
     },
   },
 });
