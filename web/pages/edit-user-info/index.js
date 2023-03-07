@@ -3,6 +3,7 @@ import { selectUserInfo, updateUserInfo } from "../../store/module/userInfo";
 const app = getApp();
 const { dispatch, getState } = app.store;
 import { uploadToCloud } from "./../../utils/util";
+import { apiSlice } from "../../store/module/apiSlice";
 
 Page({
   /**
@@ -168,6 +169,14 @@ Page({
                 ...params,
               })
             );
+
+            // 修改成功后刷新动态中使用的基础信息
+            const { refetch, unsubscribe } = dispatch(
+              apiSlice.endpoints.getUserInfoById.initiate(_id)
+            );
+            refetch?.();
+            unsubscribe?.();
+            
             setTimeout(() => {
               wx.navigateBack();
             }, 2000);
