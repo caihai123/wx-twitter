@@ -15,13 +15,9 @@ Page({
   },
 
   getPostIds() {
-    return wx.cloud
-      .callFunction({
-        name: "getPostLast",
-      })
-      .then((res) => {
-        this.setData({ postIds: res.result });
-      });
+    return wx.cloud.callFunction({ name: "getPostLast" }).then((res) => {
+      this.setData({ postIds: res.result });
+    });
   },
 
   // 去发动态

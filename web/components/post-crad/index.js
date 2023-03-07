@@ -4,11 +4,15 @@ import dayjs from "dayjs";
 import "../../utils/zh-cn";
 dayjs.locale("zh-cn");
 const app = getApp();
-const { subscribe, getState } = app.store;
+const { subscribe, getState, dispatch } = app.store;
+import { apiSlice } from "../../store/module/apiSlice";
 
 const db = wx.cloud.database();
 
-let unsubscribe = null;
+const mapDispatch = {
+  getPostItemById: apiSlice.endpoints.getPostItemById,
+  getUserItemById: apiSlice.endpoints.getUserItemById,
+};
 
 Component({
   /**
@@ -20,20 +24,38 @@ Component({
 
   lifetimes: {
     attached: async function () {
-      this.setData({ loading: true });
-      await this.getPostDetail();
+      // this.setData({ loading: true });
+     
+      // this.setData({ loading: false });
 
-      await this.getUserInfo();
+      const { postId } = this.properties;
+      const { getPostItemById, getUserItemById } = mapDispatch;
 
-      await this.getHeartNum();
+      // 开始监测store数据
+      this.watchStore = subscribe(() => {
+        const { data } = getPostItemById.select(postId)(getState());
 
-      await this.watchUserId();
-      this.setData({ loading: false });
+        if (data) {
+          this.setData({ postData: data });
+          const { data: userInfo } = getUserItemById.select(data.userId)(getState());
+          this.setData({ userInfo });
+
+          this.userUnsubscribe?.();
+          const { unsubscribe } = dispatch(
+            getUserItemById.initiate(data.userId)
+          );
+          this.userUnsubscribe = unsubscribe;
+        }
+      });
+
+      // 订阅缓存数据
+      const { unsubscribe } = dispatch(getPostItemById.initiate(postId));
+      this.unsubscribe = unsubscribe;
     },
     detached: function () {
-      const { isHeartWatch } = this.data;
-      isHeartWatch && isHeartWatch.close();
-      unsubscribe && unsubscribe();
+      this.unsubscribe?.();
+      this.watchStore?.();
+      this.userUnsubscribe?.();
     },
   },
 
@@ -48,7 +70,7 @@ Component({
 
     isHeartWatch: null,
 
-    loading: true,
+    loading: false,
 
     selfUserId: "",
   },
@@ -57,45 +79,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 此组件在首页就会加载 我不确定此时用户信息是否已经加载完成
-    watchUserId() {
-      const selfUserId = selectUserId(getState());
-      this.data.selfUserId = selfUserId;
-      selfUserId && this.canHeart(selfUserId);
-      unsubscribe = subscribe(() => {
-        const selfUserId = selectUserId(getState());
-        this.data.selfUserId = selfUserId;
-        selfUserId && this.canHeart(selfUserId);
-      });
-    },
-
-    // 获取动态详情
-    async getPostDetail() {
-      const { postId } = this.properties;
-      const { data: postData } = await db.collection("posts").doc(postId).get();
-      this.setData({
-        postData: {
-          ...postData,
-          date: this.handleRelativeTime(postData.createTime),
-        },
-      });
-    },
-
-    // 获取用户信息
-    async getUserInfo() {
-      const { postData } = this.data;
-      const { data: userInfo } = await db
-        .collection("user")
-        .doc(postData.userId)
-        .field({
-          _id: true,
-          nickName: true,
-          avatarUrl: true,
-        })
-        .get();
-      this.setData({ userInfo });
-    },
-
     // 获取喜欢的人的数量
     async getHeartNum() {
       const { postId } = this.properties;
@@ -132,7 +115,10 @@ Component({
       const pages = getCurrentPages();
       const currentPage = pages[pages.length - 1];
       const currentPageUrl = currentPage.route;
-      if(currentPageUrl !== "pages/user-page/index" || currentPage.data.id !== _id){
+      if (
+        currentPageUrl !== "pages/user-page/index" ||
+        currentPage.data.id !== _id
+      ) {
         wx.navigateTo({
           url: `/pages/user-page/index?id=${_id}`,
         });
