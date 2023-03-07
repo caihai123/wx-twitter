@@ -12,10 +12,10 @@ const customWxQuery = async (args, api, extraOptions) => {
       ).exec(args)[1];
       const { data } = await db.collection("posts").doc(postId).get();
       return { data };
-    } else if (new RegExp(/^\/get-user-item\/\w*/g).test(args)) {
+    } else if (new RegExp(/^\/get-user-info\/\w*/g).test(args)) {
       // 获取用户信息
       const userId = new RegExp(
-        /^\/get-user-item\/((?:[^\/]+?))(?:\/(?=$))?$/i
+        /^\/get-user-info\/((?:[^\/]+?))(?:\/(?=$))?$/i
       ).exec(args)[1];
       const { data } = await db
         .collection("user")
@@ -42,9 +42,10 @@ export const apiSlice = createApi({
     }),
 
     // 获取用户信息
-    getUserItemById: builder.query({
-      query: (userId) => `/get-user-item/${userId}`,
+    getUserInfoById: builder.query({
+      query: (userId) => `/get-user-info/${userId}`,
       providesTags: (result, error, arg) => [{ type: "User", id: arg }],
     }),
+
   }),
 });

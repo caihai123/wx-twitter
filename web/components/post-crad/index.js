@@ -1,5 +1,4 @@
 // components/post-crad/index.js
-import { selectUserId } from "../../store/module/userInfo";
 import dayjs from "dayjs";
 import "../../utils/zh-cn";
 dayjs.locale("zh-cn");
@@ -11,7 +10,7 @@ const db = wx.cloud.database();
 
 const mapDispatch = {
   getPostItemById: apiSlice.endpoints.getPostItemById,
-  getUserItemById: apiSlice.endpoints.getUserItemById,
+  getUserInfoById: apiSlice.endpoints.getUserInfoById,
 };
 
 Component({
@@ -29,7 +28,7 @@ Component({
       // this.setData({ loading: false });
 
       const { postId } = this.properties;
-      const { getPostItemById, getUserItemById } = mapDispatch;
+      const { getPostItemById, getUserInfoById } = mapDispatch;
 
       // 开始监测store数据
       this.watchStore = subscribe(() => {
@@ -37,20 +36,21 @@ Component({
 
         if (data) {
           this.setData({ postData: data });
-          const { data: userInfo } = getUserItemById.select(data.userId)(getState());
+          const { data: userInfo } = getUserInfoById.select(data.userId)(getState());
           this.setData({ userInfo });
 
           this.userUnsubscribe?.();
           const { unsubscribe } = dispatch(
-            getUserItemById.initiate(data.userId)
+            getUserInfoById.initiate(data.userId)
           );
           this.userUnsubscribe = unsubscribe;
         }
       });
 
       // 订阅缓存数据
-      const { unsubscribe } = dispatch(getPostItemById.initiate(postId));
-      this.unsubscribe = unsubscribe;
+      const caihai = dispatch(getPostItemById.initiate(postId));
+      console.log(caihai)
+      this.unsubscribe = caihai.unsubscribe;
     },
     detached: function () {
       this.unsubscribe?.();
