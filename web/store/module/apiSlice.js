@@ -27,17 +27,30 @@ const customWxQuery = async (args, api, extraOptions) => {
       });
       return { data: result };
     } else if (url === "/handle-heart-switch") {
+      // 处理动态上的点赞切换
       const { userId, postId, isHeart } = body;
+      const model = db.collection("heart");
       if (isHeart) {
-        await db.collection("heart").add({ data: { postId, userId } });
+        await model.add({ data: { postId, userId } });
       } else {
-        await db.collection("heart").where({ postId, userId }).remove();
+        await model.where({ postId, userId }).remove();
+      }
+      return { data: "success" };
+    } else if (url === "/handle-follow-switch") {
+      // 处理好友关系的切换
+      const { userId, followId, isFollow } = body;
+      const model = db.collection("follow");
+      if (isFollow) {
+        await model.add({ data: { followId, userId } });
+      } else {
+        await model.where({ followId, userId }).remove();
       }
       return { data: "success" };
     } else {
       return { data: undefined };
     }
   } catch (error) {
+    console.log(error);
     return { error };
   }
 };
@@ -80,6 +93,36 @@ export const apiSlice = createApi({
       },
       invalidatesTags: (result, error, arg) => [
         { type: "Post", id: arg.postId },
+      ],
+    }),
+
+    // 处理关注按钮的切换
+    handelFollowChange: builder.mutation({
+      query: (params) => ({
+        url: "/handle-follow-switch",
+        body: params,
+      }),
+      async onQueryStarted(
+        { followId, isFollow },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData(
+            "getUserInfoById",
+            followId,
+            (draft) => {
+              draft.isFollow = isFollow;
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: (result, error, arg) => [
+        { type: "User", id: arg.followId },
       ],
     }),
   }),
