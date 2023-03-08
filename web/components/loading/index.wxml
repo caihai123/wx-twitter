@@ -1,0 +1,4 @@
+<!--components/loading/index.wxml-->
+<view class="loading">
+  <view class="spinner"></view>
+</view>
