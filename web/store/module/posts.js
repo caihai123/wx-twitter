@@ -9,7 +9,7 @@ export const slice = createSlice({
       state.push(...action.payload);
     },
     // 添加到前面,一般用在发布动态之后
-    addBefore(state, action) {
+    addToBefore(state, action) {
       state.unshift(action.payload);
     },
   },
@@ -29,7 +29,7 @@ export const updatePostList = createAsyncThunk(
   }
 );
 
-export const { addBefore } = slice.actions;
+export const { addToBefore } = slice.actions;
 
 export default slice.reducer;
 
