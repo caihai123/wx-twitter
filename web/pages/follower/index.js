@@ -5,6 +5,7 @@ Page({
    */
   data: {
     list: [],
+    loading: true,
   },
 
   /**
@@ -12,13 +13,16 @@ Page({
    */
   onLoad(options) {
     const userId = options?.userId;
-    wx.cloud.callFunction({
-      name: "handleFollow",
-      data: { userId, type: "getFollowList" },
-      success: ({ result }) => {
+    wx.cloud
+      .callFunction({
+        name: "handleFollow",
+        data: { userId, type: "getFollowList" },
+      })
+      .then(({ result }) => {
         this.setData({ list: result });
-      },
-    });
+      })
+      .finally(() => {
+        this.setData({ loading: false });
+      });
   },
-
 });

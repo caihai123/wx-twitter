@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "正在关注",
   "usingComponents": {
-    "user-card": "/components/user-card/index"
+    "user-card": "/components/user-card/index",
+    "loading":"/components/loading/index"
   }
 }
