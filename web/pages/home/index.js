@@ -62,12 +62,11 @@ Page({
     });
   },
 
-  // 头像预览
-  previewAvatar(event) {
-    const { url } = event.currentTarget.dataset;
-    wx.previewImage({
-      urls: [url],
-      current: url,
+  // 跳转到个人中心
+  goUserPage() {
+    const userId = selectUserId(getState());
+    wx.navigateTo({
+      url: `/pages/user-page/index?id=${userId}`,
     });
   },
 

@@ -6,10 +6,10 @@
   </view>
   <view class="body">
     <view class="haeder">
-      <van-image width="82" height="82" round src="{{userInfo.avatarUrl ||''}}" data-url="{{userInfo.avatarUrl}}" bind:click="previewAvatar" />
+      <van-image width="82" height="82" round src="{{userInfo.avatarUrl ||''}}" bind:click="goUserPage" />
       <van-button type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
     </view>
-    <view class="nickName">{{userInfo.nickName}}</view>
+    <view class="nickName" bindtap="goUserPage">{{userInfo.nickName}}</view>
     <view class="account">ID：{{userInfo._openid}}</view>
     <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
 
