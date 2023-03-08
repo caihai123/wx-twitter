@@ -56,6 +56,15 @@ Page({
     });
   },
 
+  // 头像预览
+  previewAvatar(event) {
+    const { url } = event.currentTarget.dataset;
+    wx.previewImage({
+      urls: [url],
+      current: url,
+    });
+  },
+
   /**
    * 生命周期函数--监听页面卸载
    */

@@ -1,37 +1,37 @@
 <!--pages/user-page/index.wxml-->
 <view class="userinfo-box">
-    <view class="wall">
-        <image wx:if="{{userInfo.wallUrl}}" src="{{userInfo.wallUrl}}" />
+  <view class="wall">
+    <image wx:if="{{userInfo.wallUrl}}" src="{{userInfo.wallUrl}}" />
+  </view>
+  <view class="body">
+    <view class="haeder">
+      <van-image width="82" height="82" round src="{{userInfo.avatarUrl || ''}}" data-url="{{userInfo.avatarUrl}}" bind:click="previewAvatar" />
+      <van-button wx:if="{{userInfo.isSelf}}" type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
     </view>
-    <view class="body">
-        <view class="haeder">
-            <van-image width="82" height="82" round src="{{userInfo.avatarUrl}}" />
-            <van-button wx:if="{{userInfo.isSelf}}" type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
-        </view>
-        <view class="nickName">{{userInfo.nickName}}</view>
-        <view class="account">ID：{{userInfo._openid}}</view>
-        <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
+    <view class="nickName">{{userInfo.nickName}}</view>
+    <view class="account">ID：{{userInfo._openid}}</view>
+    <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
 
-        <view class="friend">
-            <view class="follow" bindtap="goFollower">
-                <text class="num">{{userInfo.follow}}</text>
-                正在关注
-            </view>
-            <view class="fans" bindtap="goFans">
-                <text class="num">{{userInfo.fans}}</text>
-                关注者
-            </view>
-        </view>
+    <view class="friend">
+      <view class="follow" bindtap="goFollower">
+        <text class="num">{{userInfo.follow}}</text>
+        正在关注
+      </view>
+      <view class="fans" bindtap="goFans">
+        <text class="num">{{userInfo.fans}}</text>
+        关注者
+      </view>
     </view>
+  </view>
 </view>
 
-<van-tabs active="{{ active }}" color="#1ca1f0" animated sticky >
+<van-tabs active="{{ active }}" color="#1ca1f0" animated sticky>
   <van-tab title="推文">
-    <tab-1 user-id="{{id}}"/>
+    <tab-1 user-id="{{id}}" />
   </van-tab>
   <van-tab title="推文与回复"></van-tab>
   <van-tab title="媒体">
-    <tab-3 user-id="{{id}}"/>
+    <tab-3 user-id="{{id}}" />
   </van-tab>
   <van-tab title="喜欢"></van-tab>
 </van-tabs>

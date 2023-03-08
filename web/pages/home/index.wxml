@@ -6,7 +6,7 @@
   </view>
   <view class="body">
     <view class="haeder">
-      <van-image width="82" height="82" round src="{{userInfo.avatarUrl}}" />
+      <van-image width="82" height="82" round src="{{userInfo.avatarUrl ||''}}" data-url="{{userInfo.avatarUrl}}" bind:click="previewAvatar" />
       <van-button type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
     </view>
     <view class="nickName">{{userInfo.nickName}}</view>
