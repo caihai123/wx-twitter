@@ -21,8 +21,11 @@ const customWxQuery = async (args, api, extraOptions) => {
       const userId = new RegExp(
         /^\/get-user-info\/((?:[^\/]+?))(?:\/(?=$))?$/i
       ).exec(args)[1];
-      const { data } = await db.collection("user").doc(userId).get();
-      return { data };
+      const { result } = await wx.cloud.callFunction({
+        name: "getUserInfo",
+        data: { id: userId },
+      });
+      return { data: result };
     } else if (url === "/handle-heart-switch") {
       const { userId, postId, isHeart } = body;
       if (isHeart) {
