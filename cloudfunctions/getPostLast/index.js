@@ -26,10 +26,25 @@ exports.main = async (event, context) => {
   const userId = await getUserId(wxContext.OPENID);
 
   // 获取正在关注列表
-  const { data: followList } = await db
-    .collection("follow")
-    .where({ userId })
-    .get();
+  const followList = await (async () => {
+    const model = db.collection("follow").where({ userId });
+    const { total: followTotal } = await model.count();
+    // 一次最多查多少条数据
+    const MAX_LIMIT = 100;
+    // 计算需分几次取
+    const batchTimes = Math.ceil(followTotal / MAX_LIMIT);
+    const tasks = [];
+    for (let i = 0; i < batchTimes; i++) {
+      const promise = model
+        .skip(i * MAX_LIMIT)
+        .limit(MAX_LIMIT)
+        .get();
+      tasks.push(promise);
+    }
+    return (await Promise.all(tasks)).reduce((acc, cur) => {
+      return acc.concat(cur.data || []);
+    }, []);
+  })();
 
   const { data } = await db
     .collection("posts")
