@@ -33,12 +33,13 @@ exports.main = async (event, context) => {
 
   const { data } = await db
     .collection("posts")
-    .orderBy('createTime', 'desc')
+    .orderBy("createTime", "desc")
     .where({
       // 查询自己和关注者的动态
       userId: _.in([...followList.map((item) => item.followId), userId]),
     })
     .field({ _id: true })
+    .limit(10)
     .get();
 
   return data;
