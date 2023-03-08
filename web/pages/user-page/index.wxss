@@ -5,7 +5,7 @@ page {
 }
 
 .userinfo-box .wall {
-  height: 421rpx;
+  height: 248rpx;
   background-color: #1ca1f0;
 }
 
