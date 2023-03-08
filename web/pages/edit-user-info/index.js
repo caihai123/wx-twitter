@@ -1,9 +1,11 @@
 // pages/edit-user-info/index.js
-import { selectUserInfo, updateUserInfo } from "../../store/module/userInfo";
-const app = getApp();
-const { dispatch, getState } = app.store;
+import { selectUserId } from "../../store/module/userInfo";
 import { uploadToCloud } from "./../../utils/util";
 import { apiSlice } from "../../store/module/apiSlice";
+
+const app = getApp();
+const { dispatch, getState } = app.store;
+const getUserInfoById = apiSlice.endpoints.getUserInfoById;
 
 Page({
   /**
@@ -29,7 +31,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    const userInfo = selectUserInfo(getState());
+    // 此页面是二级页面,目前先假设进入该页面时用户信息已经加载完成
+    const state = getState()
+    const userId = selectUserId(state);
+    const { data: userInfo } = getUserInfoById.select(userId)(state);
+
     this.setData({
       _id: userInfo._id,
       nickName: userInfo.nickName,
@@ -162,13 +168,6 @@ Page({
               icon: "success",
               duration: 2000,
             });
-            const userInfo = selectUserInfo(getState());
-            dispatch(
-              updateUserInfo({
-                ...userInfo,
-                ...params,
-              })
-            );
 
             // 修改成功后刷新动态中使用的基础信息
             const { refetch, unsubscribe } = dispatch(

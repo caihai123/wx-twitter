@@ -1,6 +1,11 @@
 // pages/user-page/index.js
-import { updateUserInfo, selectUserInfo } from "../../store/module/userInfo";
+
 const { subscribe, getState, dispatch } = getApp().store;
+import { apiSlice } from "../../store/module/apiSlice";
+
+const mapDispatch = {
+  getUserInfoById: apiSlice.endpoints.getUserInfoById,
+};
 
 Page({
   /**
@@ -15,28 +20,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const id = options?.id;
-    this.setData({ id });
-    wx.cloud.callFunction({
-      name: "getUserInfo",
-      data: { id },
-      success: (res) => {
-        const data = res.result;
-        this.setUserInfo(data);
+    const userId = options?.id;
+    this.setData({ id: userId });
 
-        if (data.isSelf) {
-          // 如果是自己
-          dispatch(updateUserInfo(data));
-          this._unsubscribe = subscribe(() => {
-            const userInfo = selectUserInfo(getState());
-            this.setUserInfo({
-              ...userInfo,
-              isSelf: true,
-            });
-          });
-        }
-      },
+    const { getUserInfoById } = mapDispatch;
+
+    this._watchStore = subscribe(() => {
+      const state = getState();
+      const { data: userInfo } = getUserInfoById.select(userId)(state);
+      if (userInfo) this.setData({ userInfo });
     });
+
+    const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
+    this._unsubscribe = unsubscribe;
   },
 
   setUserInfo(data) {
@@ -82,6 +78,7 @@ Page({
    */
   onUnload() {
     // 停止监听store
-    this._unsubscribe();
+    this._watchStore?.();
+    this._unsubscribe?.();
   },
 });

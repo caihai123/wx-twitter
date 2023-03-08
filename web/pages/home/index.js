@@ -1,10 +1,14 @@
 // pages/home/index.js
 
-import { selectUserInfo } from "../../store/module/userInfo";
-const app = getApp();
-const { subscribe, getState } = app.store;
+import { selectUserId } from "../../store/module/userInfo";
+import { apiSlice } from "../../store/module/apiSlice";
 
-let unsubscribe = null;
+const app = getApp();
+const { subscribe, getState, dispatch } = app.store;
+
+const mapDispatch = {
+  getUserInfoById: apiSlice.endpoints.getUserInfoById,
+};
 
 Page({
   /**
@@ -18,19 +22,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    // 监测store变化
-    unsubscribe = subscribe(() => {
-      this.initPage();
-    });
-    this.initPage();
-  },
+    const { getUserInfoById } = mapDispatch;
 
-  // 初始化页面
-  initPage() {
-    const state = getState();
-    const userInfo = selectUserInfo(state);
-    this.setData({
-      userInfo: userInfo,
+    // // 监测store变化
+    this._watchStore = subscribe(() => {
+      const state = getState();
+      const userId = selectUserId(state);
+
+      // 必须判断userId改变后再执行,否则会出现死循环
+      if (userId) {
+        const { data: userInfo } = getUserInfoById.select(userId)(state);
+        userInfo && this.setData({ userInfo });
+
+        this._unsubscribe?.();
+        const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
+        this._unsubscribe = unsubscribe;
+      }
     });
   },
 
@@ -70,6 +77,7 @@ Page({
    */
   onUnload() {
     // 停止监听store
-    unsubscribe();
+    this._unsubscribe?.();
+    this._watchStore?.();
   },
 });
