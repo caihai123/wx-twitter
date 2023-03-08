@@ -1,10 +1,13 @@
 // pages/fans/index.js
+const db = wx.cloud.database();
+
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     list: [],
+    loading: true,
   },
 
   /**
@@ -12,13 +15,15 @@ Page({
    */
   onLoad(options) {
     const userId = options?.userId;
-    wx.cloud.callFunction({
-      name: "handleFollow",
-      data: { userId, type: "getFansList" },
-      success: ({ result }) => {
-        this.setData({ list: result });
-      },
-    });
+    db.collection("follow")
+      .where({ followId: userId })
+      .get()
+      .then(({ data }) => {
+        this.setData({ list: data });
+      })
+      .finally(() => {
+        this.setData({ loading: false });
+      });
   },
 
   // 处理关注人员改变
