@@ -1,4 +1,7 @@
 // pages/follower/index.js
+
+const db = wx.cloud.database();
+
 Page({
   /**
    * 页面的初始数据
@@ -13,13 +16,11 @@ Page({
    */
   onLoad(options) {
     const userId = options?.userId;
-    wx.cloud
-      .callFunction({
-        name: "handleFollow",
-        data: { userId, type: "getFollowList" },
-      })
-      .then(({ result }) => {
-        this.setData({ list: result });
+    db.collection("follow")
+      .where({ userId })
+      .get()
+      .then(({ data }) => {
+        this.setData({ list: data });
       })
       .finally(() => {
         this.setData({ loading: false });

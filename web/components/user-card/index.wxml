@@ -3,20 +3,20 @@
 <view class="user-card border-bottom">
   <view class="card-body">
     <view class="user-avatar">
-      <van-image width="48" height="48" round src="{{avatarUrl}}" />
+      <van-image width="48" height="48" round src="{{userInfo.avatarUrl || ''}}" />
     </view>
     <view class="user-content">
       <view class="card-header">
         <view class="head-right">
-          <van-button wx:if="{{_followState === '1' || _followState==='3'}}" size="small" round color="#1ca1f0" bind:click="followSwitch">正在关注</van-button>
-          <van-button wx:if="{{_followState === '2' || _followState ==='4'}}" size="small" round color="#1ca1f0" plain  bind:click="followSwitch">关 注</van-button>
+          <van-button wx:if="{{userInfo.isFollow}}" size="small" round color="#1ca1f0" bind:click="followSwitch">正在关注</van-button>
+          <van-button wx:else size="small" round color="#1ca1f0" plain bind:click="followSwitch">关 注</van-button>
         </view>
         <view class="head-left">
-          <view class="nick-name ellipsis">{{nickName}}</view>
+          <view class="nick-name ellipsis">{{userInfo.nickName}}</view>
           <view class="account ellipsis">ID：{{userId}}</view>
         </view>
       </view>
-      <view class="describe multi-ellipsis-2">{{describe || "这个人很懒，什么也没留下~"}}</view>
+      <view class="describe multi-ellipsis-2">{{userInfo.describe || "这个人很懒，什么也没留下~"}}</view>
     </view>
   </view>
 </view>

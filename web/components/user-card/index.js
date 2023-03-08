@@ -1,5 +1,11 @@
 // components/user-card/index.js
+import { apiSlice } from "../../store/module/apiSlice";
 const app = getApp();
+const { subscribe, getState, dispatch } = app.store;
+
+const mapDispatch = {
+  getUserInfoById: apiSlice.endpoints.getUserInfoById,
+};
 
 Component({
   /**
@@ -10,25 +16,29 @@ Component({
   },
   properties: {
     userId: String,
-    nickName: String,
-    avatarUrl: String,
-    describe: String,
-    followState: String,
   },
-
-  observers: {
-    followState: function (val) {
-      this.setData({
-        _followState: val,
-      });
-    },
-  },
-
-  /**
-   * 组件的初始数据
-   */
   data: {
-    _followState: "",
+    userInfo: {},
+  },
+
+  lifetimes: {
+    attached() {
+      const { userId } = this.properties;
+      const { getUserInfoById } = mapDispatch;
+
+      this._watchStore = subscribe(() => {
+        const state = getState();
+        const { data: userInfo } = getUserInfoById.select(userId)(state);
+        userInfo && this.setData({ userInfo });
+      });
+
+      const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
+      this._unsubscribe = unsubscribe;
+    },
+    detached() {
+      this._watchStore?.();
+      this._unsubscribe?.();
+    },
   },
 
   /**

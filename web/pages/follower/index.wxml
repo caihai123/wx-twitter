@@ -2,15 +2,15 @@
 
 <view class="border-top">
   <loading wx:if="{{loading}}" />
-    
+
   <view wx:elif="{{list.length}}">
-    <user-card wx:for="{{list}}" wx:key="_id" userId="{{item._id}}" nickName="{{item.nickName}}" avatarUrl="{{item.avatarUrl}}" describe="{{item.describe}}" followState="{{item.followState}}" />
+    <user-card wx:for="{{list}}" wx:key="_id" userId="{{item.userId}}" />
   </view>
 
   <view wx:else class="empty">
     <view>
       <view class="title">你尚未关注任何人</view>
-    <view>当你关注后，他们将在此列出，而且你将在你的时间线中看到他们的推文。</view>
+      <view>当你关注后，他们将在此列出，而且你将在你的时间线中看到他们的推文。</view>
     </view>
   </view>
 </view>
