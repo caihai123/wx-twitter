@@ -6,7 +6,7 @@ import { updatePostList } from "../../store/module/posts";
 import { uploadToCloud } from "../../utils/util";
 import dayjs from "dayjs";
 const app = getApp();
-const { dispatch,getState,subscribe } = app.store;
+const { dispatch, getState } = app.store;
 const maxCount = 9; // 仅上传图片时的最大数量
 const maxDuration = 60; // 上传视频的最大时长
 
@@ -15,21 +15,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    selfId:"",
     form: {
       value: "",
       imgList: [],
       video: null,
     },
     autosize: { maxHeight: 100, minHeight: 50 },
-  },
-
-  onLoad: function () {
-    // 监测store变化
-    this._unsubscribe = subscribe(() => {
-      this.setData({ selfId: selectUserId(getState()) });
-    });
-    this.setData({ selfId: selectUserId(getState()) });
   },
 
   // 处理动态文本框改变
@@ -152,7 +143,7 @@ Page({
     const { value, imgList, video } = this.data.form;
 
     const params = {
-      userId: this.data.selfId,
+      userId: selectUserId(getState()),
       content: value,
       createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       thumbsUp: [],
@@ -222,10 +213,5 @@ Page({
       urls: this.data.form.imgList.map((item) => item.tempFilePath),
       current: url,
     });
-  },
-
-  onUnload() {
-    // 停止监听store
-    this._unsubscribe?.();
   },
 });
