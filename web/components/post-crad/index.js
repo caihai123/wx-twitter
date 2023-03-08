@@ -27,10 +27,9 @@ Component({
       const { getPostItemById, getUserInfoById } = mapDispatch;
 
       // 开始监测store数据
-      this.watchStore = subscribe(() => {
+      this._watchStore = subscribe(() => {
         const state = getState();
         const { data } = getPostItemById.select(postId)(state);
-        this.setData({ selfUserId: selectUserId(state) });
         if (data) {
           this.setData({ postData: data });
           const { data: userInfo } = getUserInfoById.select(data.userId)(state);
@@ -55,8 +54,8 @@ Component({
     },
     detached: function () {
       this._unsubscribe?.();
-      this.watchStore?.();
-      this.userUnsubscribe?.();
+      this._watchStore?.();
+      this._userUnsubscribe?.();
     },
   },
 
@@ -67,11 +66,7 @@ Component({
     postData: {},
     userInfo: {},
 
-    isHeartWatch: null,
-
     loading: false,
-
-    selfUserId: "", // 自己的userId
   },
 
   /**
@@ -102,8 +97,8 @@ Component({
       dispatch(
         handleHeartChange.initiate({
           postId: _id,
-          userId: this.data.selfUserId,
-          isHeart
+          userId: selectUserId(getState()),
+          isHeart,
         })
       );
     },
