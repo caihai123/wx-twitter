@@ -29,7 +29,6 @@ Page({
       const state = getState();
       const userId = selectUserId(state);
 
-      // 必须判断userId改变后再执行,否则会出现死循环
       if (userId) {
         const { data: userInfo } = getUserInfoById.select(userId)(state);
         userInfo && this.setData({ userInfo });
