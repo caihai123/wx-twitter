@@ -1,11 +1,10 @@
 <!--pages/index/index.wxml-->
 
-
 <view class="border-top">
   <post-card wx:for="{{postIds}}" wx:key="_id" post-id="{{item._id}}" />
 </view>
-<footer-box />
 
+<footer-box />
 
 <view class="float-button">
   <van-button type="default" type="info" round icon="plus" bind:click="goCreatdPost"></van-button>
