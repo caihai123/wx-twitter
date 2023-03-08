@@ -1,5 +1,9 @@
 // pages/index/index.js
-import { updatePostList, selectPostList } from "../../store/module/posts";
+import {
+  updatePostList,
+  selectPostList,
+  getFurtherPostList,
+} from "../../store/module/posts";
 
 const app = getApp();
 const { subscribe, getState, dispatch } = app.store;
@@ -29,6 +33,11 @@ Page({
     wx.navigateTo({
       url: "/pages/create-post/index",
     });
+  },
+
+  // 页面上拉触底
+  onReachBottom() {
+    dispatch(getFurtherPostList());
   },
 
   // 处理用户下拉操作
