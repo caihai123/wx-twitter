@@ -1,0 +1,27 @@
+/* components/line-loading/index.wxss */
+.line-loading {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.line-loading .spinner {
+  animation: rotate 0.8s linear infinite;
+  border: 2px solid #1ca1f0;
+  border-radius: 50%;
+  border-right-color: transparent;
+  height: 20px;
+  margin: 0 auto;
+  width: 20px;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

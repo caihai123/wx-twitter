@@ -1,0 +1,4 @@
+<!--components/line-loading/index.wxml-->
+<view class="line-loading">
+  <view class="spinner"></view>
+</view>
