@@ -1,15 +1,15 @@
 <!--components/user-card/index.wxml-->
 
 <view class="user-card border-bottom">
-  <view class="card-body">
+  <view class="card-body" bindtap="goUserPage">
     <view class="user-avatar">
       <van-image width="48" height="48" round src="{{userInfo.avatarUrl || ''}}" />
     </view>
     <view class="user-content">
       <view class="card-header">
         <view class="head-right">
-          <van-button wx:if="{{userInfo.isFollow}}" size="small" round color="#1ca1f0" bind:click="followSwitch">正在关注</van-button>
-          <van-button wx:else size="small" round color="#1ca1f0" plain bind:click="followSwitch">关 注</van-button>
+          <van-button wx:if="{{userInfo.isFollow}}" size="small" round color="#1ca1f0" catchtap="followSwitch">正在关注</van-button>
+          <van-button wx:else size="small" round color="#1ca1f0" plain catchtap="followSwitch">关 注</van-button>
         </view>
         <view class="head-left">
           <view class="nick-name ellipsis">{{userInfo.nickName}}</view>

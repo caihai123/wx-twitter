@@ -65,5 +65,21 @@ Component({
         this.setData({ [key]: val });
       }
     },
+
+    // 跳转到个人主页
+    goUserPage() {
+      const { userId } = this.properties;
+      const pages = getCurrentPages();
+      const currentPage = pages[pages.length - 1];
+      const currentPageUrl = currentPage.route;
+      if (
+        currentPageUrl !== "pages/user-page/index" ||
+        currentPage.data.id !== userId
+      ) {
+        wx.navigateTo({
+          url: `/pages/user-page/index?id=${userId}`,
+        });
+      }
+    },
   },
 });
