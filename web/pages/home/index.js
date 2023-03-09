@@ -22,22 +22,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    const { getUserInfoById } = mapDispatch;
-
-    // // 监测store变化
+    // 监测store变化
     this._watchStore = subscribe(() => {
-      const state = getState();
-      const userId = selectUserId(state);
-
-      if (userId) {
-        const { data: userInfo } = getUserInfoById.select(userId)(state);
-        userInfo && this.setData({ userInfo });
-
-        this._unsubscribe?.();
-        const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
-        this._unsubscribe = unsubscribe;
-      }
+      this.init();
     });
+    this.init();
+  },
+
+  init() {
+    const { getUserInfoById } = mapDispatch;
+    const state = getState();
+    const userId = selectUserId(state);
+
+    if (userId) {
+      const { data: userInfo } = getUserInfoById.select(userId)(state);
+      userInfo && this.setData({ userInfo });
+
+      this._unsubscribe?.();
+      const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
+      this._unsubscribe = unsubscribe;
+    }
   },
 
   // 去编辑个人资料
