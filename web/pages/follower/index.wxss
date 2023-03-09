@@ -9,12 +9,14 @@
   text-align: center;
   box-sizing: border-box;
   font-size: 14px;
-  color: #6a727a;
+  color: #536471;
 }
 
 .title {
-  line-height: 32px;
+  margin: 10px 0;
+  line-height: 26px;
   font-size: 20px;
   font-weight: bold;
   color: #121415;
+  word-break: break-all;
 }

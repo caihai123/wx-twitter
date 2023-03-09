@@ -13,7 +13,7 @@
       <view>当你关注后，他们将在此列出，而且你将在你的时间线中看到他们的推文。</view>
     </view>
     <view wx:else>
-      <view class="title">{{userId}} 没有关注任何人</view>
+      <view class="title">@{{userId}} 没有关注任何人</view>
       <view>关注用户后，他们就会显示在这里。</view>
     </view>
   </view>
