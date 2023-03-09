@@ -123,6 +123,7 @@ export const apiSlice = createApi({
       },
       invalidatesTags: (result, error, arg) => [
         { type: "User", id: arg.followId },
+        { type: "User", id: arg.userId },
       ],
     }),
   }),
