@@ -1,5 +1,8 @@
 /* pages/user-page/components/tab1/index.wxss */
-
+.border-top{
+  height: auto;
+  overflow: hidden;
+}
 .border-top::before {
   content: "";
   display: block;

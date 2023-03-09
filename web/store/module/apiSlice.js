@@ -51,7 +51,6 @@ const customWxQuery = async (args, api, extraOptions) => {
       return { data: undefined };
     }
   } catch (error) {
-    console.log(error);
     return { error };
   }
 };
