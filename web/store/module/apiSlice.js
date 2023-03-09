@@ -1,4 +1,5 @@
 import { createApi } from "../../utils/redux-toolkit-query";
+import { createSelector } from "../../utils/redux-toolkit";
 
 // 自定义查询
 const customWxQuery = async (args, api, extraOptions) => {
@@ -129,5 +130,13 @@ export const apiSlice = createApi({
 });
 
 // 获取单条动态数据
-export const selectPostItem = apiSlice.endpoints.getPostItemById.select();
-export const selectUserItem = apiSlice.endpoints.getUserInfoById.select();
+export const selectPostItem = createSelector(
+  [(state, postId) => apiSlice.endpoints.getPostItemById.select(postId)(state)],
+  (postItem) => postItem.data
+);
+
+// 获取单个用户
+export const selectUserItem = createSelector(
+  [(state, userId) => apiSlice.endpoints.getUserInfoById.select(userId)(state)],
+  (userItem) => userItem.data
+);

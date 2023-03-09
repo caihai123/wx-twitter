@@ -24,14 +24,12 @@ Page({
    */
   onLoad: function () {
     this._unsubscribe = subscribe(() => {
-      this.setData({
-        postIds: selectPostList(getState()),
-      });
+      this.updateData("postIds", selectPostList(getState()));
     });
     dispatch(updatePostList())
       .unwrap()
       .finally(() => {
-        this.setData({ initLoading: false });
+        this.updateData("initLoading", false);
       });
   },
 
@@ -58,6 +56,13 @@ Page({
         .finally(() => {
           this.setData({ loadMoreLoading: false });
         });
+    }
+  },
+
+  // 更新data数据,会先判断数据是否改变,没改变时不执行setData,减少无意义的渲染
+  updateData(key, val) {
+    if (this.data[key] !== val) {
+      this.setData({ [key]: val });
     }
   },
 

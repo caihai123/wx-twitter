@@ -1,4 +1,4 @@
-import { createSlice } from "../../utils/redux-toolkit";
+import { createSlice, createSelector } from "../../utils/redux-toolkit";
 
 export const slice = createSlice({
   name: "userInfo",
@@ -9,8 +9,8 @@ export const slice = createSlice({
     avatarUrl: "",
     describe: "",
     wallUrl: "",
-    follow:"",
-    fans:""
+    follow: "",
+    fans: "",
   },
   reducers: {
     // 更新所有用户信息，一般用于初始化
@@ -23,7 +23,7 @@ export const slice = createSlice({
         describe,
         wallUrl,
         follow,
-        fans
+        fans,
       } = action.payload;
       state._id = _id;
       state._openid = _openid;
@@ -45,4 +45,4 @@ export default slice.reducer;
 export const selectUserId = (state) => state.userInfo._id;
 
 // 获取所有用户信息
-export const selectUserInfo = (state) => state.userInfo;
+export const selectUserInfo = createSelector((state) => state.userInfo);

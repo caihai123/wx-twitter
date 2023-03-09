@@ -1,9 +1,12 @@
 // components/post-crad/index.js
 
 const { subscribe, getState, dispatch } = getApp().store;
-import { apiSlice } from "../../store/module/apiSlice";
+import {
+  apiSlice,
+  selectPostItem,
+  selectUserItem,
+} from "../../store/module/apiSlice";
 import { selectUserId } from "../../store/module/userInfo";
-// import { createSelector } from "../../utils/redux-toolkit";
 
 const mapDispatch = {
   getPostItemById: apiSlice.endpoints.getPostItemById,
@@ -21,7 +24,7 @@ Component({
 
   lifetimes: {
     attached: async function () {
-      this.setData({ loading: true });
+      this.updateData("loading", true);
 
       const { postId } = this.properties;
       const { getPostItemById, getUserInfoById } = mapDispatch;
@@ -29,19 +32,19 @@ Component({
       // 开始监测store数据
       this._watchStore = subscribe(() => {
         const state = getState();
-        const { data } = getPostItemById.select(postId)(state);
-        if (data) {
-          this.setData({ postData: data });
-          const { data: userInfo } = getUserInfoById.select(data.userId)(state);
-          userInfo && this.setData({ userInfo });
+        const postData = selectPostItem(state, postId);
+        if (postData) {
+          this.updateData("postData", postData);
+          const userInfo = selectUserItem(state, postData.userId);
+          userInfo && this.updateData("userInfo", userInfo);
 
           this._userUnsubscribe?.();
           const { unsubscribe } = dispatch(
-            getUserInfoById.initiate(data.userId)
+            getUserInfoById.initiate(postData.userId)
           );
           this._userUnsubscribe = unsubscribe;
 
-          this.setData({ loading: false });
+          this.updateData("loading", false);
         }
       });
 
@@ -101,6 +104,13 @@ Component({
           isHeart,
         })
       );
+    },
+
+    // 更新data数据,会先判断数据是否改变,没改变时不执行setData,减少无意义的渲染
+    updateData(key, val) {
+      if (this.data[key] !== val) {
+        this.setData({ [key]: val });
+      }
     },
   },
 });

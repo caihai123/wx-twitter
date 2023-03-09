@@ -1,7 +1,7 @@
 // pages/home/index.js
 
 import { selectUserId } from "../../store/module/userInfo";
-import { apiSlice } from "../../store/module/apiSlice";
+import { apiSlice, selectUserItem } from "../../store/module/apiSlice";
 
 const app = getApp();
 const { subscribe, getState, dispatch } = app.store;
@@ -35,8 +35,8 @@ Page({
     const userId = selectUserId(state);
 
     if (userId) {
-      const { data: userInfo } = getUserInfoById.select(userId)(state);
-      userInfo && this.setData({ userInfo });
+      const userInfo = selectUserItem(state, userId);
+      userInfo && this.updateData("userInfo", userInfo);
 
       this._unsubscribe?.();
       const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
@@ -72,6 +72,13 @@ Page({
     wx.navigateTo({
       url: `/pages/user-page/index?id=${userId}`,
     });
+  },
+
+  // 更新data数据,会先判断数据是否改变,没改变时不执行setData,减少无意义的渲染
+  updateData(key, val) {
+    if (this.data[key] !== val) {
+      this.setData({ [key]: val });
+    }
   },
 
   /**

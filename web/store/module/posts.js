@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "../../utils/redux-toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "../../utils/redux-toolkit";
 
 export const slice = createSlice({
   name: "postList",
@@ -28,7 +32,7 @@ export const slice = createSlice({
       .addCase(updatePostList.rejected, (state) => {
         state.status = "failed";
       })
-      
+
       // 加载更多相关
       .addCase(getFurtherPostList.pending, (state) => {
         state.status = "loading";
@@ -75,7 +79,7 @@ export const { addToBefore } = slice.actions;
 export default slice.reducer;
 
 // 获取userId
-export const selectPostList = (state) => state.postList.list;
+export const selectPostList = createSelector([(state) => state.postList.list],data => data);
 
 export const selectLastPostId = (state) => state.postList.lastPostId;
 

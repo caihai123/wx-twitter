@@ -1,8 +1,7 @@
 // components/user-card/index.js
 import { selectUserId } from "../../store/module/userInfo";
-import { apiSlice } from "../../store/module/apiSlice";
-const app = getApp();
-const { subscribe, getState, dispatch } = app.store;
+import { apiSlice, selectUserItem } from "../../store/module/apiSlice";
+const { subscribe, getState, dispatch } = getApp().store;
 
 const mapDispatch = {
   getUserInfoById: apiSlice.endpoints.getUserInfoById,
@@ -26,14 +25,13 @@ Component({
   lifetimes: {
     attached() {
       const { userId } = this.properties;
-      const { getUserInfoById } = mapDispatch;
 
       this._watchStore = subscribe(() => {
-        const state = getState();
-        const { data: userInfo } = getUserInfoById.select(userId)(state);
-        userInfo && this.setData({ userInfo });
+        const userInfo = selectUserItem(getState(), userId);
+        userInfo && this.updateData("userInfo", userInfo);
       });
 
+      const { getUserInfoById } = mapDispatch;
       const { unsubscribe } = dispatch(getUserInfoById.initiate(userId));
       this._unsubscribe = unsubscribe;
     },
@@ -59,6 +57,13 @@ Component({
           isFollow,
         })
       );
+    },
+
+    // 更新data数据,会先判断数据是否改变,没改变时不执行setData,减少无意义的渲染
+    updateData(key, val) {
+      if (this.data[key] !== val) {
+        this.setData({ [key]: val });
+      }
     },
   },
 });
