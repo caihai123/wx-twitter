@@ -20,5 +20,5 @@
 </wxs>
 
 <view wx:if="{{imgList.length}}" class="img-thum-box {{tools.calcClass(imgList.length)}}">
-  <van-image width="100%" height="100%" class="image" wx:for="{{imgList}}" src="{{item}}" fit="{{imgList.length === 1?'widthFix':'fill'}}" show-menu-by-longpress lazy-load wx:key="*this" data-url="{{item}}" bindtap="previewImage" />
+  <van-image width="100%" height="100%" class="image" wx:for="{{imgList}}" src="{{item}}" fit="{{imgList.length === 1?'widthFix':'cover'}}" show-menu-by-longpress lazy-load wx:key="*this" data-url="{{item}}" bindtap="previewImage" />
 </view>
