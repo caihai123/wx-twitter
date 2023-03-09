@@ -8,9 +8,13 @@
   </view>
 
   <view wx:else class="empty">
-    <view>
+    <view wx:if="{{isSelf}}">
       <view class="title">你尚未关注任何人</view>
       <view>当你关注后，他们将在此列出，而且你将在你的时间线中看到他们的推文。</view>
+    </view>
+    <view wx:else>
+      <view class="title">{{userId}} 尚无任何关注者</view>
+      <view>当有人关注他们后，关注者将在这里显示。</view>
     </view>
   </view>
 </view>

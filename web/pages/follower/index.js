@@ -1,14 +1,18 @@
 // pages/follower/index.js
 
+import { selectUserId } from "../../store/module/userInfo";
 const db = wx.cloud.database();
+const { getState } = getApp().store;
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    userId: "",
     list: [],
     loading: true,
+    isSelf: false,
   },
 
   /**
@@ -16,6 +20,8 @@ Page({
    */
   onLoad(options) {
     const userId = options?.userId;
+    const selfId = selectUserId(getState());
+    this.setData({ isSelf: userId === selfId, userId });
     db.collection("follow")
       .where({ userId })
       .get()
