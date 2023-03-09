@@ -19,5 +19,5 @@
 </view>
 
 <view class="footer">
-  <van-button type="info" block disabled="{{!form.value && !form.imgList.length && !form.video}}" bind:click="submitForm">发 布</van-button>
+  <van-button type="info" block disabled="{{!form.value && !form.imgList.length && !form.video}}" loading="{{loading}}" bind:click="submitForm" loading-text="发布中">发 布</van-button>
 </view>

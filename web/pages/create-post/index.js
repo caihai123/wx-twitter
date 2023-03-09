@@ -21,6 +21,7 @@ Page({
       video: null,
     },
     autosize: { maxHeight: 100, minHeight: 50 },
+    loading: false,
   },
 
   // 处理动态文本框改变
@@ -139,6 +140,7 @@ Page({
 
   // 发布
   async submitForm() {
+    this.setData({ loading: true });
     const db = wx.cloud.database();
     const { value, imgList, video } = this.data.form;
 
@@ -150,17 +152,20 @@ Page({
     };
 
     // 上传图片到云服务器
-    wx.showLoading({ title: "正在上传图片", mask: true });
     const uploadToCloudImgList = imgList.map((item) =>
       uploadToCloud(item.tempFilePath)
     );
-    try {
-      await Promise.all(uploadToCloudImgList).then((imgUrls) => {
-        params.imgList = imgUrls.map((item) => item.fileID);
-      });
-    } catch (error) {
-      wx.hideLoading();
-      return;
+    if (uploadToCloudImgList.length) {
+      wx.showLoading({ title: "正在上传图片", mask: true });
+      try {
+        await Promise.all(uploadToCloudImgList).then((imgUrls) => {
+          params.imgList = imgUrls.map((item) => item.fileID);
+        });
+      } catch (error) {
+        wx.hideLoading();
+        this.setData({ loading: false });
+        return;
+      }
     }
 
     // 上传视频到云服务器
@@ -177,15 +182,17 @@ Page({
         });
       } catch (error) {
         wx.hideLoading();
+        this.setData({ loading: false });
         return;
       }
     }
 
     db.collection("posts").add({
       data: params,
-      success: function () {
+      success: () => {
         wx.hideLoading();
         dispatch(updatePostList()).unwrap();
+        this.setData({ loading: false });
         wx.showToast({
           title: "发布成功",
           icon: "success",
@@ -195,8 +202,9 @@ Page({
           wx.navigateBack();
         }, 2000);
       },
-      fail() {
+      fail: () => {
         wx.hideLoading();
+        this.setData({ loading: false });
         wx.showToast({
           title: "发布失败",
           icon: "success",
