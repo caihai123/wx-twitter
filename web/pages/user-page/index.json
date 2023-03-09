@@ -6,6 +6,7 @@
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "tab-1": "./components/tab1/index",
-    "tab-3": "./components/tab3/index"
+    "tab-3": "./components/tab3/index",
+    "tab-4": "./components/tab4/index"
   }
 }

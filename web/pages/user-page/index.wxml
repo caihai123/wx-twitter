@@ -25,13 +25,17 @@
   </view>
 </view>
 
-<van-tabs active="{{ active }}" color="#1ca1f0" animated sticky>
+<van-tabs id="tabs" color="#1ca1f0" sticky animated line-width="187.5rpx" bind:change="tabsChange">
   <van-tab title="推文">
     <tab-1 user-id="{{id}}" />
   </van-tab>
-  <van-tab title="推文与回复"></van-tab>
+  <van-tab title="推文与回复">
+    
+  </van-tab>
   <van-tab title="媒体">
     <tab-3 user-id="{{id}}" />
   </van-tab>
-  <van-tab title="喜欢"></van-tab>
+  <van-tab title="喜欢">
+    <tab-4 user-id="{{id}}" />
+  </van-tab>
 </van-tabs>

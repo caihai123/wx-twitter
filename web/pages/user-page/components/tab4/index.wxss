@@ -1,0 +1,13 @@
+/* pages/user-page/components/tab3/index.wxss */
+.border-top{
+  height: auto;
+  overflow: hidden;
+}
+.border-top::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #d1d1d1;
+  transform: scaleY(0.5);
+}
