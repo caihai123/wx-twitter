@@ -20,5 +20,5 @@
 </wxs>
 
 <view wx:if="{{imgList.length}}" class="img-thum-box {{tools.calcClass(imgList.length)}}">
-  <image wx:for="{{imgList}}" src="{{item}}" mode="aspectFill" show-menu-by-longpress lazy-load wx:key="*this" data-url="{{item}}" bindtap="previewImage" />
+  <image class="image" wx:for="{{imgList}}" src="{{item}}" mode="aspectFill" show-menu-by-longpress lazy-load wx:key="*this" data-url="{{item}}" bindtap="previewImage" />
 </view>

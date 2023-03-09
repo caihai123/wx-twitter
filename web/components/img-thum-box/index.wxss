@@ -9,7 +9,7 @@
 .columns-1 {
   grid-template-columns: repeat(1, 1fr);
 }
-.columns-1 image {
+.columns-1 .image {
   width: 100%;
   height: 800rpx;
   border-radius: 10px;
@@ -23,7 +23,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 200rpx);
 }
-.columns-3 image:first-child {
+.columns-3 .image:first-child {
   grid-row-start: span 2;
 }
 
@@ -35,10 +35,14 @@
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 200rpx;
 }
-.columns-2 image,
-.columns-3 image,
-.columns-4 image,
-.columns-else image {
+.columns-2 .image,
+.columns-3 .image,
+.columns-4 .image,
+.columns-else .image {
   width: 100%;
   height: 100%;
+}
+
+.image {
+  background: rgba(0, 0, 0, 0.06);
 }
