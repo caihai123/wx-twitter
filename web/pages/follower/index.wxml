@@ -4,7 +4,7 @@
   <loading wx:if="{{loading}}" />
 
   <view wx:elif="{{list.length}}">
-    <user-card wx:for="{{list}}" wx:key="_id" userId="{{item.userId}}" />
+    <user-card wx:for="{{list}}" wx:key="_id" userId="{{item.followId}}" />
   </view>
 
   <view wx:else class="empty">
