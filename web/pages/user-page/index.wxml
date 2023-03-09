@@ -6,10 +6,15 @@
   <view class="body">
     <view class="haeder">
       <van-image width="82" height="82" round src="{{userInfo.avatarUrl || ''}}" data-url="{{userInfo.avatarUrl}}" bind:click="previewAvatar" />
-      <van-button wx:if="{{userInfo.isSelf}}" type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
+
+      <view>
+        <van-button wx:if="{{userInfo.isSelf}}" type="default" size="small" round bind:click="goEditUserInfo" custom-class="custom-but">编辑个人资料</van-button>
+        <van-button wx:elif="{{userInfo.isFollow}}" size="small" round color="#1ca1f0" bind:click="followSwitch">正在关注</van-button>
+        <van-button wx:elif="{{userInfo.isFollow === false}}" size="small" round color="#1ca1f0" plain bind:click="followSwitch">关 注</van-button>
+      </view>
     </view>
     <view class="nickName">{{userInfo.nickName}}</view>
-    <view class="account">ID：{{userInfo._openid}}</view>
+    <view class="account">ID：{{userInfo._id}}</view>
     <view class="describe">{{userInfo.describe || '这个人很懒，什么也没留下~'}}</view>
 
     <view class="friend">
@@ -30,7 +35,7 @@
     <tab-1 user-id="{{id}}" />
   </van-tab>
   <van-tab title="推文与回复">
-    
+
   </van-tab>
   <van-tab title="媒体">
     <tab-3 user-id="{{id}}" />

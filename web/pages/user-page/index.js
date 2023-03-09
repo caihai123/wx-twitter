@@ -2,9 +2,11 @@
 
 const { subscribe, getState, dispatch } = getApp().store;
 import { apiSlice } from "../../store/module/apiSlice";
+import { selectUserId } from "../../store/module/userInfo";
 
 const mapDispatch = {
   getUserInfoById: apiSlice.endpoints.getUserInfoById,
+  handelFollowChange: apiSlice.endpoints.handelFollowChange,
 };
 
 Page({
@@ -40,6 +42,19 @@ Page({
     wx.setNavigationBarTitle({
       title: data.nickName + "的个人主页",
     });
+  },
+
+  // 切换对某个人的关注状态
+  followSwitch() {
+    const { handelFollowChange } = mapDispatch;
+    const { _id, isFollow } = this.data.userInfo;
+    dispatch(
+      handelFollowChange.initiate({
+        followId: _id,
+        userId: selectUserId(getState()),
+        isFollow: !isFollow,
+      })
+    );
   },
 
   // 去编辑个人资料
