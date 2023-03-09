@@ -1,33 +1,32 @@
 <!--pages/edit-user-info/index.wxml-->
 
 <view class="container">
-    <view class="wall">
-        <image src="{{wallImg.url}}" />
-        <view class="upload" bindtap="handleWallUpdate">
-            <van-icon name="photograph" size="24px" />
-        </view>
+  <view class="wall">
+    <image src="{{wallImg.url}}" />
+    <view class="upload" bindtap="handleWallUpdate">
+      <van-icon name="photograph" size="24px" />
     </view>
+  </view>
 
-    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onAvatarUrlChange">
-        <view class="avatar-bar">
-            <van-image width="82" height="82" round src="{{avatar.url}}" />
-            <van-icon name="photograph" size="24px" class="icon" />
-        </view>
-    </button>
-
-    <view class="form-item">
-        <div class="label">昵称</div>
-        <van-field value="{{ nickName }}" maxlength="20" type="nickname" bind:change="onNickNameChange" />
+  <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onAvatarUrlChange">
+    <view class="avatar-bar">
+      <van-image width="82" height="82" round src="{{avatar.url}}" />
+      <van-icon name="photograph" size="24px" class="icon" />
     </view>
+  </button>
 
-    <view class="form-item">
-        <div class="label">简介</div>
-        <van-field value="{{ describe }}" type="textarea" maxlength="100" autosize="{{autosize}}" show-word-limit bind:change="onDescribeChange" />
-    </view>
+  <view class="form-item">
+    <div class="label">昵称</div>
+    <van-field value="{{ nickName }}" maxlength="20" type="nickname" bind:change="onNickNameChange" />
+  </view>
+
+  <view class="form-item">
+    <div class="label">简介</div>
+    <van-field value="{{ describe }}" type="textarea" maxlength="100" autosize="{{autosize}}" show-word-limit bind:change="onDescribeChange" />
+  </view>
 
 </view>
 
-
 <view class="footer">
-    <van-button type="info" block bind:click="submitForm">保 存</van-button>
+  <van-button type="info" block bind:click="submitForm">保 存</van-button>
 </view>

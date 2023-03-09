@@ -32,7 +32,7 @@ Page({
    */
   onLoad() {
     // 此页面是二级页面,目前先假设进入该页面时用户信息已经加载完成
-    const state = getState()
+    const state = getState();
     const userId = selectUserId(state);
     const { data: userInfo } = getUserInfoById.select(userId)(state);
 
@@ -175,7 +175,7 @@ Page({
             );
             refetch?.();
             unsubscribe?.();
-            
+
             setTimeout(() => {
               wx.navigateBack();
             }, 2000);
