@@ -3,6 +3,7 @@ import {
   updatePostList,
   selectPostList,
   getFurtherPostList,
+  selectStatus,
 } from "../../store/module/posts";
 
 const app = getApp();
@@ -14,6 +15,8 @@ Page({
    */
   data: {
     postIds: [], // 动态的id列表
+    initLoading: true,
+    loadMoreLoading: false,
   },
 
   /**
@@ -25,7 +28,11 @@ Page({
         postIds: selectPostList(getState()),
       });
     });
-    dispatch(updatePostList());
+    dispatch(updatePostList())
+      .unwrap()
+      .finally(() => {
+        this.setData({ initLoading: false });
+      });
   },
 
   // 去发动态
@@ -37,7 +44,21 @@ Page({
 
   // 页面上拉触底
   onReachBottom() {
-    dispatch(getFurtherPostList());
+    const status = selectStatus(getState());
+    if ((status !== "nomore" && status !== "loading") || status === "init") {
+      this.setData({ loadMoreLoading: true });
+      dispatch(getFurtherPostList())
+        .unwrap()
+        .catch(() => {
+          wx.showToast({
+            title: "获取失败!",
+            icon: "error",
+          });
+        })
+        .finally(() => {
+          this.setData({ loadMoreLoading: false });
+        });
+    }
   },
 
   // 处理用户下拉操作

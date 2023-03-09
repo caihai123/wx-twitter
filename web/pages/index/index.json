@@ -3,7 +3,9 @@
   "usingComponents": {
     "van-button": "@vant/weapp/button/index",
     "post-card": "/components/post-crad/index",
-    "footer-box":"/components/footer-box/index"
+    "footer-box": "/components/footer-box/index",
+    "loading": "/components/loading/index",
+    "line-loading":"/components/line-loading/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"

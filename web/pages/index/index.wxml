@@ -1,10 +1,14 @@
 <!--pages/index/index.wxml-->
 
-<view class="border-top">
-  <post-card wx:for="{{postIds}}" wx:key="_id" post-id="{{item._id}}" />
+<view wx:if="{{!initLoading}}">
+  <view class="border-top">
+    <post-card wx:for="{{postIds}}" wx:key="_id" post-id="{{item._id}}" />
+  </view>
+  <footer-box wx:if="{{!loadMoreLoading}}" />
+  <line-loading wx:else />
 </view>
 
-<footer-box />
+<loading wx:else />
 
 <view class="float-button">
   <van-button type="default" type="info" round icon="plus" bind:click="goCreatdPost"></van-button>

@@ -4,7 +4,7 @@ export const slice = createSlice({
   name: "postList",
   initialState: {
     list: [],
-    // status: "idle", // loading succeeded failed nomore
+    status: "", // nomore loading
     lastPostId: "", // 当前的最后一条id,加载更多时用来定位
   },
   reducers: {
@@ -15,15 +15,34 @@ export const slice = createSlice({
   },
   extraReducers(builder) {
     builder
+      // 初始化相关
+      .addCase(updatePostList.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(updatePostList.fulfilled, (state, action) => {
         const postList = action.payload;
         state.list = postList;
+        state.status = "init";
         state.lastPostId = postList[postList.length - 1]?._id;
+      })
+      .addCase(updatePostList.rejected, (state) => {
+        state.status = "failed";
+      })
+      
+      // 加载更多相关
+      .addCase(getFurtherPostList.pending, (state) => {
+        state.status = "loading";
       })
       .addCase(getFurtherPostList.fulfilled, (state, action) => {
         const postList = action.payload;
         state.list = state.list.concat(postList);
         state.lastPostId = state.list[state.list.length - 1]?._id;
+        if (postList.length === 0) {
+          state.status = "nomore";
+        }
+      })
+      .addCase(getFurtherPostList.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });
@@ -41,7 +60,8 @@ export const updatePostList = createAsyncThunk(
 export const getFurtherPostList = createAsyncThunk(
   "posts/getFurtherPostList",
   async (_, { getState }) => {
-    const lastPostId = selectLastPostId(getState());
+    const state = getState();
+    const lastPostId = selectLastPostId(state);
     const { result } = await wx.cloud.callFunction({
       name: "getPostLast",
       data: { postId: lastPostId },
@@ -58,3 +78,5 @@ export default slice.reducer;
 export const selectPostList = (state) => state.postList.list;
 
 export const selectLastPostId = (state) => state.postList.lastPostId;
+
+export const selectStatus = (state) => state.postList.status;
