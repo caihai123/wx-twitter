@@ -25,7 +25,7 @@
           <view class="account ellipsis">ID：{{userId}}</view>
         </view>
       </view>
-      <view class="describe multi-ellipsis-2">{{userInfo.describe || "这个人很懒，什么也没留下~"}}</view>
+      <view class="describe multi-ellipsis-2">{{userInfo.describe}}</view>
     </view>
   </view>
 </view>
